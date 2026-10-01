@@ -7,7 +7,7 @@ sys.path.insert(0, str(Path(__file__).parents[1] / "src"))
 
 project = "GV Tools"
 author = "NASA GPM Ground Validation"
-release = "0.30.0"
+release = "0.31.0"
 
 extensions = [
     "sphinx.ext.autodoc",

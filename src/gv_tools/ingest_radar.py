@@ -29,6 +29,7 @@ class RadarIngestRoute:
 _NETCDF3_SIGNATURE = b"CDF"
 _HDF5_SIGNATURE = b"\x89HDF\r\n\x1a\n"
 _SIGMET_SIGNATURE = b"\x1b"
+_NEXRAD_LEVEL2_SIGNATURES = (b"AR2V", b"ARCHIVE2.")
 _GZIP_SIGNATURE = b"\x1f\x8b"
 _BZIP2_SIGNATURE = b"BZh"
 _ZIP_SIGNATURE = b"PK\x03\x04"
@@ -90,15 +91,18 @@ def _uncompressed_signature(source: Path) -> bytes:
 def inspect_radar_file(path: str | Path) -> RadarIngestRoute:
     """Inspect file bytes and return the supported radar ingest route.
 
-    Raw ``np1`` files are SIGMET/IRIS volumes. NPOL1 products are CF/Radial
-    NetCDF files. Detection intentionally uses format signatures rather than
-    extensions because operational archives do not always preserve names.
+    Raw ``np1`` files are SIGMET/IRIS volumes, NPOL1 products are CF/Radial
+    NetCDF files, and WSR-88D files are NEXRAD Level-II archives. Detection
+    intentionally uses format signatures rather than extensions because
+    operational archives do not always preserve names.
     """
     source = _source(path)
     signature = _uncompressed_signature(source)
 
     if signature.startswith(_SIGMET_SIGNATURE):
         return RadarIngestRoute("np1", "SIGMET", "read_sigmet")
+    if signature.startswith(_NEXRAD_LEVEL2_SIGNATURES):
+        return RadarIngestRoute("WSR-88D", "NEXRAD Level II", "read_nexrad_archive")
     if signature.startswith(_NETCDF3_SIGNATURE):
         return RadarIngestRoute("NPOL1", "NetCDF3", "read_cfradial")
     if signature.startswith(_HDF5_SIGNATURE):
@@ -106,8 +110,9 @@ def inspect_radar_file(path: str | Path) -> RadarIngestRoute:
 
     preview = signature[:8].hex(" ") or "<empty>"
     raise ValueError(
-        "unsupported radar format; expected raw np1 (SIGMET/IRIS) or "
-        f"NPOL1 (CF/Radial NetCDF), first bytes: {preview}"
+        "unsupported radar format; expected raw np1 (SIGMET/IRIS), "
+        "WSR-88D (NEXRAD Level II), or NPOL1 (CF/Radial NetCDF), "
+        f"first bytes: {preview}"
     )
 
 
@@ -222,12 +227,23 @@ def _prepare_pyart_info(radar: Any) -> None:
 def ingest_radar(path: str | Path, *, XRADAR: bool = False, **reader_options: Any) -> Any:
     """Read a supported radar file with the content-selected Py-ART reader.
 
-    Parameters after *path* are forwarded unchanged to ``read_sigmet`` or
-    ``read_cfradial``. The returned object is a :class:`pyart.core.Radar`.
+    Parameters after *path* are forwarded unchanged to ``read_sigmet``,
+    ``read_nexrad_archive``, or ``read_cfradial``. The returned object is a
+    :class:`pyart.core.Radar`.
     """
     source = _source(path)
     route = inspect_radar_file(source)
-    if XRADAR and "file_field_names" in reader_options:
+    use_xradar = XRADAR
+    if XRADAR and route.reader == "read_nexrad_archive":
+        warnings.warn(
+            "XRADAR=True cannot reliably convert multi-sweep NEXRAD Level-II "
+            "volumes with unequal gate counts to a Py-ART Radar; using Py-ART "
+            "read_nexrad_archive instead",
+            UserWarning,
+            stacklevel=2,
+        )
+        use_xradar = False
+    if use_xradar and "file_field_names" in reader_options:
         warnings.warn(
             "file_field_names is a Py-ART reader option and is ignored when "
             "XRADAR=True",
@@ -236,18 +252,19 @@ def ingest_radar(path: str | Path, *, XRADAR: bool = False, **reader_options: An
         )
         reader_options.pop("file_field_names")
     with _pyart_input(source) as pyart_path:
-        if XRADAR:
-            reader_name = (
-                "open_iris_datatree" if route.reader == "read_sigmet"
-                else "open_cfradial1_datatree"
-            )
+        if use_xradar:
+            reader_name = {
+                "read_sigmet": "open_iris_datatree",
+                "read_nexrad_archive": "open_nexradlevel2_datatree",
+                "read_cfradial": "open_cfradial1_datatree",
+            }[route.reader]
             reader = getattr(_xradar().io, reader_name)
             tree = reader(str(pyart_path), **reader_options)
             tree.load()
         else:
             reader = getattr(_pyart().io, route.reader)
             radar = reader(str(pyart_path), **reader_options)
-    if XRADAR:
+    if use_xradar:
         scan_type = _scan_type(tree, source)
         import_module("pyart.xradar")  # registers DataTree.pyart
         radar = tree.pyart.to_radar()
@@ -261,6 +278,6 @@ def ingest_radar(path: str | Path, *, XRADAR: bool = False, **reader_options: An
         # netCDF4 does not support Boolean attributes. Keep the public flag
         # truth-testable while ensuring a Radar returned here can be written
         # directly with pyart.io.write_cfradial().
-        radar.metadata["XRADAR"] = int(XRADAR)
+        radar.metadata["XRADAR"] = int(use_xradar)
     print(f"Radar scan type: {scan_type}")
     return radar

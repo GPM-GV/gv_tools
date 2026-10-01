@@ -1,6 +1,6 @@
 # GV Tools
 
-`GV Tools` 0.30.0 is a scientific Python framework for NASA Global Precipitation
+`GV Tools` 0.31.0 is a scientific Python framework for NASA Global Precipitation
 Measurement (GPM) Ground Validation instruments. Version 0.1 establishes the
 common package, metadata and output contracts, and an adapter for APU and PIERS
 data through `process-parsivel`. It also reads PIERS-associated RM Young
@@ -13,7 +13,7 @@ newer. It intentionally contains no third-party packages. Pip obtains required
 dependencies from the configured package index:
 
 ```console
-python3 -m pip install "./gv_tools-0.30.0-py3-none-any.whl[parsivel,netcdf]"
+python3 -m pip install "./gv_tools-0.31.0-py3-none-any.whl[parsivel,netcdf]"
 python3 -m gv_tools.cli check
 ```
 
@@ -49,7 +49,7 @@ set BUILD_DIR = `mktemp -d /tmp/gv_tools_install.XXXXXX`
 
 unzip -q "$PARSIVEL_ZIP" -d "$BUILD_DIR"
 ~/anaconda3/bin/python -m pip install "$BUILD_DIR/source"
-~/anaconda3/bin/python -m pip install "$WORKSPACE/release/gv_tools-0.30.0-py3-none-any.whl"
+~/anaconda3/bin/python -m pip install "$WORKSPACE/release/gv_tools-0.31.0-py3-none-any.whl"
 ```
 
 For notebook plotting, ensure Jupyter and Matplotlib are installed:
@@ -136,9 +136,10 @@ instrument adapter.
 
 ## Radar ingest
 
-Install the radar dependency and ingest either a raw np1 SIGMET/IRIS volume or
-an NPOL1 CF/Radial NetCDF volume. GV Tools examines the file signature rather
-than trusting its extension and returns the native Py-ART ``Radar`` object:
+Install the radar dependency and ingest a raw np1 SIGMET/IRIS volume, a WSR-88D
+NEXRAD Level-II archive, or an NPOL1 CF/Radial NetCDF volume. GV Tools examines
+the file signature rather than trusting its extension and returns the native
+Py-ART ``Radar`` object:
 
 ```bash
 python -m pip install 'gv_tools[radar]'
@@ -168,6 +169,10 @@ print(radar.metadata["gv_tools_scan_type"])
 print(radar.metadata["XRADAR"])  # 1 (xradar); Py-ART is 0
 radar.info()
 ```
+
+For NEXRAD Level-II volumes, ``XRADAR=True`` warns and falls back to Py-ART's
+``read_nexrad_archive`` because xradar-to-Py-ART conversion cannot reliably
+combine multi-sweep volumes whose sweeps have unequal gate counts.
 
 ``file_field_names`` is specific to the Py-ART reader. If it is included with
 ``XRADAR=True``, GV Tools emits a warning and ignores that option.
@@ -378,7 +383,7 @@ exactly one matching drop file and are read without extraction.
 ```tcsh
 set WORKSPACE = "$HOME/Desktop/Work/GV Tools"
 set PYTHON = "$HOME/anaconda3/bin/python"
-$PYTHON -m pip install "${WORKSPACE}/gv_tools/release/gv_tools-0.30.0-py3-none-any.whl[py_2dvd]"
+$PYTHON -m pip install "${WORKSPACE}/gv_tools/release/gv_tools-0.31.0-py3-none-any.whl[py_2dvd]"
 $HOME/anaconda3/bin/gv-tools-2dvd-process /path/to/V23022.drops.txt --site WFF --instrument sn37 --output-dir "$WORKSPACE/Output"
 $HOME/anaconda3/bin/gv-tools-2dvd-plot "$WORKSPACE/Output/NetCDF/2023/01/WFF_2023_0122_2DVD_measured_velocity.nc" --output-dir "$WORKSPACE/Output"
 ```

@@ -70,6 +70,18 @@ def test_inspect_npol1_netcdf_content(tmp_path, signature, file_format):
     assert route.reader == "read_cfradial"
 
 
+@pytest.mark.parametrize("signature", [b"AR2V0006", b"ARCHIVE2."])
+def test_inspect_nexrad_level2_content(tmp_path, signature):
+    source = tmp_path / "KCRP20240821_000517_V06"
+    source.write_bytes(signature + b"payload")
+
+    route = inspect_radar_file(source)
+
+    assert route.family == "WSR-88D"
+    assert route.file_format == "NEXRAD Level II"
+    assert route.reader == "read_nexrad_archive"
+
+
 def test_ingest_dispatches_to_sigmet_reader(tmp_path, monkeypatch):
     source = tmp_path / "raw.np1"
     source.write_bytes(b"\x1braw")
@@ -99,6 +111,24 @@ def test_ingest_dispatches_npol1_to_cfradial_reader(tmp_path, monkeypatch):
     monkeypatch.setattr(module, "_pyart", lambda: fake)
 
     assert ingest_radar(source, delay_field_loading=True) == "radar"
+    assert calls == [(str(source), {"delay_field_loading": True})]
+
+
+def test_ingest_dispatches_nexrad_to_archive_reader(tmp_path, monkeypatch):
+    source = tmp_path / "KCRP20240821_000517_V06"
+    source.write_bytes(b"AR2V0006payload")
+    calls = []
+    radar = SimpleNamespace(scan_type="ppi", metadata={})
+    fake = SimpleNamespace(
+        io=SimpleNamespace(
+            read_nexrad_archive=lambda path, **options: calls.append(
+                (path, options)
+            ) or radar,
+        )
+    )
+    monkeypatch.setattr(module, "_pyart", lambda: fake)
+
+    assert ingest_radar(source, delay_field_loading=True) is radar
     assert calls == [(str(source), {"delay_field_loading": True})]
 
 
@@ -134,6 +164,27 @@ def test_ingest_xradar_dispatches_to_cfradial_datatree(tmp_path, monkeypatch, ca
     assert radar.metadata["XRADAR"] == 1
     assert callable(radar.info)
     assert capsys.readouterr().out.endswith("Radar scan type: UNKNOWN\n")
+
+
+def test_ingest_xradar_nexrad_falls_back_to_pyart(tmp_path, monkeypatch):
+    source = tmp_path / "KCRP20240821_000517_V06"
+    source.write_bytes(b"AR2V0006payload")
+    calls = []
+
+    radar = SimpleNamespace(scan_type="ppi", metadata={})
+    fake = SimpleNamespace(
+        io=SimpleNamespace(
+            read_nexrad_archive=lambda path, **options: calls.append(
+                (path, options)
+            ) or radar
+        )
+    )
+    monkeypatch.setattr(module, "_pyart", lambda: fake)
+
+    with pytest.warns(UserWarning, match="using Py-ART read_nexrad_archive"):
+        assert ingest_radar(source, XRADAR=True, file_field_names=True) is radar
+    assert calls == [(str(source), {"file_field_names": True})]
+    assert radar.metadata["XRADAR"] == 0
 
 
 def test_ingest_xradar_warns_and_ignores_file_field_names(

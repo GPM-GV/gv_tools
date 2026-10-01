@@ -1,6 +1,0 @@
-Version: 0.30.0
-Base: Desktop gv_tools 0.29.6
-Tests: passed (see tmp/release-0.30.0/tests.log)
-Sphinx manual: rebuilt; version title verified; included in source archive
-Wheel smoke: passed; existing APIs, lookup tables, export, plotting
-Master notebook: synchronized with notebooks/GV_Tools_Ingest_Demonstration.ipynb
