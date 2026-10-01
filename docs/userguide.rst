@@ -51,9 +51,9 @@ Radar
 -----
 
 ``read_radar(radar_file)`` reads one volume at a time and returns Py-ART's
-native ``Radar`` object. GV Tools detects SIGMET/IRIS and CF/Radial NetCDF from
-the file contents and transparently expands gzip, bzip2, or a ZIP archive that
-contains exactly one radar file.
+native ``Radar`` object. GV Tools detects SIGMET/IRIS, WSR-88D NEXRAD Level II,
+and CF/Radial NetCDF from the file contents and transparently expands gzip,
+bzip2, or a ZIP archive that contains exactly one radar file.
 After decoding, ingest prints the detected scan type (``PPI``, ``RHI``, or
 ``BB`` for birdbath) and stores it in ``radar.metadata['gv_tools_scan_type']``.
 Py-ART is the default backend. Pass ``XRADAR=True`` to load through xradar;
@@ -65,6 +65,9 @@ directly to ``pyart.io.write_cfradial``.
 If ``file_field_names`` is supplied with ``XRADAR=True``, GV Tools warns and
 ignores it because it is a Py-ART reader option rather than an xradar option.
 The converted result retains Py-ART's native ``radar.info()`` reporting method.
+For NEXRAD Level-II volumes, ``XRADAR=True`` warns and falls back to Py-ART's
+``read_nexrad_archive`` because xradar-to-Py-ART conversion cannot reliably
+combine multi-sweep volumes whose sweeps have unequal gate counts.
 The PPI and RHI quicklooks support both the native Py-ART result and the
 Py-ART-compatible XRADAR result, including multi-sweep volumes.
 

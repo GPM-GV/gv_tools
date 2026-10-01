@@ -1,3 +1,15 @@
+# 0.31.0
+
+- Adds content-based detection for WSR-88D NEXRAD Level-II archives beginning
+  with either ``AR2V`` or legacy ``ARCHIVE2.`` signatures.
+- Routes NEXRAD Level-II data transparently through
+  ``pyart.io.read_nexrad_archive()``. ``XRADAR=True`` warns and safely falls
+  back to Py-ART for NEXRAD volumes whose unequal gate counts cannot be
+  converted reliably by the current xradar-to-Py-ART bridge.
+- Adds dispatch regression tests and verifies decoding against a KCRP V06
+  archive containing 14 sweeps, 7,920 rays, and seven radar fields.
+- Updates the quickstart example with optional content-aware radar ingest.
+
 # 0.30.0
 
 Built on 0.29.6, preserving its existing readers, corrections, plotting, and

@@ -14,7 +14,7 @@ Legacy top-level objects remain available for the 0.x migration period.
 
 from importlib import import_module
 
-__version__ = "0.30.0"
+__version__ = "0.31.0"
 
 __all__ = [
     "py_2dvd",

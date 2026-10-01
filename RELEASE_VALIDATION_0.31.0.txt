@@ -1,0 +1,12 @@
+Version: 0.31.0
+Date: 2026-10-01
+Tests: 119 passed (8 dependency warnings)
+Documentation: Sphinx HTML build succeeded; title verified as GV Tools 0.31.0
+Real-data validation: KCRP20240821_000517_V06 decoded as PPI with 14 sweeps,
+7,920 rays, and seven fields through gv_tools.io.read_radar()
+Wheel installation: clean --no-deps target install succeeded
+Source archive: 210 members; source, master notebook, and HTML manual verified
+
+SHA-256:
+e1d4adbbdd49ec2a4d241d098ed4318511ddfab4b29a6e0d558e7283be8857fd  gv_tools-0.31.0-py3-none-any.whl
+aecca47ffe41af28e6332454465ad187816a56a9fd48ab071edce29f14c69092  gv_tools-0.31.0.tar.gz

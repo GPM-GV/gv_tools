@@ -386,7 +386,8 @@ def read_parsivel(files, **options):
 def read_radar(radar_file, *, XRADAR=False, **reader_options):
     """Read one compressed or uncompressed radar file.
 
-    The file format is detected from its content. ``.gz``, ``.bz2``, and ZIP
+    The file format is detected from its content, including SIGMET/IRIS,
+    NEXRAD Level II, and CF/Radial NetCDF. ``.gz``, ``.bz2``, and ZIP
     compression are handled transparently. The default reads directly with
     ARM Py-ART. ``XRADAR=True`` loads through xradar, converts the resulting
     DataTree with ``tree.pyart.to_radar()``, and returns the Py-ART Radar.

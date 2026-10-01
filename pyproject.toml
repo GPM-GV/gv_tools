@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gv_tools"
-version = "0.30.0"
+version = "0.31.0"
 description = "Read, normalize, analyze, and plot NASA GPM Ground Validation instruments"
 readme = "README.md"
 requires-python = ">=3.10"
