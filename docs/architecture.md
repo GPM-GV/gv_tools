@@ -30,9 +30,10 @@ and exposes the same raw-versus-normalized workflow and ingest accounting.
 MRR2 and MRRPro use a separate `gv_tools.io.read_mrr()` regime. MRR files
 are already scientific NetCDF products, so they do not pass through a surface
 instrument adapter or the scanning-radar Py-ART route. The reader identifies
-MRR2 versus MRRPro from the dataset schema, normalizes MRR2 Unix timestamps,
-records the detected model, and returns the native multidimensional
-`xarray.Dataset`.
+MRR2, native MRRPro, and C. Williams post-processed MRRPro from the dataset
+schema, normalizes MRR2 Unix timestamps, records the detected model, and
+returns the native multidimensional `xarray.Dataset`. Multi-file inputs are
+loaded, sorted, de-duplicated, and concatenated along time without Dask.
 
 Outputs are staged in the destination filesystem before atomic replacement.
 The typed version 0.2 manifest records checksums, platform, and temporal

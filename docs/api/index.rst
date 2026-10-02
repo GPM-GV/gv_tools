@@ -12,3 +12,4 @@ public objects exported by that namespace.
    config
    correct
    graph
+   util

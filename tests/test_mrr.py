@@ -1,3 +1,4 @@
+from pathlib import Path
 from zipfile import ZIP_DEFLATED, ZipFile
 
 import numpy as np
@@ -109,3 +110,72 @@ def test_reads_mrrpro_netcdf4_zip(tmp_path):
     assert result.attrs["mrr_model"] == "MRRPro"
     assert result.time.dtype == np.dtype("datetime64[ns]")
     assert result.RR.shape == shape
+
+
+def _write_postprocessed_mrrpro(path, start):
+    times = np.array([start, start + np.timedelta64(10, "s")])
+    shape = (2, 3)
+    dataset = xr.Dataset(
+        {
+            "base_time": ("single_value", [start]),
+            "seconds_since_epoch": ("time", times),
+            "latitude": ("single_value", [27.71]),
+            "longitude": ("single_value", [-97.32]),
+            "altitude": ("single_value", [10.0]),
+            "calibration_constant": ("single_value", [0.0]),
+            "lowest_clutter_free_gate": ("single_value", [4.0]),
+            "noise_power_profile": ("range", np.ones(3, dtype="float32")),
+            "signal_to_noise_ratio": (("time", "range"), np.ones(shape)),
+            "reflectivity_factor": (("time", "range"), np.ones(shape)),
+            "radial_velocity": (("time", "range"), np.ones(shape)),
+            "spectrum_width": (("time", "range"), np.ones(shape)),
+            "spectrum_skewness": (("time", "range"), np.ones(shape)),
+            "spectrum_kurtosis": (("time", "range"), np.ones(shape)),
+        },
+        coords={"time": times, "range": [5.0, 40.0, 75.0]},
+        attrs={
+            "source": "METEK MRRPro Data",
+            "history": "created by Christopher Williams",
+        },
+    )
+    dataset.to_netcdf(path, engine="scipy")
+
+
+@pytest.mark.parametrize("input_kind", ["directory", "glob", "sequence"])
+def test_reads_postprocessed_mrrpro_collection(tmp_path, input_kind):
+    _write_postprocessed_mrrpro(tmp_path / "hour_01.nc", np.datetime64("2023-08-22T01:00:00"))
+    _write_postprocessed_mrrpro(tmp_path / "hour_00.nc", np.datetime64("2023-08-22T00:00:00"))
+    sources = {
+        "directory": tmp_path,
+        "glob": str(tmp_path / "*.nc"),
+        "sequence": [tmp_path / "hour_01.nc", tmp_path / "hour_00.nc"],
+    }
+
+    result = read_mrr(sources[input_kind])
+
+    assert result.attrs["mrr_model"] == "MRRPro"
+    assert result.attrs["mrr_product"] == "post_processed_moments"
+    assert result.attrs["mrr_source_file_count"] == 2
+    assert result.sizes == {"single_value": 1, "time": 4, "range": 3}
+    assert result.time.values[0] == np.datetime64("2023-08-22T00:00:00")
+    assert result.time.values[-1] == np.datetime64("2023-08-22T01:00:10")
+    assert result.reflectivity_factor.shape == (4, 3)
+
+
+def test_reads_real_postprocessed_mrrpro_day_when_available():
+    source = Path(
+        "/Volumes/36TB/MRR/TAMU-CC/reprocessed/nc_files/"
+        "nc_files_c01_mom/2023/08/22"
+    )
+    if not source.is_dir():
+        pytest.skip("C. Williams MRRPro sample directory is not mounted")
+
+    result = read_mrr(source)
+
+    assert result.attrs["mrr_model"] == "MRRPro"
+    assert result.attrs["mrr_product"] == "post_processed_moments"
+    assert result.attrs["mrr_source_file_count"] == 24
+    assert result.sizes["time"] == 8640
+    assert result.sizes["range"] == 256
+    assert result.time.values[0].astype("datetime64[s]") == np.datetime64("2023-08-22T00:00:00")
+    assert result.time.values[-1].astype("datetime64[s]") == np.datetime64("2023-08-22T23:59:50")

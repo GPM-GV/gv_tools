@@ -9,7 +9,7 @@ exactly one matching drop file and are read without extraction.
 ```tcsh
 set WORKSPACE = "$HOME/Desktop/Work/GV Tools"
 set PYTHON = "$HOME/anaconda3/bin/python"
-$PYTHON -m pip install "${WORKSPACE}/gv_tools/release/gv_tools-0.31.0-py3-none-any.whl[py_2dvd]"
+$PYTHON -m pip install "${WORKSPACE}/gv_tools/release/gv_tools-0.34.0-py3-none-any.whl[py_2dvd]"
 $HOME/anaconda3/bin/gv-tools-2dvd-process /path/to/V23022.drops.txt --site WFF --instrument sn37 --output-dir "$WORKSPACE/Output"
 $HOME/anaconda3/bin/gv-tools-2dvd-plot "$WORKSPACE/Output/NetCDF/2023/01/WFF_2023_0122_2DVD_measured_velocity.nc" --output-dir "$WORKSPACE/Output"
 ```

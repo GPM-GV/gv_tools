@@ -1,10 +1,46 @@
 # GV Tools
 
-`GV Tools` 0.31.0 is a scientific Python framework for NASA Global Precipitation
+`GV Tools` 0.34.0 is a scientific Python framework for NASA Global Precipitation
 Measurement (GPM) Ground Validation instruments. Version 0.1 establishes the
 common package, metadata and output contracts, and an adapter for APU and PIERS
 data through `process-parsivel`. It also reads PIERS-associated RM Young
 All-in-One weather packets and monthly Met One AIO files directly.
+
+## Model upper-air profiles
+
+The `gv_tools.util` namespace downloads pressure-level profiles from NOAA
+NOMADS for RAP, HRRR, GFS, and NAM. Choose the latest available cycle, one UTC
+cycle, or an inclusive cycle range. The downloaded GRIB2 subset includes
+height, temperature, relative humidity, and U/V wind components.
+
+```tcsh
+set WORKSPACE = "$HOME/Desktop/Work/GV Tools"
+$HOME/anaconda3/bin/gv-tools-sounding 38.90 -77.00 --model rap --latest \
+  --output-dir "$WORKSPACE/Soundings"
+```
+
+RAP is the operational successor to RUC. NOAA retired the old RUC Soundings
+service, so requesting `model="ruc"` produces an actionable error instead of
+silently returning a different model. NOMADS retains recent operational data;
+it is not a permanent historical archive.
+
+Install decoding and high-quality Skew-T plotting support with the sounding
+extra:
+
+```tcsh
+set WORKSPACE = "$HOME/Desktop/Work/GV Tools"
+set PYTHON = "$HOME/anaconda3/bin/python"
+$PYTHON -m pip install "$WORKSPACE/gv_tools/release/gv_tools-0.34.0-py3-none-any.whl[sounding]"
+```
+
+The end-to-end test notebook is
+`notebooks/Upper_Air_Sounding_Downloads.ipynb`. The reusable plotting script
+accepts a GRIB2 file produced by `gv-tools-sounding`:
+
+```tcsh
+$PYTHON examples/plot_model_skewt.py Soundings/profile.grib2 \
+  Soundings/profile_skewt.png --latitude 37.94 --longitude -75.47
+```
 
 ## Install on macOS or Rocky Linux
 
@@ -13,7 +49,7 @@ newer. It intentionally contains no third-party packages. Pip obtains required
 dependencies from the configured package index:
 
 ```console
-python3 -m pip install "./gv_tools-0.31.0-py3-none-any.whl[parsivel,netcdf]"
+~/anaconda3/bin/python -m pip install "./gv_tools-0.34.0-py3-none-any.whl[parsivel,netcdf]"
 python3 -m gv_tools.cli check
 ```
 
@@ -49,7 +85,7 @@ set BUILD_DIR = `mktemp -d /tmp/gv_tools_install.XXXXXX`
 
 unzip -q "$PARSIVEL_ZIP" -d "$BUILD_DIR"
 ~/anaconda3/bin/python -m pip install "$BUILD_DIR/source"
-~/anaconda3/bin/python -m pip install "$WORKSPACE/release/gv_tools-0.31.0-py3-none-any.whl"
+~/anaconda3/bin/python -m pip install "$WORKSPACE/release/gv_tools-0.34.0-py3-none-any.whl"
 ```
 
 For notebook plotting, ensure Jupyter and Matplotlib are installed:
@@ -329,10 +365,10 @@ writing and the combined AIO dashboard quicklook.
 
 ## MRR2 and MRRPro ingest
 
-Read an MRR2 or MRRPro NetCDF file, or a ZIP archive containing one NetCDF
-file, as an `xarray.Dataset`. The model is detected from the file schema and
-stored in `dataset.attrs["mrr_model"]`. Both models' timestamps are decoded
-into UTC `datetime64[ns]` coordinates:
+Read an MRR2 or MRRPro NetCDF file, a ZIP archive containing one NetCDF file,
+or a directory/glob/list of hourly files as an `xarray.Dataset`. The model is
+detected from the schema and stored in `dataset.attrs["mrr_model"]`. Multiple
+files are combined chronologically along `time` without Dask:
 
 ```python
 import gv_tools
@@ -340,6 +376,11 @@ import gv_tools
 mrr2 = gv_tools.io.read_mrr("/data/mrr2/0722.ave.nc.zip")
 mrrpro = gv_tools.io.read_mrr("/data/mrrpro/20260722_070000.nc.zip")
 print(mrr2.MRR_RR, mrrpro.RR)
+
+postprocessed = gv_tools.io.read_mrr(
+    "/Volumes/36TB/MRR/TAMU-CC/reprocessed/nc_files/nc_files_c01_mom/2023/08/22"
+)
+print(postprocessed.reflectivity_factor)
 ```
 
 Plot selected profile fields in one stacked column. Field names are explicit
@@ -353,6 +394,13 @@ gv_tools.graph.plot_mrr_time_height_quicklook(
     colorbar_bounds={"Ze": (-10, 40), "RR": (0, 20), "LWC": (0, 3), "VEL": (-8, 2)},
     height_range_km=(0, 3),
 )
+
+gv_tools.graph.plot_mrr_time_height_quicklook(
+    postprocessed,
+    ["reflectivity_factor", "radial_velocity", "spectrum_width"],
+    cmaps={"reflectivity_factor": "turbo", "radial_velocity": "coolwarm"},
+    height_range_km=(0, 3),
+)
 ```
 
 The API also accepts per-field labels, a time range, colorbar location, grid
@@ -363,8 +411,9 @@ control, title, figure size, DPI, and a complete ``savefig`` path.
 The HTML reference manual follows the task-oriented layout and PyData Sphinx
 theme used by ARM Py-ART. Build it from a source checkout with:
 
-```console
-python3 -m pip install -e '.[docs]'
+```tcsh
+set PYTHON = "$HOME/anaconda3/bin/python"
+$PYTHON -m pip install -e '.[docs]'
 make -C docs html
 ```
 
@@ -383,7 +432,7 @@ exactly one matching drop file and are read without extraction.
 ```tcsh
 set WORKSPACE = "$HOME/Desktop/Work/GV Tools"
 set PYTHON = "$HOME/anaconda3/bin/python"
-$PYTHON -m pip install "${WORKSPACE}/gv_tools/release/gv_tools-0.31.0-py3-none-any.whl[py_2dvd]"
+$PYTHON -m pip install "${WORKSPACE}/gv_tools/release/gv_tools-0.34.0-py3-none-any.whl[py_2dvd]"
 $HOME/anaconda3/bin/gv-tools-2dvd-process /path/to/V23022.drops.txt --site WFF --instrument sn37 --output-dir "$WORKSPACE/Output"
 $HOME/anaconda3/bin/gv-tools-2dvd-plot "$WORKSPACE/Output/NetCDF/2023/01/WFF_2023_0122_2DVD_measured_velocity.nc" --output-dir "$WORKSPACE/Output"
 ```

@@ -1,0 +1,19 @@
+GV Tools 0.34.0 release validation
+Date: 2026-10-02
+Python: /Users/dwolff/anaconda3/bin/python
+
+Version: 0.34.0
+Full test suite: 134 passed
+Mounted MRRPro integration: 24 files, 8640 times, 256 range gates
+Post-processed product marker: post_processed_moments
+Sphinx HTML build: succeeded
+HTML title: GV Tools 0.34.0 documentation
+Wheel clean-target install and mounted-data ingest: succeeded
+Source archive contains docs/_build/html/index.html: verified
+Master and packaged ingest notebooks: identical and valid JSON
+Post-processed MRRPro notebook: executed successfully against mounted sample
+Source archive contains post-processed MRRPro notebook: verified
+
+SHA-256:
+6d62977dfa4a9c442eb13d85e9f638a780f62e44a50cdbf424c2b8f78ad6a93d  gv_tools-0.34.0-py3-none-any.whl
+c9e54d85588bad065f4697666d921861b47f2180352505b9c38b68efac86fd04  gv_tools-0.34.0.tar.gz

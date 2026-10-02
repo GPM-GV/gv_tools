@@ -19,9 +19,63 @@ The preferred interface starts with a task namespace:
 ``gv_tools.graph``
    Quicklooks and plot-output paths.
 
+``gv_tools.util``
+   General utilities, including NOAA model upper-air profile downloads.
+
 Existing imports such as ``from gv_tools import InstrumentMetadata`` continue
 to work during the 0.x migration period. New code should use
 ``gv_tools.core.InstrumentMetadata`` and the other task namespaces.
+
+Model upper-air profiles
+------------------------
+
+``gv_tools.util.download_model_soundings`` downloads geographically subsetted
+GRIB2 profiles from NOAA NOMADS. Files include height, temperature, relative
+humidity, and U/V wind on all available pressure levels. RAP, HRRR, GFS, and
+NAM are supported. RAP is the operational successor to RUC; the retired RUC
+Soundings service is not silently substituted.
+
+Download the latest RAP analysis::
+
+   results = gv_tools.util.download_model_soundings(
+       38.90, -77.00, model="rap", latest=True, output_dir="Soundings"
+   )
+
+Download one GFS initialization or an inclusive range of RAP cycles::
+
+   from datetime import datetime, timezone
+
+   one = gv_tools.util.download_model_soundings(
+       38.90, -77.00, model="gfs",
+       when=datetime(2026, 9, 30, 18, tzinfo=timezone.utc),
+       output_dir="Soundings",
+   )
+   many = gv_tools.util.download_model_soundings(
+       38.90, -77.00, model="rap",
+       start=datetime(2026, 9, 29, tzinfo=timezone.utc),
+       end=datetime(2026, 9, 30, 23, tzinfo=timezone.utc),
+       output_dir="Soundings",
+   )
+
+The equivalent command is ``gv-tools-sounding``. Forecast hour zero is the
+default analysis; select a forecast lead with ``forecast_hour`` or
+``--forecast-hour``. NOMADS retains recent operational data, not a permanent
+historical archive.
+
+Install the optional decoder and plot stack with ``gv_tools[sounding]``. Then
+decode the GRIB2 subset and make a Skew-T/log-P diagram::
+
+   profile = gv_tools.util.load_model_profile(
+       results[0].path, latitude=38.90, longitude=-77.00
+   )
+   figure = gv_tools.util.plot_skewt(
+       profile, "Soundings/rap_skewt.png", title="RAP analysis", dpi=220
+   )
+
+The plot includes temperature, dew point, wind barbs, dry and moist adiabats,
+mixing-ratio lines, a surface-parcel trace, CAPE/CIN shading, and a hodograph.
+See ``notebooks/Upper_Air_Sounding_Downloads.ipynb`` for an end-to-end test and
+``examples/plot_model_skewt.py`` for a reusable command-line script.
 
 Direct readers
 --------------
@@ -167,9 +221,11 @@ MRR2 and MRRPro
 METEK MRR2 and MRRPro are handled by their own ``read_mrr(file)`` ingest regime.
 Unlike scanning radar, MRR products are time-height or time-range datasets and
 are returned directly as an ``xarray.Dataset`` rather than a Py-ART ``Radar``.
-Both MRR2 processed products and MRRPro CF/Radial products are detected from
-their variables and metadata. See :doc:`mrr` for supported containers, time
-decoding, model identification, examples, and limitations.
+MRR2 processed products, native MRRPro CF/Radial products, and C. Williams
+post-processed MRRPro moment files are detected from variables and metadata.
+Directories, globs, and file sequences are concatenated chronologically. See
+:doc:`mrr` for supported containers, time decoding, model identification,
+examples, and limitations.
 Use ``plot_mrr_time_height_quicklook(dataset, fields)`` to plot any explicit
 list of two-dimensional profile fields as a stacked, single-column time-height
 figure. Explicit names accommodate the different MRR2 and MRRPro schemas.

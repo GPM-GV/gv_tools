@@ -165,7 +165,7 @@ class RMYoungAIOAdapter(InstrumentAdapter):
             Conventions="CF-1.10, NASA-GPM-GV-TOOLS-0.2",
             processing_level="1",
             processing_software="gv_tools",
-            processing_software_version="0.29.6",
+            processing_software_version="0.34.0",
             processing_time=datetime.now(timezone.utc).isoformat(),
             time_reference="UTC",
             source=str(Path(source_path).expanduser()) if source_path is not None else "in_memory",

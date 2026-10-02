@@ -1,0 +1,17 @@
+GV Tools release validation
+===========================
+
+Version: 0.32.0
+Base release: 0.31.0
+Python: ~/anaconda3/bin/python
+Tests: 129 passed
+Live NOAA smoke test: RAP pressure-profile GRIB2 download succeeded
+Documentation: Sphinx HTML build succeeded with warnings treated as errors;
+title verified as GV Tools 0.32.0; util API page generated
+Wheel install: passed; version 0.32.0 and models rap/hrrr/gfs/nam verified
+Source archive: complete HTML manual, master notebook copy, and util sources verified
+
+SHA-256
+-------
+bea4d2105a2d788fc0a26c49b52d656124f2a3fdc11791ccd608d6b2676e7834  gv_tools-0.32.0-py3-none-any.whl
+42a6e1f3749b5ecb37d0a11778a6369ad18520fb5253e732a16c8c7a7379cee5  gv_tools-0.32.0.tar.gz

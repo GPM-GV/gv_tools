@@ -1,0 +1,19 @@
+GV Tools release validation
+===========================
+
+Version: 0.33.0
+Base release: 0.32.0
+Python: ~/anaconda3/bin/python
+Tests: 130 passed
+Live NOAA validation: real RAP GRIB2 decoded with cfgrib/ecCodes
+Skew-T validation: 551 KB PNG rendered with parcel, CAPE/CIN, barbs, and hodograph
+Notebook validation: JSON structure verified; latest/single/range workflow included
+Documentation: Sphinx HTML build succeeded with warnings treated as errors;
+title verified as GV Tools 0.33.0
+Wheel install: passed; sounding extra metadata and public plotting API verified
+Source archive: notebook, plotting script, HTML manual, and util sources verified
+
+SHA-256
+-------
+2d403c192e9ec9f8900907899bc0c51961d8bfb905653a0e834c10a125f5b647  gv_tools-0.33.0-py3-none-any.whl
+08bc59d9a3c98fe02c9fce28521fbf509ec294e31327cfbc3b32a1af7472019c  gv_tools-0.33.0.tar.gz

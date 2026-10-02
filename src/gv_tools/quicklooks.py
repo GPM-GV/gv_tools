@@ -39,7 +39,14 @@ def _time_series_dataset(data):
 
 def _dataset_plot_title(dataset, plot_name, *, date=None, title=None):
     """Return a title containing site, observation date, and instrument."""
-    site = str(dataset.attrs.get("site_id", "")).strip() or "Unknown site"
+    site = next(
+        (
+            str(dataset.attrs.get(key, "")).strip()
+            for key in ("site_id", "site_name", "facility", "location")
+            if str(dataset.attrs.get(key, "")).strip()
+        ),
+        "Unknown site",
+    )
     instrument = next(
         (str(dataset.attrs.get(key, "")).strip() for key in ("instrument_id", "instrument_name", "model", "mrr_model")
          if str(dataset.attrs.get(key, "")).strip()),
@@ -994,7 +1001,13 @@ def plot_mrr_time_height_quicklook(
         + f"\n{start_time} to {end_time} UTC"
     )
     figure.suptitle(verbose_title, fontsize=16, y=0.995)
-    figure.subplots_adjust(top=max(0.84, 0.94 - 0.02 / panel_count), bottom=0.08, left=0.08, right=0.94, hspace=0.26)
+    figure.subplots_adjust(
+        top=0.86,
+        bottom=0.08,
+        left=0.08,
+        right=0.92,
+        hspace=0.32,
+    )
     if save_path is not None:
         save_path.parent.mkdir(parents=True, exist_ok=True)
         figure.savefig(save_path, dpi=dpi, bbox_inches="tight")

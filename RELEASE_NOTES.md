@@ -1,3 +1,33 @@
+# 0.34.0
+
+- Adds C. Williams post-processed MRRPro moment-file detection and ingest.
+- Allows ``read_mrr`` to accept a directory, glob, or file sequence and return
+  one chronological, de-duplicated ``xarray.Dataset`` without requiring Dask.
+- Displays the post-processed reflectivity, velocity, spectrum width, skewness,
+  kurtosis, and signal-to-noise fields with the existing MRR time-height
+  quicklook.
+- Adds a dedicated post-processed MRRPro notebook with configurable input,
+  field groups, colormaps, bounds, labels, time/height windows, layout, file
+  output, and combined-NetCDF export.
+
+# 0.33.0
+
+- Adds a complete upper-air download test notebook covering latest, single,
+  and ranged NOAA model requests.
+- Adds GRIB2 profile decoding and publication-quality Skew-T/log-P plotting,
+  including wind barbs, parcel ascent, CAPE/CIN shading, and a hodograph.
+- Adds the runnable ``examples/plot_model_skewt.py`` command-line script and a
+  ``sounding`` optional dependency group.
+
+# 0.32.0
+
+- Adds ``gv_tools.util.download_model_soundings`` for latest, single-cycle,
+  and ranged NOAA NOMADS pressure-level downloads from RAP, HRRR, GFS, and
+  NAM.
+- Adds the ``gv-tools-sounding`` command-line program.
+- Documents that RAP is the operational successor to RUC and emits an
+  actionable error for the retired RUC Soundings service.
+
 # 0.31.0
 
 - Adds content-based detection for WSR-88D NEXRAD Level-II archives beginning

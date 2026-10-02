@@ -21,19 +21,27 @@ than the filename:
 
 ``MRRPro``
    CF/Radial NetCDF4/HDF5 containing the MRRPro moment, spectrum, range, and
-   time variables. Its CF time coordinate is decoded by xarray.
+   time variables, or C. Williams' post-processed hourly moment files with
+   reflectivity, radial velocity, spectrum width, skewness, kurtosis, and
+   signal-to-noise ratio. Time coordinates are decoded by xarray.
 
 The detected generation is recorded as ``dataset.attrs["mrr_model"]`` with a
 value of ``"MRR2"`` or ``"MRRPro"``. Files that match neither schema are
 rejected with a message describing representative missing variables.
 
-Files and ZIP archives
-----------------------
+Files, directories, globs, and ZIP archives
+-------------------------------------------
 
 The input may be a NetCDF file or a ZIP archive containing exactly one
 ``.nc``, ``.cdf``, or ``.netcdf`` member. ZIP content is loaded eagerly so the
 returned dataset remains usable after the archive is closed. NetCDF3 content
 uses the SciPy engine by default; NetCDF4/HDF5 content uses ``h5netcdf``.
+
+A directory, glob, or sequence of fully qualified filenames reads an hourly
+collection into one in-memory dataset. Files are concatenated along ``time``,
+sorted chronologically, and duplicate timestamps are retained only once. The
+attributes ``mrr_source_file_count`` and ``mrr_source_files`` record the
+inputs. This path does not require Dask.
 
 Install NetCDF4/HDF5 support from ``tcsh`` with:
 
@@ -41,7 +49,7 @@ Install NetCDF4/HDF5 support from ``tcsh`` with:
 
    set WORKSPACE = "$HOME/Desktop/Work/GV Tools"
    set PYTHON = "$HOME/anaconda3/bin/python"
-   $PYTHON -m pip install "$WORKSPACE/gv_tools/release/gv_tools-0.29.6-py3-none-any.whl[netcdf]"
+   $PYTHON -m pip install "$WORKSPACE/gv_tools/release/gv_tools-0.34.0-py3-none-any.whl[netcdf]"
 
 Examples
 --------
@@ -57,6 +65,12 @@ Examples
    mrrpro = gv_tools.io.read_mrr("/data/mrrpro/20260722_070000.nc")
    print(mrrpro.attrs["mrr_model"])  # MRRPro
    print(mrrpro.RR)
+
+   postprocessed = gv_tools.io.read_mrr(
+       "/Volumes/36TB/MRR/TAMU-CC/reprocessed/nc_files/"
+       "nc_files_c01_mom/2023/08/22"
+   )
+   print(postprocessed.reflectivity_factor)
 
 Time-height quicklooks
 ----------------------
@@ -86,6 +100,17 @@ is drawn in its own row in a shared-time, single-column figure::
    gv_tools.graph.plot_mrr_time_height_quicklook(
        mrrpro,
        ["Ze", "RR", "LWC", "VEL"],
+   )
+
+   gv_tools.graph.plot_mrr_time_height_quicklook(
+       postprocessed,
+       ["reflectivity_factor", "radial_velocity", "spectrum_width"],
+       cmaps={
+           "reflectivity_factor": "turbo",
+           "radial_velocity": "coolwarm",
+           "spectrum_width": "viridis",
+       },
+       height_range_km=(0, 3),
    )
 
 Colormaps and colorbar bounds may be one setting for every panel or mappings

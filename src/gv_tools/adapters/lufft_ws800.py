@@ -115,7 +115,7 @@ class LufftWS800Adapter(InstrumentAdapter):
             dataset[target].attrs.update(units=_units(source), long_name=source.replace("_", " "))
         dataset.attrs.update(self.metadata.to_attrs())
         dataset.attrs.update(Conventions="CF-1.10, NASA-GPM-GV-TOOLS-0.2", processing_level="1",
-            processing_software="gv_tools", processing_software_version="0.29.6",
+            processing_software="gv_tools", processing_software_version="0.34.0",
             processing_time=datetime.now(timezone.utc).isoformat(), time_reference="UTC",
             source=str(Path(source_path).expanduser()), product_type="surface_meteorology",
             source_platform="piers", rejected_rows=int(rejected_rows), duplicate_rows=int(duplicate_rows))

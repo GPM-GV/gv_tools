@@ -14,7 +14,7 @@ Legacy top-level objects remain available for the 0.x migration period.
 
 from importlib import import_module
 
-__version__ = "0.31.0"
+__version__ = "0.34.0"
 
 __all__ = [
     "py_2dvd",
@@ -24,6 +24,7 @@ __all__ = [
     "correct",
     "graph",
     "io",
+    "util",
     "InstrumentMetadata",
     "RadarIngestRoute",
     "available_adapters",
@@ -54,6 +55,7 @@ _PUBLIC_OBJECTS = {
     "correct": (".correct", None),
     "graph": (".graph", None),
     "io": (".io", None),
+    "util": (".util", None),
     "InstrumentMetadata": (".metadata", "InstrumentMetadata"),
     "RadarIngestRoute": (".ingest_radar", "RadarIngestRoute"),
     "available_adapters": (".registry", "available_adapters"),
