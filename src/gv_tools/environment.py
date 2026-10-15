@@ -8,7 +8,7 @@ import re
 
 
 DEPENDENCY_GROUPS = {
-    "required": {"numpy": "2.4", "pandas": "2.0", "xarray": "2023.1"},
+    "required": {"numpy": "1.24", "pandas": "2.0", "xarray": "2023.1"},
     "parsivel": {"process-parsivel": "1.2.1"},
     "radar": {"arm-pyart": "2.1", "xradar": "0.10"},
     "netcdf": {"h5netcdf": "1.3", "h5py": "3.10"},
