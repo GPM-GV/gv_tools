@@ -1,0 +1,717 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Plotting and command-line behavior &#8212; GV Tools 0.40.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/gv_tools.css?v=f6e64a54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../_static/documentation_options.js?v=13a5ab13"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'py_2dvd/plotting';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="References and provenance" href="references.html" />
+    <link rel="prev" title="From drops to integral parameters and DSD" href="methods.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">GV Tools 0.40.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="methods.html">From drops to integral parameters and DSD</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Plotting and command-line behavior</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References and provenance</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">2DVD ingestion, calculations, and plots</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Plotting and command-line behavior</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="plotting-and-command-line-behavior">
+<h1>Plotting and command-line behavior<a class="headerlink" href="#plotting-and-command-line-behavior" title="Link to this heading">#</a></h1>
+<section id="integral-figure">
+<h2>Integral figure<a class="headerlink" href="#integral-figure" title="Link to this heading">#</a></h2>
+<p>The fixed eight panels show rain rate, dBZ, liquid water content, Dm/DMax,
+accepted count, number concentration, mass-spectrum spread and DMin. Linear
+reflectivity remains in the Dataset but is not plotted. Blue Dm and orange-red
+DMax are fully opaque. The only multi-curve panel has a legend; the overall
+heading supplies the common literature method, selected velocity, site and date.</p>
+<p>Options accepted by plot_integral_parameters:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Keyword</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>velocity</p></td>
+<td><p>measured</p></td>
+<td><p>existing velocity coordinate to display</p></td>
+</tr>
+<tr class="row-odd"><td><p>output_dir</p></td>
+<td><p>None</p></td>
+<td><p>output root above Plots; None means no file</p></td>
+</tr>
+<tr class="row-even"><td><p>figsize</p></td>
+<td><p>(14, 14)</p></td>
+<td><p>figure width/height in inches</p></td>
+</tr>
+<tr class="row-odd"><td><p>colors</p></td>
+<td><p>None</p></td>
+<td><p>mapping from physical variable names to Matplotlib colors</p></td>
+</tr>
+<tr class="row-even"><td><p>ylimits</p></td>
+<td><p>None</p></td>
+<td><p>mapping from panel’s first variable to (minimum, maximum)</p></td>
+</tr>
+<tr class="row-odd"><td><p>time_range</p></td>
+<td><p>None</p></td>
+<td><p>two increasing timestamps; otherwise raw-record window</p></td>
+</tr>
+<tr class="row-even"><td><p>valid_only</p></td>
+<td><p>True</p></td>
+<td><p>mask minutes failing the reporting rule</p></td>
+</tr>
+<tr class="row-odd"><td><p>linewidth</p></td>
+<td><p>1.5</p></td>
+<td><p>line width in points</p></td>
+</tr>
+<tr class="row-even"><td><p>dpi</p></td>
+<td><p>150</p></td>
+<td><p>resolution of saved PNG</p></td>
+</tr>
+<tr class="row-odd"><td><p>rc_params</p></td>
+<td><p>None</p></td>
+<td><p>scoped Matplotlib font/style overrides</p></td>
+</tr>
+<tr class="row-even"><td><p>show</p></td>
+<td><p>False</p></td>
+<td><p>call pyplot.show after optional saving</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>For the shared Dm/DMax panel, set ylimits with <code class="docutils literal notranslate"><span class="pre">mass_weighted_diameter</span></code>; the
+panel has one common vertical scale. Masking inserts missing values so plotted
+lines do not bridge excluded minutes. Setting valid_only=False displays stored
+values without the reporting threshold; it does not change calculation or QC.</p>
+</section>
+<section id="dsd-figure">
+<h2>DSD figure<a class="headerlink" href="#dsd-figure" title="Link to this heading">#</a></h2>
+<p>Options are velocity, output_dir, time_range, valid_only, dpi, rc_params and show
+as above, plus figsize=(12,6), diameter_range=(0,5),
+concentration_range=(1,10000) and cmap=’dsd’. Supply a registered Matplotlib
+colormap name to replace the inherited DSD palette.</p>
+<p>The stored time-by-diameter slice is transposed for pcolormesh, whose rows are
+diameter and columns time. One extra time edge closes the final minute; stored
+lower/upper diameter edges define the actual cells. Values are neither
+interpolated nor smoothed. Nonfinite and nonpositive cells are masked before
+LogNorm. Colorbar limits are physical concentrations, not log10 values. Values
+outside the chosen color limits saturate at the palette ends; they are not
+removed from the Dataset. Limit choices can conceal variation, so report them
+when comparing figures.</p>
+</section>
+<section id="style-and-figure-lifecycle">
+<h2>Style and figure lifecycle<a class="headerlink" href="#style-and-figure-lifecycle" title="Link to this heading">#</a></h2>
+<p>Default fonts are 14-point general text, 18-point axis titles, 15-point labels,
+13-point ticks, 12-point legends and 20-point figure titles. An rc_context scopes
+changes to the plotting call. <code class="docutils literal notranslate"><span class="pre">rc_params={'font.size':16}</span></code> changes general text;
+explicit axes/tick/legend settings remain independently configurable.
+Constrained layout allocates room for titles, labels and colorbars. Functions
+return live Figure objects; close them after saving when producing many plots.</p>
+<p>Output filenames include site/day/velocity/kind. Measured and terminal plots can share the same output root without overwriting each other.</p>
+</section>
+<section id="cli-stages">
+<h2>CLI stages<a class="headerlink" href="#cli-stages" title="Link to this heading">#</a></h2>
+<p>Processing reads raw input, calculates both products once, and saves both
+velocity choices. Plotting reads a previously saved lite NetCDF, loads the arrays,
+closes the file, then renders both figures. It does not reopen the original drops
+or recalculate moments. Root .py scripts and installed console commands call the
+same cli.py functions. Shell options are parsed before work begins.</p>
+<div class="highlight-tcsh notranslate"><div class="highlight"><pre><span></span><span class="nb">setenv </span>WORKSPACE /Users/dwolff/Desktop/Work/py2DVD_Wolff
+<span class="nb">cd</span> <span class="s2">&quot;$WORKSPACE&quot;</span>
+~/anaconda3/bin/python py_2dvd_lite/process_2dvd_lite.py /Volumes/TBW/distro/2dvd/2dvd_sn37/ascii/V23022.drops.zip
+~/anaconda3/bin/python py_2dvd_lite/plot_2dvd_lite.py Output/NetCDF/2023/01/WFF_2023_0122_2DVD_measured_velocity.nc --velocity measured --plot-config py_2dvd_lite/examples/plot_config.json
+</pre></div>
+</div>
+<p>The JSON rain/dsd objects supply plotting keyword options. rcParams is shared.
+Velocity, output directory and interactive display belong to CLI options; do not
+repeat them inside JSON. Unknown or conflicting keywords cause an error rather
+than silently changing the selected branch. –show displays figures after saving;
+otherwise the CLI uses Agg and closes figures. A second-figure error can leave
+an already-saved first PNG; exporting two figures is not an atomic transaction.
+Fix the configuration and rerun. Handled failures exit 2; success returns 0.</p>
+<p>Version 0.1.2 exports separate measured/terminal files with explicit velocity names. See README for the eight new save_products return keys.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="methods.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">From drops to integral parameters and DSD</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="references.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">References and provenance</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integral-figure">Integral figure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dsd-figure">DSD figure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#style-and-figure-lifecycle">Style and figure lifecycle</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cli-stages">CLI stages</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/py_2dvd/plotting.md.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

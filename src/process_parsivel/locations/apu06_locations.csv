@@ -1,0 +1,5 @@
+instrument,latitude,longitude,elevation,city,state,date_range,num_files
+apu06,37.9346016667,-75.4707566667,24.2,Wallops Island,Virginia,2016-07-19 - 2016-08-04,17
+apu06,38.0816533333,-75.5993516667,3.7,Pocomoke City,Maryland,2016-08-05 - 2018-04-09,610
+apu06,38.0795833333,-75.5961316667,7.2,Pocomoke City,Maryland,2018-04-10 - 2019-02-07,262
+apu06,30.5506183333,-96.4336333333,73.0,Burleson County,Texas,2019-04-20 - 2025-04-05,1979

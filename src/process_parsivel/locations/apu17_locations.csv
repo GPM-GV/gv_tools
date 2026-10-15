@@ -1,0 +1,4 @@
+instrument,latitude,longitude,elevation,city,state,date_range,num_files
+apu17,37.944035,-75.4812916667,9.3,Wattsville,Virginia,2016-10-27 - 2017-03-31,156
+apu17,37.94416,-75.4812633333,4.4,Wattsville,Virginia,2017-04-01 - 2017-05-17,47
+apu17,37.94402,-75.48135,11.2,Wattsville,Virginia,2017-05-18 - 2025-05-27,3396

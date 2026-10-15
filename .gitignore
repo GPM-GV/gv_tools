@@ -6,6 +6,12 @@ __pycache__/
 build/
 dist/
 processed/
+Output/
+Demo_Output/
+Soundings/
+workspace_files/
+notebooks/Ingest_WSR88D.ipynb
+notebooks/My_GV_Tools.ipynb
 
 
 .DS_Store

@@ -108,19 +108,21 @@ def test_reads_mrrpro_netcdf4_zip(tmp_path):
     result = read_mrr(archive)
 
     assert result.attrs["mrr_model"] == "MRRPro"
+    assert result.attrs["mrr_product"] == "original"
+    assert result.attrs["mrr_product_code"] == "org"
+    assert result.attrs["processing_method"] == "Original MRRPro"
+    assert result.attrs["processing_method_code"] == "org"
     assert result.time.dtype == np.dtype("datetime64[ns]")
     assert result.RR.shape == shape
 
 
-def _write_postprocessed_mrrpro(path, start):
+def _write_postprocessed_mrrpro(path, start, *, method="mom", location=None, geolocation=True):
     times = np.array([start, start + np.timedelta64(10, "s")])
     shape = (2, 3)
     dataset = xr.Dataset(
         {
             "base_time": ("single_value", [start]),
             "seconds_since_epoch": ("time", times),
-            "latitude": ("single_value", [27.71]),
-            "longitude": ("single_value", [-97.32]),
             "altitude": ("single_value", [10.0]),
             "calibration_constant": ("single_value", [0.0]),
             "lowest_clutter_free_gate": ("single_value", [4.0]),
@@ -138,6 +140,19 @@ def _write_postprocessed_mrrpro(path, start):
             "history": "created by Christopher Williams",
         },
     )
+    if geolocation:
+        dataset["latitude"] = ("single_value", [27.71])
+        dataset["longitude"] = ("single_value", [-97.32])
+    if location is not None:
+        dataset.attrs["location"] = location
+    if method == "spc":
+        spectral_shape = (2, 3, 2)
+        dataset = dataset.assign_coords(spectral_bins=[0, 1])
+        dataset["spectrum_Doppler_velocity"] = ("spectral_bins", [-1.0, 1.0])
+        dataset["precipitation_mask"] = (("time", "range"), np.ones(shape))
+        dataset["reflectivity_spectral_density"] = (
+            ("time", "range", "spectral_bins"), np.ones(spectral_shape)
+        )
     dataset.to_netcdf(path, engine="scipy")
 
 
@@ -155,11 +170,80 @@ def test_reads_postprocessed_mrrpro_collection(tmp_path, input_kind):
 
     assert result.attrs["mrr_model"] == "MRRPro"
     assert result.attrs["mrr_product"] == "post_processed_moments"
+    assert result.attrs["mrr_product_code"] == "mom"
+    assert result.attrs["processing_method"] == "Method of Moments"
+    assert result.attrs["processing_method_code"] == "mom"
     assert result.attrs["mrr_source_file_count"] == 2
     assert result.sizes == {"single_value": 1, "time": 4, "range": 3}
     assert result.time.values[0] == np.datetime64("2023-08-22T00:00:00")
     assert result.time.values[-1] == np.datetime64("2023-08-22T01:00:10")
     assert result.reflectivity_factor.shape == (4, 3)
+
+
+def test_distinguishes_spectral_postprocessing(tmp_path):
+    source = tmp_path / "TAMUCC_c01_spc_20230822_00.nc"
+    _write_postprocessed_mrrpro(
+        source,
+        np.datetime64("2023-08-22T00:00:00"),
+        method="spc",
+        location="Texas A&M University, Corpus Christi, TX",
+    )
+
+    result = read_mrr(source)
+
+    assert result.attrs["mrr_product"] == "post_processed_spectra"
+    assert result.attrs["mrr_product_code"] == "spc"
+    assert result.attrs["processing_method"] == "Spectral"
+    assert result.attrs["processing_method_code"] == "spc"
+    assert "reflectivity_spectral_density" in result
+
+
+def test_applies_piers0030_geolocation_to_tamucc_postprocessing(tmp_path):
+    source = tmp_path / "TAMUCC_c01_mom_20230822_00.nc"
+    _write_postprocessed_mrrpro(
+        source,
+        np.datetime64("2023-08-22T00:00:00"),
+        location="Texas A&M University, Corpus Christi, TX",
+    )
+
+    result = read_mrr(source)
+
+    assert result.latitude.item() == pytest.approx(27.713017)
+    assert result.longitude.item() == pytest.approx(-97.318275)
+    assert result.latitude.attrs["units"] == "degrees_north"
+    assert result.longitude.attrs["units"] == "degrees_east"
+    assert result.attrs["site_id"] == "PIERS0030"
+    assert result.attrs["latitude"] == pytest.approx(27.713017)
+    assert result.attrs["longitude"] == pytest.approx(-97.318275)
+    assert result.attrs["geolocation_source"].startswith("Collocated PIERS0030")
+
+
+def test_warns_when_geolocation_is_unavailable(tmp_path):
+    source = tmp_path / "other_site_mom.nc"
+    _write_postprocessed_mrrpro(
+        source, np.datetime64("2023-08-22T00:00:00"), geolocation=False
+    )
+
+    with pytest.warns(UserWarning, match="no valid latitude or longitude"):
+        result = read_mrr(source)
+
+    assert "latitude" not in result
+    assert "longitude" not in result
+
+
+def test_rejects_mixed_postprocessing_methods(tmp_path):
+    mom = tmp_path / "TAMUCC_c01_mom_20230822_00.nc"
+    spc = tmp_path / "TAMUCC_c01_spc_20230822_01.nc"
+    location = "Texas A&M University, Corpus Christi, TX"
+    _write_postprocessed_mrrpro(
+        mom, np.datetime64("2023-08-22T00:00:00"), method="mom", location=location
+    )
+    _write_postprocessed_mrrpro(
+        spc, np.datetime64("2023-08-22T01:00:00"), method="spc", location=location
+    )
+
+    with pytest.raises(ValueError, match="mixed post-processing methods"):
+        read_mrr([mom, spc])
 
 
 def test_reads_real_postprocessed_mrrpro_day_when_available():
@@ -174,8 +258,33 @@ def test_reads_real_postprocessed_mrrpro_day_when_available():
 
     assert result.attrs["mrr_model"] == "MRRPro"
     assert result.attrs["mrr_product"] == "post_processed_moments"
+    assert result.attrs["processing_method"] == "Method of Moments"
+    assert result.attrs["site_id"] == "PIERS0030"
+    assert result.latitude.item() == pytest.approx(27.713017)
+    assert result.longitude.item() == pytest.approx(-97.318275)
     assert result.attrs["mrr_source_file_count"] == 24
     assert result.sizes["time"] == 8640
     assert result.sizes["range"] == 256
     assert result.time.values[0].astype("datetime64[s]") == np.datetime64("2023-08-22T00:00:00")
     assert result.time.values[-1].astype("datetime64[s]") == np.datetime64("2023-08-22T23:59:50")
+
+
+def test_reads_real_spectral_mrrpro_file_when_available():
+    directory = Path(
+        "/Volumes/36TB/MRR/TAMU-CC/reprocessed/nc_files/"
+        "nc_files_c01_spc/2023/08/22"
+    )
+    sources = sorted(directory.glob("*.nc"))
+    if not sources:
+        pytest.skip("C. Williams spectral MRRPro sample is not mounted")
+
+    result = read_mrr(sources[0])
+
+    assert result.attrs["mrr_product"] == "post_processed_spectra"
+    assert result.attrs["processing_method"] == "Spectral"
+    assert result.attrs["processing_method_code"] == "spc"
+    assert result.attrs["site_id"] == "PIERS0030"
+    assert result.latitude.item() == pytest.approx(27.713017)
+    assert result.longitude.item() == pytest.approx(-97.318275)
+    assert result.sizes["spectral_bins"] == 96
+    assert "reflectivity_spectral_density" in result

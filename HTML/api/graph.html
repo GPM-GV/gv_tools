@@ -1,0 +1,873 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>gv_tools.graph &#8212; GV Tools 0.40.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/gv_tools.css?v=f6e64a54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../_static/documentation_options.js?v=13a5ab13"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/graph';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Utilities" href="util.html" />
+    <link rel="prev" title="gv_tools.correct" href="correct.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">GV Tools 0.40.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="core.html">gv_tools.core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">gv_tools.io</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">gv_tools.config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="correct.html">gv_tools.correct</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">gv_tools.graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">Utilities</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">API Reference Manual</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">gv_tools.graph</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="gv-tools-graph">
+<h1>gv_tools.graph<a class="headerlink" href="#gv-tools-graph" title="Link to this heading">#</a></h1>
+<p>One-dimensional time-series plotting functions accept either a pandas
+<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> or an xarray <code class="docutils literal notranslate"><span class="pre">Dataset</span></code>. Multidimensional plots retain their
+native scientific input: Parsivel DSD plotting uses an xarray <code class="docutils literal notranslate"><span class="pre">Dataset</span></code>, and
+radar plotting uses the Py-ART-compatible object returned by
+<code class="docutils literal notranslate"><span class="pre">gv_tools.io.read_radar</span></code>.</p>
+<p id="module-gv_tools.graph">Plotting and quicklook generation.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.graph.plot_aio_quicklook">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.</span></span><span class="sig-name descname"><span class="pre">plot_aio_quicklook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">4,</span> <span class="pre">6,</span> <span class="pre">8,</span> <span class="pre">inf)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/quicklooks.html#plot_aio_quicklook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.plot_aio_quicklook" title="Link to this definition">#</a></dt>
+<dd><p>Plot a three-row, two-column AIO dashboard and return the Figure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>Dataset</em>)</p></li>
+<li><p><strong>output</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>savefig</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>title</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>direction_bins</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.graph.plot_aio_wind_rose">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.</span></span><span class="sig-name descname"><span class="pre">plot_aio_wind_rose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">4,</span> <span class="pre">6,</span> <span class="pre">8,</span> <span class="pre">inf)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/quicklooks.html#plot_aio_wind_rose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.plot_aio_wind_rose" title="Link to this definition">#</a></dt>
+<dd><p>Plot direction/speed occurrence percentages and return Figure, Axes, and frequencies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>Dataset</em>)</p></li>
+<li><p><strong>output</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>direction_bins</strong> (<em>int</em>)</p></li>
+<li><p><strong>title</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.graph.plot_parsivel_quicklook">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.</span></span><span class="sig-name descname"><span class="pre">plot_parsivel_quicklook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'viridis'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar_bounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'right'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dsd_yrange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/quicklooks.html#plot_parsivel_quicklook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.plot_parsivel_quicklook" title="Link to this definition">#</a></dt>
+<dd><p>Plot one UTC day of Parsivel DSD and precipitation parameters.</p>
+<p>The six rows contain DSD, dBZ, rain rate, liquid-water content,
+concentration, and number of drops.</p>
+<p><code class="docutils literal notranslate"><span class="pre">savefig</span></code> must be a full path including an image filename. The legacy
+positional <code class="docutils literal notranslate"><span class="pre">output</span></code> argument remains supported, but cannot be combined
+with <code class="docutils literal notranslate"><span class="pre">savefig</span></code>. <code class="docutils literal notranslate"><span class="pre">colorbar_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">dsd_yrange</span></code> are two-item <code class="docutils literal notranslate"><span class="pre">(minimum,</span> <span class="pre">maximum)</span></code>
+pairs. <code class="docutils literal notranslate"><span class="pre">colorbar_location</span></code> accepts <code class="docutils literal notranslate"><span class="pre">&quot;left&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;right&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;top&quot;</span></code>,
+or <code class="docutils literal notranslate"><span class="pre">&quot;bottom&quot;</span></code>. Zero-valued DSD bins are displayed in white.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>Dataset</em>)</p></li>
+<li><p><strong>output</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>savefig</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>title</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>colorbar_bounds</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>colorbar_location</strong> (<em>str</em>)</p></li>
+<li><p><strong>dsd_yrange</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.graph.plot_radar_ppi_quicklook">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.</span></span><span class="sig-name descname"><span class="pre">plot_radar_ppi_quicklook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sweep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_range_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_ring_interval_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_ring_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_ring_linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radial_spoke_interval_deg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radial_spoke_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radial_spoke_linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gridline_interval_deg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'50m'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_map_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_borders</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(13,</span> <span class="pre">11)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/quicklooks.html#plot_radar_ppi_quicklook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.plot_radar_ppi_quicklook" title="Link to this definition">#</a></dt>
+<dd><p>Plot a mapped Py-ART PPI sweep with geographic and radar overlays.</p>
+<p>Radial-spoke spacing is specified in degrees; range-ring spacing and
+<code class="docutils literal notranslate"><span class="pre">max_range_km</span></code> are specified in kilometers. Set either interval to
+<code class="docutils literal notranslate"><span class="pre">None</span></code> to disable that overlay.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>savefig</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>field</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>sweep</strong> (<em>int</em>)</p></li>
+<li><p><strong>cmap</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>vmin</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>vmax</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>max_range_km</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>range_ring_interval_km</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>range_ring_color</strong> (<em>str</em>)</p></li>
+<li><p><strong>range_ring_linewidth</strong> (<em>float</em>)</p></li>
+<li><p><strong>radial_spoke_interval_deg</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>radial_spoke_color</strong> (<em>str</em>)</p></li>
+<li><p><strong>radial_spoke_linewidth</strong> (<em>float</em>)</p></li>
+<li><p><strong>gridline_interval_deg</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>map_resolution</strong> (<em>str</em>)</p></li>
+<li><p><strong>add_map_features</strong> (<em>bool</em>)</p></li>
+<li><p><strong>add_borders</strong> (<em>bool</em>)</p></li>
+<li><p><strong>colorbar_label</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>title</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>dpi</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.graph.plot_radar_rhi_quicklook">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.</span></span><span class="sig-name descname"><span class="pre">plot_radar_rhi_quicklook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sweep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_range_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_range_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_height_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_height_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse_xaxis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar_orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vertical'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(14,</span> <span class="pre">8)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/quicklooks.html#plot_radar_rhi_quicklook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.plot_radar_rhi_quicklook" title="Link to this definition">#</a></dt>
+<dd><p>Plot a Py-ART RHI sweep with optional range-height symbols.</p>
+<p>Symbol dictionaries use <code class="docutils literal notranslate"><span class="pre">{'Location':</span> <span class="pre">(range_km,</span> <span class="pre">height_km),</span>
+<span class="pre">'Color':</span> <span class="pre">color,</span> <span class="pre">'Symbol':</span> <span class="pre">marker,</span> <span class="pre">'Size':</span> <span class="pre">size}</span></code>. A single dictionary or
+a sequence of dictionaries is accepted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>savefig</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>field</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>sweep</strong> (<em>int</em>)</p></li>
+<li><p><strong>cmap</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>vmin</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>vmax</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>min_range_km</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>max_range_km</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>min_height_km</strong> (<em>float</em>)</p></li>
+<li><p><strong>max_height_km</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>reverse_xaxis</strong> (<em>bool</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>symbols</strong> (<em>dict</em><em> | </em><em>list</em><em>[</em><em>dict</em><em>] </em><em>| </em><em>tuple</em><em>[</em><em>dict</em><em>, </em><em>...</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>colorbar_label</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>colorbar_orientation</strong> (<em>str</em>)</p></li>
+<li><p><strong>grid</strong> (<em>bool</em>)</p></li>
+<li><p><strong>title</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>dpi</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.graph.plot_radar_bb_zdr_calibration">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.</span></span><span class="sig-name descname"><span class="pre">plot_radar_bb_zdr_calibration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sweep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_range_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_range_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zdr_bounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(-3.0,</span> <span class="pre">3.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">histogram_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">60</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statistic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'median'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reflectivity_field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reflectivity_bounds_dbz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density_cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'viridis'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">8)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/quicklooks.html#plot_radar_bb_zdr_calibration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.plot_radar_bb_zdr_calibration" title="Link to this definition">#</a></dt>
+<dd><p>Plot a birdbath ZDR calibration diagnostic and estimated correction.</p>
+<p>The reported bias is the selected center statistic of valid vertical ZDR
+samples. The recommended additive correction is the negative of that bias.
+Optional reflectivity bounds can isolate the desired calibration regime.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>savefig</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>field</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>sweep</strong> (<em>int</em>)</p></li>
+<li><p><strong>min_range_km</strong> (<em>float</em>)</p></li>
+<li><p><strong>max_range_km</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>zdr_bounds</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>)</p></li>
+<li><p><strong>histogram_bins</strong> (<em>int</em>)</p></li>
+<li><p><strong>statistic</strong> (<em>str</em>)</p></li>
+<li><p><strong>reflectivity_field</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>reflectivity_bounds_dbz</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>min_samples</strong> (<em>int</em>)</p></li>
+<li><p><strong>density_cmap</strong> (<em>str</em>)</p></li>
+<li><p><strong>title</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>dpi</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.graph.plot_mrr_time_height_quicklook">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.</span></span><span class="sig-name descname"><span class="pre">plot_mrr_time_height_quicklook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmaps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'viridis'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar_bounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height_range_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'right'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/quicklooks.html#plot_mrr_time_height_quicklook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.plot_mrr_time_height_quicklook" title="Link to this definition">#</a></dt>
+<dd><p>Plot selected MRR2 or MRRPro fields as stacked time-height panels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>Dataset</em>)</p></li>
+<li><p><strong>fields</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>tuple</em><em>[</em><em>str</em><em>, </em><em>...</em><em>]</em>)</p></li>
+<li><p><strong>output</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>savefig</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>cmaps</strong> (<em>str</em><em> | </em><em>dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>)</p></li>
+<li><p><strong>colorbar_bounds</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>] </em><em>| </em><em>dict</em><em>[</em><em>str</em><em>, </em><em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>field_labels</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>height_range_km</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>time_range</strong> (<em>tuple</em><em>[</em><em>object</em><em>, </em><em>object</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>colorbar_location</strong> (<em>str</em>)</p></li>
+<li><p><strong>grid</strong> (<em>bool</em>)</p></li>
+<li><p><strong>title</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>dpi</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.graph.plot_ws800_full_quicklook">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.</span></span><span class="sig-name descname"><span class="pre">plot_ws800_full_quicklook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">18)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/quicklooks.html#plot_ws800_full_quicklook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.plot_ws800_full_quicklook" title="Link to this definition">#</a></dt>
+<dd><p>Plot six stacked field-family panels for full Lufft WS800 data.</p>
+<p><code class="docutils literal notranslate"><span class="pre">data</span></code> may be the pandas DataFrame or xarray Dataset returned by
+<code class="docutils literal notranslate"><span class="pre">read_ws800_full</span></code>. Each panel contains every available field in its
+family: air temperature, dew point, relative humidity, absolute humidity,
+mixing ratio, and lightning. <code class="docutils literal notranslate"><span class="pre">colors</span></code> optionally maps field names to
+Matplotlib colors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>savefig</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>title</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>colors</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>linewidth</strong> (<em>float</em>)</p></li>
+<li><p><strong>dpi</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.graph.plot_directory">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.</span></span><span class="sig-name descname"><span class="pre">plot_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">create</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/outputs.html#plot_directory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.plot_directory" title="Link to this definition">#</a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">root/Plots/PlotType/YYYY/MM</span></code> for a requested plot date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>plot_type</strong> (<em>str</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Path</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="module-gv_tools.graph.py_2dvd">
+<span id="dvd"></span><h2>2DVD<a class="headerlink" href="#module-gv_tools.graph.py_2dvd" title="Link to this heading">#</a></h2>
+<p>Readable plots of literature products, with no scientific recalculation.</p>
+<p>Integral parameters are displayed in eight panels; linear reflectivity remains
+in the data but is intentionally omitted from the figure. The DSD displays
+logarithmic concentration, not counts. Date, velocity choice, and method are
+always named. Plot styling follows the earlier Parsivel-inspired workflow.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.graph.py_2dvd.plot_integral_parameters">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.py_2dvd.</span></span><span class="sig-name descname"><span class="pre">plot_integral_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'measured'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(14,</span> <span class="pre">14)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylimits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rc_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/graph/py_2dvd.html#plot_integral_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.py_2dvd.plot_integral_parameters" title="Link to this definition">#</a></dt>
+<dd><p>Return an eight-panel Figure, excluding linear reflectivity.</p>
+<p>colors and ylimits are dictionaries keyed by physical parameter name, e.g.
+colors={‘mass_weighted_diameter’: ‘navy’, ‘maximum_diameter’: ‘darkorange’}.
+rc_params overrides only this call’s Matplotlib style. Optional output_dir
+saves Plots/Rain/YYYY/MM/SITE_YYYY_MMDD_2DVD_measured_velocity_rain.png. Each velocity choice
+has a separate filename. valid_only masks the documented reporting
+threshold; it does not alter the stored scientific results.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.graph.py_2dvd.plot_dsd">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.py_2dvd.</span></span><span class="sig-name descname"><span class="pre">plot_dsd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dsd</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'measured'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concentration_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">10000)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(12,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dsd'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rc_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/graph/py_2dvd.html#plot_dsd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.py_2dvd.plot_dsd" title="Link to this definition">#</a></dt>
+<dd><p>Return a time/diameter DSD Figure with concentration in m^-3 mm^-1.</p>
+<p>Each cell spans an actual minute and its stored diameter edges. Nonpositive
+concentrations and (by default) invalid minutes are masked before applying
+LogNorm. The colorbar is a concentration scale; it is not a logarithm stored
+in the Dataset. Saving is explicit through output_dir; the function never
+calculates a replacement spectrum from plotted integral parameters.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="correct.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">gv_tools.correct</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="util.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Utilities</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.graph.plot_aio_quicklook"><code class="docutils literal notranslate"><span class="pre">plot_aio_quicklook()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.graph.plot_aio_wind_rose"><code class="docutils literal notranslate"><span class="pre">plot_aio_wind_rose()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.graph.plot_parsivel_quicklook"><code class="docutils literal notranslate"><span class="pre">plot_parsivel_quicklook()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.graph.plot_radar_ppi_quicklook"><code class="docutils literal notranslate"><span class="pre">plot_radar_ppi_quicklook()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.graph.plot_radar_rhi_quicklook"><code class="docutils literal notranslate"><span class="pre">plot_radar_rhi_quicklook()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.graph.plot_radar_bb_zdr_calibration"><code class="docutils literal notranslate"><span class="pre">plot_radar_bb_zdr_calibration()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.graph.plot_mrr_time_height_quicklook"><code class="docutils literal notranslate"><span class="pre">plot_mrr_time_height_quicklook()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.graph.plot_ws800_full_quicklook"><code class="docutils literal notranslate"><span class="pre">plot_ws800_full_quicklook()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.graph.plot_directory"><code class="docutils literal notranslate"><span class="pre">plot_directory()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-gv_tools.graph.py_2dvd">2DVD</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.graph.py_2dvd.plot_integral_parameters"><code class="docutils literal notranslate"><span class="pre">plot_integral_parameters()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.graph.py_2dvd.plot_dsd"><code class="docutils literal notranslate"><span class="pre">plot_dsd()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/api/graph.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

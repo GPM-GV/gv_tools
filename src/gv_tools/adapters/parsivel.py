@@ -51,8 +51,8 @@ def _backend() -> Any:
         return import_module("process_parsivel")
     except ImportError as exc:
         raise ImportError(
-            "Parsivel support requires process-parsivel>=1.0.0; "
-            "install GV Tools with the 'parsivel' extra"
+            "The bundled process_parsivel module could not be imported; "
+            "reinstall the complete GV Tools wheel"
         ) from exc
 
 
@@ -178,7 +178,7 @@ class ParsivelAdapter(InstrumentAdapter):
             Conventions="CF-1.10, NASA-GPM-GV-TOOLS-0.2",
             processing_level="2",
             processing_software="gv_tools; process_parsivel",
-            processing_software_version=f"0.34.0; {getattr(backend, '__version__', 'unknown')}",
+            processing_software_version=f"0.40.0; {getattr(backend, '__version__', 'unknown')}",
             processing_time=datetime.now(timezone.utc).isoformat(),
             time_reference="UTC",
             source=str(Path(source_path).expanduser()) if source_path is not None else "in_memory",

@@ -1,0 +1,810 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>piers_tools.comparison &#8212; GV Tools 0.40.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gv_tools.css?v=f6e64a54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../_static/documentation_options.js?v=13a5ab13"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/piers_tools/comparison';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">GV Tools 0.40.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">piers_tools.comparison</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for piers_tools.comparison</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Compare standalone tip increments with PIERS wind on a minute grid.</span>
+
+<span class="sd">This module preserves the scientifically important behavior of the former</span>
+<span class="sd">``comp_standalone_gauges`` distribution while placing it in the unified</span>
+<span class="sd">``piers_tools`` namespace. Missing observations remain missing: the routines</span>
+<span class="sd">never interpolate rainfall or wind measurements.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">__version__</span>
+
+
+<div class="viewcode-block" id="circular_mean">
+<a class="viewcode-back" href="../../piers.html#piers_tools.circular_mean">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">circular_mean</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Unweighted circular mean; an undefined resultant returns NaN.&quot;&quot;&quot;</span>
+    <span class="n">radians</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">radians</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">sine</span><span class="p">,</span> <span class="n">cosine</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">radians</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="n">sine</span><span class="p">,</span> <span class="n">cosine</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-12</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">sine</span><span class="p">,</span> <span class="n">cosine</span><span class="p">))</span> <span class="o">%</span> <span class="mi">360</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mf">0.0</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span> <span class="k">else</span> <span class="n">result</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_provenance</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the source path and digest used for reproducibility records.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;sha256&quot;</span><span class="p">:</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()}</span>
+
+
+<div class="viewcode-block" id="InputDataError">
+<a class="viewcode-back" href="../../piers.html#piers_tools.InputDataError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">InputDataError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An existing instrument file cannot be read as valid observations.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="read_standalone">
+<a class="viewcode-back" href="../../piers.html#piers_tools.read_standalone">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_standalone</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="s2">&quot;WFFpad&quot;</span><span class="p">,</span> <span class="n">gauges</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read rain observations, reporting unusable input with its full path.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_read_standalone</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">gauges</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">StopIteration</span><span class="p">,</span> <span class="ne">UnicodeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InputDataError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;incomplete header&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_read_standalone</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="s2">&quot;WFFpad&quot;</span><span class="p">,</span> <span class="n">gauges</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sum tip increments; require 60 valid seconds for a complete minute.&quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">path</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="n">stream</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">header</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;empty or truncated file: expected calibration, coordinates, and CSV header&quot;</span><span class="p">)</span>
+    <span class="n">calibration</span><span class="p">,</span> <span class="n">coordinate_line</span><span class="p">,</span> <span class="n">csv_header</span> <span class="o">=</span> <span class="n">header</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">coordinate_line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;LAT/LON:&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">csv_header</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;TIMESTAMP,&quot;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid coordinates or CSV header&quot;</span><span class="p">)</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;AMOUNT_OF_RAIN_PER_TIP:\s*([\d.]+)\s+inch&quot;</span><span class="p">,</span> <span class="n">calibration</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span> <span class="ow">or</span> <span class="nb">float</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported calibration: </span><span class="si">{</span><span class="n">calibration</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">raw_observations_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;NAN&quot;</span><span class="p">],</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;TIMESTAMP&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;TIMESTAMP&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">raw_observations_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;header-only file: no observations&quot;</span><span class="p">)</span>
+    <span class="n">all_gauges</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">raw_observations_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">coordinate_line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_gauges</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Coordinate count does not match gauge columns&quot;</span><span class="p">)</span>
+    <span class="n">day</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">date</span><span class="p">)</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">raw_observations_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">hasnans</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">raw_observations_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">is_unique</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Standalone timestamps must be valid and unique&quot;</span><span class="p">)</span>
+    <span class="n">raw_observations_df</span> <span class="o">=</span> <span class="n">raw_observations_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">raw_observations_df</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="n">day</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">raw_observations_df</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="n">day</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))]</span>
+    <span class="n">seconds</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">day</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">86400</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">raw_observations_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Standalone timestamps must fall on whole seconds&quot;</span><span class="p">)</span>
+    <span class="n">raw_observations_df</span> <span class="o">=</span> <span class="n">raw_observations_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">all_gauges</span> <span class="k">if</span> <span class="n">gauges</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="n">gauges</span><span class="p">)]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;raise&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">raw_observations_df</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">raw_observations_df</span> <span class="o">%</span> <span class="mi">1</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">raw_observations_df</span><span class="o">.</span><span class="n">notna</span><span class="p">())</span><span class="o">.</span><span class="n">any</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Standalone values must be nonnegative integer tip increments&quot;</span><span class="p">)</span>
+    <span class="n">aligned_observations_df</span> <span class="o">=</span> <span class="n">raw_observations_df</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
+    <span class="n">sample_counts_df</span> <span class="o">=</span> <span class="n">aligned_observations_df</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s2">&quot;1min&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+    <span class="n">rainfall_df</span> <span class="o">=</span> <span class="n">aligned_observations_df</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s2">&quot;1min&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">min_count</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span> <span class="o">*</span> <span class="n">scale</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="p">{</span><span class="n">g</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">site</span><span class="si">}</span><span class="s2">__</span><span class="si">{</span><span class="n">g</span><span class="si">}</span><span class="s2">__rain_in&quot;</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">rainfall_df</span><span class="p">}</span>
+    <span class="n">rainfall_df</span> <span class="o">=</span> <span class="n">rainfall_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
+    <span class="n">sample_counts_df</span> <span class="o">=</span> <span class="n">sample_counts_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">_provenance</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;rain_per_tip_in&quot;</span><span class="p">:</span> <span class="n">scale</span><span class="p">,</span> <span class="s2">&quot;source_rows_in_day&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw_observations_df</span><span class="p">),</span>
+            <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">names</span><span class="p">[</span><span class="n">g</span><span class="p">]:</span> <span class="p">{</span><span class="s2">&quot;latitude&quot;</span><span class="p">:</span> <span class="n">coords</span><span class="p">[</span><span class="n">all_gauges</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">g</span><span class="p">)],</span> <span class="s2">&quot;longitude&quot;</span><span class="p">:</span> <span class="n">coords</span><span class="p">[</span><span class="n">all_gauges</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_gauges</span><span class="p">)]}</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">raw_observations_df</span><span class="p">}}</span>
+    <span class="k">return</span> <span class="n">rainfall_df</span><span class="p">,</span> <span class="n">sample_counts_df</span><span class="p">,</span> <span class="n">meta</span>
+
+
+<div class="viewcode-block" id="read_wind">
+<a class="viewcode-back" href="../../piers.html#piers_tools.read_wind">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_wind</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">station</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read PIERS++ status/direction/speed packets, reporting corrupt rows.&quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">records</span><span class="p">,</span> <span class="n">rejected</span><span class="p">,</span> <span class="n">outside</span> <span class="o">=</span> <span class="p">[],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="n">day</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">date</span><span class="p">)</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;ascii&quot;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;replace&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\d</span><span class="si">{14}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">()</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">%H%M%S&quot;</span><span class="p">)</span>
+            <span class="n">status</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">speed</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">([</span><span class="n">status</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">speed</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">direction</span> <span class="o">&lt;=</span> <span class="mi">360</span> <span class="ow">or</span> <span class="n">speed</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">()</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">OverflowError</span><span class="p">):</span>
+            <span class="n">rejected</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">day</span> <span class="o">&lt;=</span> <span class="n">timestamp</span> <span class="o">&lt;</span> <span class="n">day</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">outside</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">continue</span>
+        <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">direction</span> <span class="o">%</span> <span class="mi">360</span><span class="p">,</span> <span class="n">speed</span><span class="p">))</span>
+    <span class="n">raw_observations_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;TIMESTAMP&quot;</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="s2">&quot;direction&quot;</span><span class="p">,</span> <span class="s2">&quot;speed&quot;</span><span class="p">])</span>
+    <span class="n">duplicates</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">raw_observations_df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    <span class="n">raw_observations_df</span> <span class="o">=</span> <span class="n">raw_observations_df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">raw_observations_df</span><span class="o">.</span><span class="n">TIMESTAMP</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Conflicting wind packets at identical timestamps: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">status_counts</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">):</span> <span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">raw_observations_df</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="n">raw_observations_df</span> <span class="o">=</span> <span class="n">raw_observations_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;TIMESTAMP&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+    <span class="n">raw_observations_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">raw_observations_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">day</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">1440</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;min&quot;</span><span class="p">)</span>
+    <span class="n">speed_name</span><span class="p">,</span> <span class="n">direction_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">station</span><span class="si">}</span><span class="s2">__wind_speed_m_s&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">station</span><span class="si">}</span><span class="s2">__wind_direction_deg&quot;</span>
+    <span class="n">minute_wind_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="n">speed_name</span><span class="p">:</span> <span class="n">raw_observations_df</span><span class="o">.</span><span class="n">speed</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s2">&quot;1min&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">direction_name</span><span class="p">:</span> <span class="n">raw_observations_df</span><span class="o">.</span><span class="n">direction</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s2">&quot;1min&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">circular_mean</span><span class="p">)})</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">wind_sample_counts</span> <span class="o">=</span> <span class="n">raw_observations_df</span><span class="o">.</span><span class="n">speed</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s2">&quot;1min&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">sample_coverage_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="n">speed_name</span><span class="p">:</span> <span class="n">wind_sample_counts</span><span class="p">,</span> <span class="n">direction_name</span><span class="p">:</span> <span class="n">wind_sample_counts</span><span class="p">})</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">_provenance</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;lines&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">),</span> <span class="s2">&quot;valid_packets&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw_observations_df</span><span class="p">),</span> <span class="s2">&quot;rejected_lines&quot;</span><span class="p">:</span> <span class="n">rejected</span><span class="p">,</span>
+            <span class="s2">&quot;duplicate_packets_removed&quot;</span><span class="p">:</span> <span class="n">duplicates</span><span class="p">,</span> <span class="s2">&quot;out_of_day_packets&quot;</span><span class="p">:</span> <span class="n">outside</span><span class="p">,</span> <span class="s2">&quot;status_counts&quot;</span><span class="p">:</span> <span class="n">status_counts</span><span class="p">,</span>
+            <span class="s2">&quot;status_policy&quot;</span><span class="p">:</span> <span class="s2">&quot;Numeric status retained in diagnostics; no undocumented status-code filtering (PIERS++ convention)&quot;</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">minute_wind_df</span><span class="p">,</span> <span class="n">sample_coverage_df</span><span class="p">,</span> <span class="n">meta</span></div>
+
+
+
+<div class="viewcode-block" id="load_day">
+<a class="viewcode-back" href="../../piers.html#piers_tools.load_day">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_day</span><span class="p">(</span><span class="n">date</span><span class="o">=</span><span class="s2">&quot;2026-07-22&quot;</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s2">&quot;/Volumes/TBW/distro&quot;</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="s2">&quot;WFFpad&quot;</span><span class="p">,</span> <span class="n">stations</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;PIERS0027&quot;</span><span class="p">,</span> <span class="s2">&quot;PIERS0028&quot;</span><span class="p">),</span> <span class="n">gauges</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return 1440 rows with instrument-qualified rain (inch), speed (m/s), direction (degrees).</span>
+
+<span class="sd">    Missing files raise FileNotFoundError. Missing observations remain NaN.</span>
+<span class="sd">    Timestamp labels are minute starts; timezone is unchanged from the input files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">day</span><span class="p">,</span> <span class="n">root</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">date</span><span class="p">)</span><span class="o">.</span><span class="n">normalize</span><span class="p">(),</span> <span class="n">Path</span><span class="p">(</span><span class="n">root</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">day</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Use a date without a timezone; input timezone is unspecified&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">stations</span><span class="p">))</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Station identifiers must be unique&quot;</span><span class="p">)</span>
+    <span class="n">gauge_path</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;standalone/</span><span class="si">{</span><span class="n">site</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">day</span><span class="si">:</span><span class="s2">%Y/%m</span><span class="si">}</span><span class="s2">/Standalone_TB_</span><span class="si">{</span><span class="n">day</span><span class="si">:</span><span class="s2">%Y_%m%d</span><span class="si">}</span><span class="s2">.dat&quot;</span>
+    <span class="n">rainfall_df</span><span class="p">,</span> <span class="n">sample_coverage_df</span><span class="p">,</span> <span class="n">gauge_meta</span> <span class="o">=</span> <span class="n">read_standalone</span><span class="p">(</span><span class="n">gauge_path</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">gauges</span><span class="p">)</span>
+    <span class="n">frames</span><span class="p">,</span> <span class="n">coverages</span><span class="p">,</span> <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="n">rainfall_df</span><span class="p">],</span> <span class="p">[</span><span class="n">sample_coverage_df</span><span class="p">],</span> <span class="p">{</span><span class="n">site</span><span class="p">:</span> <span class="n">gauge_meta</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">station</span> <span class="ow">in</span> <span class="n">stations</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;PIERS_Gauges_Daily/</span><span class="si">{</span><span class="n">station</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">day</span><span class="si">:</span><span class="s2">%Y/%m/%d</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">station</span><span class="si">}</span><span class="s2">_wind_</span><span class="si">{</span><span class="n">day</span><span class="si">:</span><span class="s2">%Y%m%d</span><span class="si">}</span><span class="s2">_daily.csv&quot;</span>
+        <span class="n">wind_df</span><span class="p">,</span> <span class="n">sample_counts_df</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">read_wind</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">station</span><span class="p">)</span>
+        <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wind_df</span><span class="p">)</span>
+        <span class="n">coverages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample_counts_df</span><span class="p">)</span>
+        <span class="n">sources</span><span class="p">[</span><span class="n">station</span><span class="p">]</span> <span class="o">=</span> <span class="n">meta</span>
+    <span class="n">daily_comparison_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">day</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">1440</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;TIMESTAMP&quot;</span><span class="p">))</span>
+    <span class="n">sample_counts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">coverages</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">daily_comparison_df</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;package_version&quot;</span><span class="p">:</span> <span class="n">__version__</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">day</span><span class="o">.</span><span class="n">date</span><span class="p">()),</span> <span class="s2">&quot;sources&quot;</span><span class="p">:</span> <span class="n">sources</span><span class="p">,</span>
+                <span class="s2">&quot;timezone&quot;</span><span class="p">:</span> <span class="s2">&quot;Unspecified; source timestamps preserved&quot;</span><span class="p">,</span> <span class="s2">&quot;minute_intervals&quot;</span><span class="p">:</span> <span class="s2">&quot;[timestamp, timestamp + 1 minute)&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;rain_method&quot;</span><span class="p">:</span> <span class="s2">&quot;Sum per-second tip increments times header calibration; fewer than 60 valid seconds gives NaN&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;wind_method&quot;</span><span class="p">:</span> <span class="s2">&quot;Arithmetic speed mean, unweighted circular direction mean; at least one valid packet; no interpolation&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;valid_sample_counts&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sample_counts_df</span><span class="p">[</span><span class="n">c</span><span class="p">]]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">sample_counts_df</span><span class="p">},</span>
+                <span class="s2">&quot;nan_minutes&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">daily_comparison_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()}}</span>
+    <span class="k">return</span> <span class="n">daily_comparison_df</span></div>
+
+
+
+<div class="viewcode-block" id="event_totals">
+<a class="viewcode-back" href="../../piers.html#piers_tools.event_totals">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">event_totals</span><span class="p">(</span><span class="n">daily_comparison_df</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Observed rainfall sums and completeness for an inclusive selection of minute labels.&quot;&quot;&quot;</span>
+    <span class="n">rainfall_df</span> <span class="o">=</span> <span class="n">daily_comparison_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">,</span> <span class="n">daily_comparison_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;__rain_in&quot;</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;observed_rain_in&quot;</span><span class="p">:</span> <span class="n">rainfall_df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">min_count</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;valid_minutes&quot;</span><span class="p">:</span> <span class="n">rainfall_df</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span>
+                         <span class="s2">&quot;missing_minutes&quot;</span><span class="p">:</span> <span class="n">rainfall_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="s2">&quot;complete&quot;</span><span class="p">:</span> <span class="n">rainfall_df</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="o">&amp;</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rainfall_df</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)})</span></div>
+
+
+
+<div class="viewcode-block" id="save_day">
+<a class="viewcode-back" href="../../piers.html#piers_tools.save_day">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">save_day</span><span class="p">(</span><span class="n">daily_comparison_df</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write exactly one CSV containing the daily DataFrame.&quot;&quot;&quot;</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">out</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;merged_</span><span class="si">{</span><span class="n">daily_comparison_df</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">daily_comparison_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">&quot;.csv&quot;</span><span class="p">),</span> <span class="n">na_rep</span><span class="o">=</span><span class="s2">&quot;NaN&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">base</span></div>
+
+
+
+<div class="viewcode-block" id="process_range">
+<a class="viewcode-back" href="../../piers.html#piers_tools.process_range">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">process_range</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">output_mode</span><span class="o">=</span><span class="s2">&quot;merged&quot;</span><span class="p">,</span>
+                  <span class="n">root</span><span class="o">=</span><span class="s2">&quot;/Volumes/TBW/distro&quot;</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="s2">&quot;WFFpad&quot;</span><span class="p">,</span>
+                  <span class="n">stations</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;PIERS0027&quot;</span><span class="p">,</span> <span class="s2">&quot;PIERS0028&quot;</span><span class="p">),</span> <span class="n">gauges</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Process an inclusive range and save one merged CSV or one CSV per day.</span>
+
+<span class="sd">    All requested minutes remain in the result. Unavailable instruments are NaN;</span>
+<span class="sd">    valid collocated instruments are retained. Diagnostics stay in attrs/in memory.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">start_date</span><span class="p">),</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">end_date</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">start</span><span class="p">)</span> <span class="ow">or</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">end</span><span class="p">)</span> <span class="ow">or</span> <span class="n">start</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">end</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">or</span> <span class="n">start</span> <span class="o">!=</span> <span class="n">start</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span> <span class="ow">or</span> <span class="n">end</span> <span class="o">!=</span> <span class="n">end</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span> <span class="ow">or</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="n">end</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Use date-only endpoints with start_date &lt;= end_date&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">output_mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;merged&quot;</span><span class="p">,</span> <span class="s2">&quot;daily&quot;</span><span class="p">}:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;output_mode must be merged or daily&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">stations</span><span class="p">))</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Station identifiers must be unique&quot;</span><span class="p">)</span>
+    <span class="n">root</span><span class="p">,</span> <span class="n">output_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">root</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(),</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+    <span class="n">output_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">daily_frames</span><span class="p">,</span> <span class="n">diagnostics</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="n">gauge_columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">gauges</span><span class="p">)</span> <span class="k">if</span> <span class="n">gauges</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;D&quot;</span><span class="p">):</span>
+        <span class="n">day_index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">day</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">1440</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;TIMESTAMP&quot;</span><span class="p">)</span>
+        <span class="n">instrument_frames</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">gauge_path</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;standalone/</span><span class="si">{</span><span class="n">site</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">day</span><span class="si">:</span><span class="s2">%Y/%m</span><span class="si">}</span><span class="s2">/Standalone_TB_</span><span class="si">{</span><span class="n">day</span><span class="si">:</span><span class="s2">%Y_%m%d</span><span class="si">}</span><span class="s2">.dat&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rainfall_df</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">read_standalone</span><span class="p">(</span><span class="n">gauge_path</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">gauges</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">gauge_columns</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">gauge_columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">rainfall_df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+            <span class="n">instrument_frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rainfall_df</span><span class="p">)</span>
+            <span class="n">diagnostics</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">day</span><span class="o">.</span><span class="n">date</span><span class="p">()),</span> <span class="s2">&quot;instrument&quot;</span><span class="p">:</span> <span class="n">site</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;loaded&quot;</span><span class="p">,</span> <span class="s2">&quot;detail&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">gauge_path</span><span class="p">)})</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="n">InputDataError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="n">diagnostics</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">day</span><span class="o">.</span><span class="n">date</span><span class="p">()),</span> <span class="s2">&quot;instrument&quot;</span><span class="p">:</span> <span class="n">site</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;unavailable&quot;</span><span class="p">,</span> <span class="s2">&quot;detail&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">)})</span>
+        <span class="k">for</span> <span class="n">station</span> <span class="ow">in</span> <span class="n">stations</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;PIERS_Gauges_Daily/</span><span class="si">{</span><span class="n">station</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">day</span><span class="si">:</span><span class="s2">%Y/%m/%d</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">station</span><span class="si">}</span><span class="s2">_wind_</span><span class="si">{</span><span class="n">day</span><span class="si">:</span><span class="s2">%Y%m%d</span><span class="si">}</span><span class="s2">_daily.csv&quot;</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">wind_df</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">read_wind</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">station</span><span class="p">)</span>
+                <span class="n">instrument_frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wind_df</span><span class="p">)</span>
+                <span class="n">diagnostics</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">day</span><span class="o">.</span><span class="n">date</span><span class="p">()),</span> <span class="s2">&quot;instrument&quot;</span><span class="p">:</span> <span class="n">station</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;loaded&quot;</span><span class="p">,</span> <span class="s2">&quot;detail&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)})</span>
+            <span class="k">except</span> <span class="ne">FileNotFoundError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+                <span class="n">diagnostics</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">day</span><span class="o">.</span><span class="n">date</span><span class="p">()),</span> <span class="s2">&quot;instrument&quot;</span><span class="p">:</span> <span class="n">station</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;unavailable&quot;</span><span class="p">,</span> <span class="s2">&quot;detail&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">)})</span>
+        <span class="n">daily_comparison_df</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">instrument_frames</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">day_index</span><span class="p">)</span>
+                               <span class="k">if</span> <span class="n">instrument_frames</span> <span class="k">else</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">day_index</span><span class="p">))</span>
+        <span class="n">daily_frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">daily_comparison_df</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">day</span><span class="si">:</span><span class="s2">%Y-%m-%d</span><span class="si">}</span><span class="s2">: processed&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">gauge_columns</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InputDataError</span><span class="p">(</span><span class="s2">&quot;No readable standalone gauge header in the requested range; specify gauges to retain an all-NaN rain schema&quot;</span><span class="p">)</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">site</span><span class="si">}</span><span class="s2">__</span><span class="si">{</span><span class="n">g</span><span class="si">}</span><span class="s2">__rain_in&quot;</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">gauge_columns</span><span class="p">]</span>
+    <span class="n">columns</span> <span class="o">+=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">station</span><span class="si">}</span><span class="s2">__</span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">station</span> <span class="ow">in</span> <span class="n">stations</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;wind_speed_m_s&quot;</span><span class="p">,</span> <span class="s2">&quot;wind_direction_deg&quot;</span><span class="p">)]</span>
+    <span class="n">date_range_comparison_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">daily_frames</span><span class="p">)</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+    <span class="n">date_range_comparison_df</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;start_date&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">start</span><span class="o">.</span><span class="n">date</span><span class="p">()),</span> <span class="s2">&quot;end_date&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">end</span><span class="o">.</span><span class="n">date</span><span class="p">()),</span>
+                                     <span class="s2">&quot;processing_summary&quot;</span><span class="p">:</span> <span class="n">diagnostics</span><span class="p">,</span> <span class="s2">&quot;timezone&quot;</span><span class="p">:</span> <span class="s2">&quot;Unspecified; source timestamps preserved&quot;</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">output_mode</span> <span class="o">==</span> <span class="s2">&quot;merged&quot;</span><span class="p">:</span>
+        <span class="n">output_path</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;comparison_</span><span class="si">{</span><span class="n">start</span><span class="si">:</span><span class="s2">%Y-%m-%d</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">end</span><span class="si">:</span><span class="s2">%Y-%m-%d</span><span class="si">}</span><span class="s2">.csv&quot;</span>
+        <span class="n">date_range_comparison_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s2">&quot;NaN&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">day</span><span class="p">,</span> <span class="n">daily_comparison_df</span> <span class="ow">in</span> <span class="n">date_range_comparison_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">date_range_comparison_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">normalize</span><span class="p">()):</span>
+            <span class="n">daily_comparison_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;comparison_</span><span class="si">{</span><span class="n">day</span><span class="si">:</span><span class="s2">%Y-%m-%d</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s2">&quot;NaN&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">date_range_comparison_df</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--date&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;2026-07-22&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--root&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;/Volumes/TBW/distro&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--site&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;WFFpad&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--stations&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;PIERS0027&quot;</span><span class="p">,</span> <span class="s2">&quot;PIERS0028&quot;</span><span class="p">])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--gauges&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--output-dir&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;outputs/daily&quot;</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">daily_comparison_df</span> <span class="o">=</span> <span class="n">load_day</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">site</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">stations</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">gauges</span><span class="p">)</span>
+    <span class="n">save_day</span><span class="p">(</span><span class="n">daily_comparison_df</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved </span><span class="si">{</span><span class="n">daily_comparison_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows x </span><span class="si">{</span><span class="n">daily_comparison_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns to </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">event_totals</span><span class="p">(</span><span class="n">daily_comparison_df</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,3 +1,34 @@
+# 0.40.0
+
+- Consolidates GV Tools, PIERS Tools 0.9.0, and Process Parsivel 1.2.1 into
+  one installable distribution.
+- Replaces the obsolete `piers_gauge_tools` and `process_piers_plus` package
+  names with `piers_tools` while retaining gauge reports, PIERS++ daily
+  ingestion, AIO processing, NetCDF export, plotting, publishing, and gauge
+  comparison workflows.
+- Moves notebooks and Python examples into their canonical directories, writes
+  release artifacts only to `dist`, and publishes the manual in `HTML`.
+- Updates the release version and processing metadata to 0.40.0.
+
+# 0.35.0
+
+- Adds content-aware Universal Format (UF) detection and routes compressed or
+  uncompressed UF volumes through Py-ART's ``read_uf`` reader.
+- Supports direct ``gv_tools.io.read_radar(UF_FILE)`` ingest for NOAA DPQC UF
+  archives and preserves the existing transparent gzip expansion.
+- Warns and falls back to Py-ART when ``XRADAR=True`` is requested for UF.
+
+# 0.34.1
+
+- Distinguishes C. Williams Method of Moments (``mom``) and Spectral (``spc``)
+  MRRPro processing in dataset attributes and rejects mixed-method collections.
+- Corrects TAMU-CC post-processed MRRPro latitude and longitude using the
+  collocated PIERS0030 coordinates, with explicit geolocation provenance.
+- Warns when an ingested MRR dataset has no valid latitude or longitude.
+- Assigns the compact output discriminator ``org``, ``mom``, or ``spc`` to
+  every MRRPro dataset and includes it automatically in notebook/example
+  NetCDF and figure filenames.
+
 # 0.34.0
 
 - Adds C. Williams post-processed MRRPro moment-file detection and ingest.

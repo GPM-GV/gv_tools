@@ -25,6 +25,43 @@ than the filename:
    reflectivity, radial velocity, spectrum width, skewness, kurtosis, and
    signal-to-noise ratio. Time coordinates are decoded by xarray.
 
+C. Williams post-processing methods
+-----------------------------------
+
+The two TAMU-CC post-processing streams are distinguished explicitly:
+
+``nc_files_c01_mom``
+   Method of Moments. The dataset attributes contain
+   ``processing_method="Method of Moments"``, ``processing_method_code="mom"``,
+   and ``mrr_product="post_processed_moments"``.
+
+``nc_files_c01_spc``
+   Spectral processing. The dataset attributes contain
+   ``processing_method="Spectral"``, ``processing_method_code="spc"``, and
+   ``mrr_product="post_processed_spectra"``. Spectral products also retain the
+   Doppler-velocity, precipitation-mask, and reflectivity-spectral-density
+   variables and their ``spectral_bins`` dimension.
+
+Native files produced directly by the MRRPro are labeled
+``processing_method="Original MRRPro"``, ``processing_method_code="org"``,
+``mrr_product="original"``, and ``mrr_product_code="org"``. MOM and SPC
+datasets similarly carry ``mrr_product_code="mom"`` or ``"spc"``. Use this
+compact code in derived filenames so all three sources remain distinguishable,
+for example ``TAMUCC_MRRPro_20230822_mom.nc`` and
+``TAMUCC_MRRPro_20230822_spc.nc``. The packaged notebook and plotting example
+add the code automatically to their NetCDF and figure output names.
+
+A multi-file call may not mix MOM and SPC products. Such input is rejected
+instead of silently assigning one method's metadata to the combined dataset.
+
+TAMU-CC geolocation is normalized to the collocated PIERS0030 station:
+27.713017 degrees north and -97.318275 degrees east. These values are written
+to the ``latitude`` and ``longitude`` variables and global attributes, along
+with ``site_id="PIERS0030"``, WGS84 geospatial bounds, and a
+``geolocation_source`` provenance attribute. Other sites are not overridden.
+The reader emits a ``UserWarning`` whenever valid latitude or longitude
+metadata cannot be found.
+
 The detected generation is recorded as ``dataset.attrs["mrr_model"]`` with a
 value of ``"MRR2"`` or ``"MRRPro"``. Files that match neither schema are
 rejected with a message describing representative missing variables.
@@ -47,9 +84,9 @@ Install NetCDF4/HDF5 support from ``tcsh`` with:
 
 .. code-block:: tcsh
 
-   set WORKSPACE = "$HOME/Desktop/Work/GV Tools"
+   set WORKSPACE = "$HOME/Desktop/Work/GV_Tools"
    set PYTHON = "$HOME/anaconda3/bin/python"
-   $PYTHON -m pip install "$WORKSPACE/gv_tools/release/gv_tools-0.34.0-py3-none-any.whl[netcdf]"
+   $PYTHON -m pip install "$WORKSPACE/gv_tools/dist/gv_tools-0.40.0-py3-none-any.whl[netcdf]"
 
 Examples
 --------
@@ -71,6 +108,16 @@ Examples
        "nc_files_c01_mom/2023/08/22"
    )
    print(postprocessed.reflectivity_factor)
+   print(postprocessed.attrs["processing_method"])  # Method of Moments
+   print(postprocessed.attrs["mrr_product_code"])   # mom
+   print(postprocessed.attrs["latitude"], postprocessed.attrs["longitude"])
+
+   spectral = gv_tools.io.read_mrr(
+       "/Volumes/36TB/MRR/TAMU-CC/reprocessed/nc_files/"
+       "nc_files_c01_spc/2023/08/22"
+   )
+   print(spectral.attrs["processing_method"])  # Spectral
+   print(spectral.attrs["mrr_product_code"])   # spc
 
 Time-height quicklooks
 ----------------------

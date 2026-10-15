@@ -1,6 +1,9 @@
 include INSTALL.tcsh
 include RELEASE_NOTES.md
 recursive-include docs *.md *.rst *.py *.css Makefile
-recursive-include docs/_build/html *
+recursive-include HTML *
 recursive-include notebooks *.ipynb
+exclude notebooks/Ingest_WSR88D.ipynb
+exclude notebooks/My_GV_Tools.ipynb
+prune notebooks/.ipynb_checkpoints
 recursive-include examples *.py

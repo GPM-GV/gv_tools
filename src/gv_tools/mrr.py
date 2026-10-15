@@ -7,6 +7,7 @@ from glob import glob
 from io import BytesIO
 from pathlib import Path
 from typing import Any
+import warnings
 from zipfile import BadZipFile, ZipFile
 
 import numpy as np
@@ -61,6 +62,11 @@ _MRRPRO_POSTPROCESSED_VARIABLES = frozenset(
     }
 )
 _HDF5_SIGNATURE = b"\x89HDF\r\n\x1a\n"
+_POSTPROCESSED_SPECTRAL_VARIABLES = frozenset(
+    {"spectrum_Doppler_velocity", "precipitation_mask", "reflectivity_spectral_density"}
+)
+_PIERS0030_LATITUDE = 27.713017
+_PIERS0030_LONGITUDE = -97.318275
 
 
 def _open_zipped_netcdf(source: Path, **options: Any) -> xr.Dataset:
@@ -158,11 +164,103 @@ def _read_mrr_file(source: Path, **open_dataset_options: Any) -> xr.Dataset:
             dataset = _decode_unix_time(dataset)
         dataset.attrs["mrr_model"] = model
         if _MRRPRO_POSTPROCESSED_VARIABLES <= frozenset(dataset.variables):
-            dataset.attrs["mrr_product"] = "post_processed_moments"
+            dataset = _normalize_postprocessed_metadata(dataset, source)
+        elif model == "MRRPro":
+            dataset.attrs.update(
+                mrr_product="original",
+                mrr_product_code="org",
+                processing_method="Original MRRPro",
+                processing_method_code="org",
+            )
         return dataset
     except Exception:
         dataset.close()
         raise
+
+
+def _is_tamucc_product(dataset: xr.Dataset, source: Path) -> bool:
+    identity = " ".join(
+        (
+            str(source),
+            str(dataset.attrs.get("location", "")),
+            str(dataset.attrs.get("site_id", "")),
+        )
+    ).casefold()
+    return any(token in identity for token in ("tamu-cc", "tamucc", "corpus christi"))
+
+
+def _set_scalar_geolocation(dataset: xr.Dataset, name: str, value: float) -> None:
+    attrs = {
+        "standard_name": name,
+        "long_name": "Latitude" if name == "latitude" else "Longitude",
+        "units": "degrees_north" if name == "latitude" else "degrees_east",
+    }
+    if name in dataset:
+        variable = dataset[name]
+        dataset[name] = xr.full_like(variable, value, dtype=float)
+        dataset[name].attrs.update(attrs)
+    else:
+        dataset[name] = xr.DataArray(value, attrs=attrs)
+
+
+def _normalize_postprocessed_metadata(dataset: xr.Dataset, source: Path) -> xr.Dataset:
+    """Identify the Williams retrieval method and normalize known site metadata."""
+    variables = frozenset(dataset.variables)
+    path_text = str(source).casefold()
+    if _POSTPROCESSED_SPECTRAL_VARIABLES <= variables or "_spc_" in path_text:
+        method_code = "spc"
+        method_name = "Spectral"
+        product = "post_processed_spectra"
+    else:
+        method_code = "mom"
+        method_name = "Method of Moments"
+        product = "post_processed_moments"
+
+    dataset.attrs.update(
+        mrr_product=product,
+        mrr_product_code=method_code,
+        processing_method=method_name,
+        processing_method_code=method_code,
+    )
+
+    if _is_tamucc_product(dataset, source):
+        _set_scalar_geolocation(dataset, "latitude", _PIERS0030_LATITUDE)
+        _set_scalar_geolocation(dataset, "longitude", _PIERS0030_LONGITUDE)
+        dataset.attrs.update(
+            site_id="PIERS0030",
+            latitude=_PIERS0030_LATITUDE,
+            longitude=_PIERS0030_LONGITUDE,
+            geospatial_lat_min=_PIERS0030_LATITUDE,
+            geospatial_lat_max=_PIERS0030_LATITUDE,
+            geospatial_lon_min=_PIERS0030_LONGITUDE,
+            geospatial_lon_max=_PIERS0030_LONGITUDE,
+            geospatial_bounds_crs="EPSG:4326",
+            geolocation_source="Collocated PIERS0030 tipping-bucket station",
+        )
+    return dataset
+
+
+def _valid_geolocation(dataset: xr.Dataset, name: str) -> bool:
+    if name in dataset:
+        values = np.asarray(dataset[name].values, dtype=float)
+        if np.isfinite(values).any():
+            return True
+    try:
+        return bool(np.isfinite(float(dataset.attrs[name])))
+    except (KeyError, TypeError, ValueError):
+        return False
+
+
+def _warn_missing_geolocation(dataset: xr.Dataset) -> None:
+    missing = [
+        name for name in ("latitude", "longitude") if not _valid_geolocation(dataset, name)
+    ]
+    if missing:
+        warnings.warn(
+            "MRR dataset has no valid " + " or ".join(missing) + " metadata",
+            UserWarning,
+            stacklevel=2,
+        )
 
 
 def _decode_unix_time(dataset: xr.Dataset) -> xr.Dataset:
@@ -201,7 +299,9 @@ def read_mrr(
     """
     sources = _resolve_mrr_files(file)
     if len(sources) == 1:
-        return _read_mrr_file(sources[0], **open_dataset_options)
+        dataset = _read_mrr_file(sources[0], **open_dataset_options)
+        _warn_missing_geolocation(dataset)
+        return dataset
 
     datasets = []
     try:
@@ -214,6 +314,16 @@ def read_mrr(
         models = {dataset.attrs["mrr_model"] for dataset in datasets}
         if len(models) != 1:
             raise ValueError(f"MRR inputs contain mixed instrument models: {sorted(models)}")
+        methods = {
+            dataset.attrs.get("processing_method_code")
+            for dataset in datasets
+            if dataset.attrs.get("processing_method_code") is not None
+        }
+        if len(methods) > 1:
+            raise ValueError(
+                "MRR inputs contain mixed post-processing methods: "
+                f"{sorted(methods)}"
+            )
         combined = xr.concat(
             datasets,
             dim="time",
@@ -227,6 +337,7 @@ def read_mrr(
             combined = combined.isel(time=~time_index.duplicated(keep="first"))
         combined.attrs["mrr_source_file_count"] = len(sources)
         combined.attrs["mrr_source_files"] = ",".join(str(source) for source in sources)
+        _warn_missing_geolocation(combined)
         return combined
     except Exception:
         for dataset in datasets:

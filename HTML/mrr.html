@@ -1,0 +1,762 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>MRR2 and MRRPro ingest &#8212; GV Tools 0.40.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/gv_tools.css?v=f6e64a54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="_static/documentation_options.js?v=13a5ab13"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'mrr';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="PIERS Tools" href="piers.html" />
+    <link rel="prev" title="User Guide" href="userguide.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">GV Tools 0.40.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">MRR2 and MRRPro ingest</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="mrr2-and-mrrpro-ingest">
+<h1>MRR2 and MRRPro ingest<a class="headerlink" href="#mrr2-and-mrrpro-ingest" title="Link to this heading">#</a></h1>
+<p>MRR2 and MRRPro have their own Micro Rain Radar ingest regime because vertically profiling
+radar products differ from both surface instruments and scanning radar
+volumes. Use <a class="reference internal" href="api/io.html#gv_tools.io.read_mrr" title="gv_tools.io.read_mrr"><code class="xref py py-func docutils literal notranslate"><span class="pre">gv_tools.io.read_mrr()</span></code></a> for MRR data. The result is always an
+<code class="docutils literal notranslate"><span class="pre">xarray.Dataset</span></code> that preserves the product’s time, range, spectral, and
+derived-variable dimensions.</p>
+<section id="supported-products">
+<h2>Supported products<a class="headerlink" href="#supported-products" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">read_mrr</span></code> detects the instrument generation from dataset contents rather
+than the filename:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">MRR2</span></code></dt><dd><p>METEK processed-data NetCDF containing the <code class="docutils literal notranslate"><span class="pre">MRR_*</span></code> variables, including
+rain rate, liquid-water content, reflectivity, velocity, spectra, and
+range-gate information. The non-CF <code class="docutils literal notranslate"><span class="pre">UNIX</span> <span class="pre">Time</span> <span class="pre">Stamp</span></code> coordinate is
+converted to UTC <code class="docutils literal notranslate"><span class="pre">datetime64[ns]</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">MRRPro</span></code></dt><dd><p>CF/Radial NetCDF4/HDF5 containing the MRRPro moment, spectrum, range, and
+time variables, or C. Williams’ post-processed hourly moment files with
+reflectivity, radial velocity, spectrum width, skewness, kurtosis, and
+signal-to-noise ratio. Time coordinates are decoded by xarray.</p>
+</dd>
+</dl>
+</section>
+<section id="c-williams-post-processing-methods">
+<h2>C. Williams post-processing methods<a class="headerlink" href="#c-williams-post-processing-methods" title="Link to this heading">#</a></h2>
+<p>The two TAMU-CC post-processing streams are distinguished explicitly:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">nc_files_c01_mom</span></code></dt><dd><p>Method of Moments. The dataset attributes contain
+<code class="docutils literal notranslate"><span class="pre">processing_method=&quot;Method</span> <span class="pre">of</span> <span class="pre">Moments&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">processing_method_code=&quot;mom&quot;</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">mrr_product=&quot;post_processed_moments&quot;</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">nc_files_c01_spc</span></code></dt><dd><p>Spectral processing. The dataset attributes contain
+<code class="docutils literal notranslate"><span class="pre">processing_method=&quot;Spectral&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">processing_method_code=&quot;spc&quot;</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">mrr_product=&quot;post_processed_spectra&quot;</span></code>. Spectral products also retain the
+Doppler-velocity, precipitation-mask, and reflectivity-spectral-density
+variables and their <code class="docutils literal notranslate"><span class="pre">spectral_bins</span></code> dimension.</p>
+</dd>
+</dl>
+<p>Native files produced directly by the MRRPro are labeled
+<code class="docutils literal notranslate"><span class="pre">processing_method=&quot;Original</span> <span class="pre">MRRPro&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">processing_method_code=&quot;org&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">mrr_product=&quot;original&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">mrr_product_code=&quot;org&quot;</span></code>. MOM and SPC
+datasets similarly carry <code class="docutils literal notranslate"><span class="pre">mrr_product_code=&quot;mom&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;spc&quot;</span></code>. Use this
+compact code in derived filenames so all three sources remain distinguishable,
+for example <code class="docutils literal notranslate"><span class="pre">TAMUCC_MRRPro_20230822_mom.nc</span></code> and
+<code class="docutils literal notranslate"><span class="pre">TAMUCC_MRRPro_20230822_spc.nc</span></code>. The packaged notebook and plotting example
+add the code automatically to their NetCDF and figure output names.</p>
+<p>A multi-file call may not mix MOM and SPC products. Such input is rejected
+instead of silently assigning one method’s metadata to the combined dataset.</p>
+<p>TAMU-CC geolocation is normalized to the collocated PIERS0030 station:
+27.713017 degrees north and -97.318275 degrees east. These values are written
+to the <code class="docutils literal notranslate"><span class="pre">latitude</span></code> and <code class="docutils literal notranslate"><span class="pre">longitude</span></code> variables and global attributes, along
+with <code class="docutils literal notranslate"><span class="pre">site_id=&quot;PIERS0030&quot;</span></code>, WGS84 geospatial bounds, and a
+<code class="docutils literal notranslate"><span class="pre">geolocation_source</span></code> provenance attribute. Other sites are not overridden.
+The reader emits a <code class="docutils literal notranslate"><span class="pre">UserWarning</span></code> whenever valid latitude or longitude
+metadata cannot be found.</p>
+<p>The detected generation is recorded as <code class="docutils literal notranslate"><span class="pre">dataset.attrs[&quot;mrr_model&quot;]</span></code> with a
+value of <code class="docutils literal notranslate"><span class="pre">&quot;MRR2&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;MRRPro&quot;</span></code>. Files that match neither schema are
+rejected with a message describing representative missing variables.</p>
+</section>
+<section id="files-directories-globs-and-zip-archives">
+<h2>Files, directories, globs, and ZIP archives<a class="headerlink" href="#files-directories-globs-and-zip-archives" title="Link to this heading">#</a></h2>
+<p>The input may be a NetCDF file or a ZIP archive containing exactly one
+<code class="docutils literal notranslate"><span class="pre">.nc</span></code>, <code class="docutils literal notranslate"><span class="pre">.cdf</span></code>, or <code class="docutils literal notranslate"><span class="pre">.netcdf</span></code> member. ZIP content is loaded eagerly so the
+returned dataset remains usable after the archive is closed. NetCDF3 content
+uses the SciPy engine by default; NetCDF4/HDF5 content uses <code class="docutils literal notranslate"><span class="pre">h5netcdf</span></code>.</p>
+<p>A directory, glob, or sequence of fully qualified filenames reads an hourly
+collection into one in-memory dataset. Files are concatenated along <code class="docutils literal notranslate"><span class="pre">time</span></code>,
+sorted chronologically, and duplicate timestamps are retained only once. The
+attributes <code class="docutils literal notranslate"><span class="pre">mrr_source_file_count</span></code> and <code class="docutils literal notranslate"><span class="pre">mrr_source_files</span></code> record the
+inputs. This path does not require Dask.</p>
+<p>Install NetCDF4/HDF5 support from <code class="docutils literal notranslate"><span class="pre">tcsh</span></code> with:</p>
+<div class="highlight-tcsh notranslate"><div class="highlight"><pre><span></span><span class="nb">set </span><span class="nv">WORKSPACE</span> <span class="o">=</span> <span class="s2">&quot;$HOME/Desktop/Work/GV_Tools&quot;</span>
+<span class="nb">set </span><span class="nv">PYTHON</span> <span class="o">=</span> <span class="s2">&quot;$HOME/anaconda3/bin/python&quot;</span>
+<span class="nv">$PYTHON</span> -m pip install <span class="s2">&quot;$WORKSPACE/gv_tools/dist/gv_tools-0.40.0-py3-none-any.whl[netcdf]&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">gv_tools</span>
+
+<span class="n">mrr2</span> <span class="o">=</span> <span class="n">gv_tools</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_mrr</span><span class="p">(</span><span class="s2">&quot;/data/mrr2/0722.ave.nc.zip&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mrr2</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;mrr_model&quot;</span><span class="p">])</span>  <span class="c1"># MRR2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mrr2</span><span class="o">.</span><span class="n">MRR_RR</span><span class="p">)</span>
+
+<span class="n">mrrpro</span> <span class="o">=</span> <span class="n">gv_tools</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_mrr</span><span class="p">(</span><span class="s2">&quot;/data/mrrpro/20260722_070000.nc&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mrrpro</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;mrr_model&quot;</span><span class="p">])</span>  <span class="c1"># MRRPro</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mrrpro</span><span class="o">.</span><span class="n">RR</span><span class="p">)</span>
+
+<span class="n">postprocessed</span> <span class="o">=</span> <span class="n">gv_tools</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_mrr</span><span class="p">(</span>
+    <span class="s2">&quot;/Volumes/36TB/MRR/TAMU-CC/reprocessed/nc_files/&quot;</span>
+    <span class="s2">&quot;nc_files_c01_mom/2023/08/22&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">postprocessed</span><span class="o">.</span><span class="n">reflectivity_factor</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">postprocessed</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;processing_method&quot;</span><span class="p">])</span>  <span class="c1"># Method of Moments</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">postprocessed</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;mrr_product_code&quot;</span><span class="p">])</span>   <span class="c1"># mom</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">postprocessed</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">],</span> <span class="n">postprocessed</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">])</span>
+
+<span class="n">spectral</span> <span class="o">=</span> <span class="n">gv_tools</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_mrr</span><span class="p">(</span>
+    <span class="s2">&quot;/Volumes/36TB/MRR/TAMU-CC/reprocessed/nc_files/&quot;</span>
+    <span class="s2">&quot;nc_files_c01_spc/2023/08/22&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spectral</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;processing_method&quot;</span><span class="p">])</span>  <span class="c1"># Spectral</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spectral</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;mrr_product_code&quot;</span><span class="p">])</span>   <span class="c1"># spc</span>
+</pre></div>
+</div>
+</section>
+<section id="time-height-quicklooks">
+<h2>Time-height quicklooks<a class="headerlink" href="#time-height-quicklooks" title="Link to this heading">#</a></h2>
+<p>MRR2 and MRRPro use different variable names, so
+<code class="docutils literal notranslate"><span class="pre">plot_mrr_time_height_quicklook</span></code> takes an explicit list of fields. Each field
+is drawn in its own row in a shared-time, single-column figure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gv_tools</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">plot_mrr_time_height_quicklook</span><span class="p">(</span>
+    <span class="n">mrr2</span><span class="p">,</span>
+    <span class="p">[</span><span class="s2">&quot;MRR_Capital_Z&quot;</span><span class="p">,</span> <span class="s2">&quot;MRR_RR&quot;</span><span class="p">,</span> <span class="s2">&quot;MRR_LWC&quot;</span><span class="p">,</span> <span class="s2">&quot;MRR_W&quot;</span><span class="p">],</span>
+    <span class="n">cmaps</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;MRR_Capital_Z&quot;</span><span class="p">:</span> <span class="s2">&quot;NWSRef&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;MRR_RR&quot;</span><span class="p">:</span> <span class="s2">&quot;turbo&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;MRR_LWC&quot;</span><span class="p">:</span> <span class="s2">&quot;viridis&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;MRR_W&quot;</span><span class="p">:</span> <span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">colorbar_bounds</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;MRR_Capital_Z&quot;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span>
+        <span class="s2">&quot;MRR_RR&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+        <span class="s2">&quot;MRR_LWC&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="s2">&quot;MRR_W&quot;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="p">},</span>
+    <span class="n">height_range_km</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">gv_tools</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">plot_mrr_time_height_quicklook</span><span class="p">(</span>
+    <span class="n">mrrpro</span><span class="p">,</span>
+    <span class="p">[</span><span class="s2">&quot;Ze&quot;</span><span class="p">,</span> <span class="s2">&quot;RR&quot;</span><span class="p">,</span> <span class="s2">&quot;LWC&quot;</span><span class="p">,</span> <span class="s2">&quot;VEL&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="n">gv_tools</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">plot_mrr_time_height_quicklook</span><span class="p">(</span>
+    <span class="n">postprocessed</span><span class="p">,</span>
+    <span class="p">[</span><span class="s2">&quot;reflectivity_factor&quot;</span><span class="p">,</span> <span class="s2">&quot;radial_velocity&quot;</span><span class="p">,</span> <span class="s2">&quot;spectrum_width&quot;</span><span class="p">],</span>
+    <span class="n">cmaps</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;reflectivity_factor&quot;</span><span class="p">:</span> <span class="s2">&quot;turbo&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;radial_velocity&quot;</span><span class="p">:</span> <span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;spectrum_width&quot;</span><span class="p">:</span> <span class="s2">&quot;viridis&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">height_range_km</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Colormaps and colorbar bounds may be one setting for every panel or mappings
+keyed by field name. Field labels, height and time ranges, colorbar location,
+grid, title, figure size, DPI, and output path are also configurable. Invalid
+or missing samples are white. MRR2 height is taken from <code class="docutils literal notranslate"><span class="pre">MRR_H</span></code>; MRRPro
+height is taken from its <code class="docutils literal notranslate"><span class="pre">range</span></code> coordinate.</p>
+<p>Options accepted by <code class="xref py py-func docutils literal notranslate"><span class="pre">xarray.open_dataset()</span></code> may be passed through when a
+specific engine or decoding behavior is required:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">gv_tools</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_mrr</span><span class="p">(</span><span class="s2">&quot;product.nc&quot;</span><span class="p">,</span> <span class="n">decode_times</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="resource-handling">
+<h2>Resource handling<a class="headerlink" href="#resource-handling" title="Link to this heading">#</a></h2>
+<p>Uncompressed NetCDF results retain xarray’s file-backed behavior. Close them
+explicitly or use a context manager when finished. ZIP results are loaded into
+memory and do not retain the archive handle.</p>
+<p>MRR is not routed through <a class="reference internal" href="api/io.html#gv_tools.io.read_radar" title="gv_tools.io.read_radar"><code class="xref py py-func docutils literal notranslate"><span class="pre">gv_tools.io.read_radar()</span></code></a>: that function is for
+scanning SIGMET/IRIS and CF/Radial volumes represented by Py-ART <code class="docutils literal notranslate"><span class="pre">Radar</span></code>.
+Keeping MRR in xarray preserves its native profiling data model.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="userguide.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">User Guide</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="piers.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">PIERS Tools</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-products">Supported products</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-williams-post-processing-methods">C. Williams post-processing methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#files-directories-globs-and-zip-archives">Files, directories, globs, and ZIP archives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-height-quicklooks">Time-height quicklooks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resource-handling">Resource handling</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/mrr.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

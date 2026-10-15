@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 from importlib.metadata import PackageNotFoundError, version
+from importlib import import_module
 import re
 
 
 DEPENDENCY_GROUPS = {
     "required": {"numpy": "2.4", "pandas": "2.0", "xarray": "2023.1"},
-    "parsivel": {"process-parsivel": "1.0.0"},
+    "parsivel": {"process-parsivel": "1.2.1"},
     "radar": {"arm-pyart": "2.1", "xradar": "0.10"},
     "netcdf": {"h5netcdf": "1.3", "h5py": "3.10"},
     "plot": {"matplotlib": "3.7"},
@@ -31,7 +32,12 @@ def dependency_report(groups=("required", "parsivel", "netcdf")) -> list[dict[st
             try:
                 installed = version(package)
             except PackageNotFoundError:
-                installed = "not installed"
+                # Process Parsivel is bundled in the unified GV Tools wheel.
+                module_name = package.replace("-", "_")
+                try:
+                    installed = str(import_module(module_name).__version__)
+                except (ImportError, AttributeError):
+                    installed = "not installed"
             available = installed != "not installed"
             compatible = available and _version_key(installed) >= _version_key(minimum)
             report.append(

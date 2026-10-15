@@ -1,0 +1,804 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Process Parsivel &#8212; GV Tools 0.40.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/gv_tools.css?v=f6e64a54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="_static/documentation_options.js?v=13a5ab13"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'process_parsivel';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2DVD ingestion, calculations, and plots" href="py_2dvd/index.html" />
+    <link rel="prev" title="PIERS Tools" href="piers.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">GV Tools 0.40.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Process Parsivel</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="process-parsivel">
+<h1>Process Parsivel<a class="headerlink" href="#process-parsivel" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">process_parsivel</span></code> 1.2.1 is bundled with GV Tools 0.40.0. The bundled copy
+supports APU and PIERS archives, location timelines, daily processing,
+NetCDF output, radar-band reflectivity, and parameter/DSD plotting. A separate
+<code class="docutils literal notranslate"><span class="pre">process-parsivel</span></code> installation is not required.</p>
+<p id="module-process_parsivel">Parsivel disdrometer processing.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.get_dataset_from_parsivel">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">get_dataset_from_parsivel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dv_parms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'F'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/core.html#get_dataset_from_parsivel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.get_dataset_from_parsivel" title="Link to this definition">#</a></dt>
+<dd><p>Read a concatenated Parsivel file for one date.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.get_integral_parameters">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">get_integral_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instrument</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds_1min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dv_parms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/core.html#get_integral_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.get_integral_parameters" title="Link to this definition">#</a></dt>
+<dd><p>Calculate parameters, PSD, and moments using the legacy formulas.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.discover_input_dates">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">discover_input_dates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/core.html#discover_input_dates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.discover_input_dates" title="Link to this definition">#</a></dt>
+<dd><p>Return valid dates found in supported input filenames, recursively.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.load_tables">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">load_tables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/core.html#load_tables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.load_tables" title="Link to this definition">#</a></dt>
+<dd><p>Load diameter/velocity parameters and the conditional mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>table_dir</strong> (<em>str</em><em> | </em><em>PathLike</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.process_input">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">process_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temp_root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/core.html#process_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.process_input" title="Link to this definition">#</a></dt>
+<dd><p>Process a single ZIP/CSV/DAT file or a recursively scanned directory.</p>
+<p>Directory inputs select files containing YYYYMMDD in their filename. A
+single file is filtered by timestamps inside that file, so it may contain
+records from more than one day.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.run">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temp_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radar_bands</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">water_temperature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permittivity_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Liebe1991'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radar_frequencies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_dbz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/workflow.html#run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.run" title="Link to this definition">#</a></dt>
+<dd><p>Process one file or directory without reading command-line arguments.</p>
+<p>Parameters use regular Python values and are safe for Jupyter. Dates may be
+strings (<code class="docutils literal notranslate"><span class="pre">&quot;2023-01-01&quot;</span></code>), <code class="docutils literal notranslate"><span class="pre">date</span></code>/<code class="docutils literal notranslate"><span class="pre">datetime</span></code> objects, or pandas
+timestamps. If <code class="docutils literal notranslate"><span class="pre">start_date</span></code> is omitted, dates are inferred from filenames.</p>
+<p>Returns a dictionary keyed by <code class="docutils literal notranslate"><span class="pre">YYYY-MM-DD</span></code>. Each value contains the
+<code class="docutils literal notranslate"><span class="pre">(parameters,</span> <span class="pre">psd,</span> <span class="pre">moments)</span></code> DataFrame tuple. Empty days are omitted.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="process_parsivel.DailyNetCDFResult">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">DailyNetCDFResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skipped</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/daily.html#DailyNetCDFResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.DailyNetCDFResult" title="Link to this definition">#</a></dt>
+<dd><p>Results from a batch conversion, including per-day failures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>outputs</strong> (<em>dict</em><em>[</em><em>tuple</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em><em>, </em><em>str</em><em>]</em>)</p></li>
+<li><p><strong>skipped</strong> (<em>list</em><em>[</em><em>tuple</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>errors</strong> (<em>dict</em><em>[</em><em>tuple</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em><em>, </em><em>str</em><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.discover_apu_days">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">discover_apu_days</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">PosixPath('/Volumes/TBW/distro/apu')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instruments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/daily.html#discover_apu_days"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.discover_apu_days" title="Link to this definition">#</a></dt>
+<dd><p>Discover unique <code class="docutils literal notranslate"><span class="pre">(instrument,</span> <span class="pre">date)</span></code> pairs from hourly APU ZIP names.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.run_daily_netcdf">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">run_daily_netcdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">PosixPath('/Volumes/TBW/distro/apu')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">PosixPath('/Volumes/TBW/APU_Daily')</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">instruments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'APU'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temp_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">complevel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continue_on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/daily.html#run_daily_netcdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.run_daily_netcdf" title="Link to this definition">#</a></dt>
+<dd><p>Convert hourly ZIP archives into one derived Xarray/NetCDF file per day.</p>
+<p>ZIP archives are only read. Their CSV/DAT members are extracted beneath a
+temporary work directory and removed after every day, including on errors.
+<code class="docutils literal notranslate"><span class="pre">start_date</span></code> and <code class="docutils literal notranslate"><span class="pre">end_date</span></code> are inclusive when supplied.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.load_location_timeline">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">load_location_timeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instrument</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/location.html#load_location_timeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.load_location_timeline" title="Link to this definition">#</a></dt>
+<dd><p>Load and validate one APU location timeline.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>instrument</strong> (<em>str</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.resolve_location">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">resolve_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instrument</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">when</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/location.html#resolve_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.resolve_location" title="Link to this definition">#</a></dt>
+<dd><p>Resolve an APU location for a date, retaining match provenance.</p>
+<p>A row becomes effective on its start date and remains current until the
+next row begins. The recorded end date is retained as provenance but does
+not make the location expire. Dates before the first row use the first
+recorded location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>instrument</strong> (<em>str</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict[str, object]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.plot_parameters">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">plot_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">accumulate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accumulation_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tab:blue'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accumulation_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tab:red'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/plotting.html#plot_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.plot_parameters" title="Link to this definition">#</a></dt>
+<dd><p>Plot parameter time series with optional cumulative values on y2 axes.</p>
+<p><code class="docutils literal notranslate"><span class="pre">accumulate=True</span></code> accumulates <code class="docutils literal notranslate"><span class="pre">Rain</span></code>. Pass a column name or iterable,
+such as <code class="docutils literal notranslate"><span class="pre">accumulate=[&quot;Rain&quot;,</span> <span class="pre">&quot;Total</span> <span class="pre">Drops&quot;]</span></code>, to select other plotted
+parameters. Accumulations use pandas <code class="docutils literal notranslate"><span class="pre">cumsum()</span></code> and ignore missing values
+by default. The function returns <code class="docutils literal notranslate"><span class="pre">(figure,</span> <span class="pre">primary_axes,</span> <span class="pre">secondary_axes)</span></code>;
+<code class="docutils literal notranslate"><span class="pre">secondary_axes</span></code> is a dictionary keyed by accumulated column name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parms</strong> (<em>DataFrame</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.plot_dsd">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">plot_dsd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psd</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">site</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'contourf'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">10)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concentration_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1.0,</span> <span class="pre">10000.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">17</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar_tick_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dsd'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(10,</span> <span class="pre">8)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bottom'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotate_xticks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">45</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/plotting.html#plot_dsd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.plot_dsd" title="Link to this definition">#</a></dt>
+<dd><p>Plot a DSD time series with contours or bin-faithful colored cells.</p>
+<p>The layout follows the supplied <code class="docutils literal notranslate"><span class="pre">plot_dsd.py</span></code> function. Values less than
+or equal to zero are masked before logarithmic normalization. If the entire
+selected DSD is dry, the axes are returned with a clear annotation instead
+of raising a log-scale warning. Use <code class="docutils literal notranslate"><span class="pre">method=&quot;pcolormesh&quot;</span></code> to draw each
+measured time/diameter bin without contour interpolation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>psd</strong> (<em>DataFrame</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.get_dsd_colormap">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">get_dsd_colormap</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/plotting.html#get_dsd_colormap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.get_dsd_colormap" title="Link to this definition">#</a></dt>
+<dd><p>Return the package DSD colormap for concentrations from 10^0 upward.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.plot_integral_parameters">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">plot_integral_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parms</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">panels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphas</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylimits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accumulate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accumulation_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accumulation_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accumulation_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tab:blue'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(14,</span> <span class="pre">12)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotate_xticks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">45</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sharex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suptitle_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.985</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.93</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/plotting.html#plot_integral_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.plot_integral_parameters" title="Link to this definition">#</a></dt>
+<dd><p>Create the customizable stacked parameter figure from <code class="docutils literal notranslate"><span class="pre">plot_parms.py</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">panels</span></code> is an iterable of column groups; columns in the same group share
+one subplot. <code class="docutils literal notranslate"><span class="pre">accumulate=True</span></code> adds cumulative Rain to a secondary axis.
+A string or iterable selects other series. Set <code class="docutils literal notranslate"><span class="pre">accumulation_scale=1/60</span></code>
+to convert one-minute samples of an hourly rain rate into accumulated depth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parms</strong> (<em>DataFrame</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.add_band_reflectivities">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">add_band_reflectivities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">psd</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/radar.html#add_band_reflectivities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.add_band_reflectivities" title="Link to this definition">#</a></dt>
+<dd><p>Return a copy of <code class="docutils literal notranslate"><span class="pre">parms</span></code> with band-specific Z and dBZ columns added.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.compute_band_reflectivity">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">compute_band_reflectivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psd</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">water_temperature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permittivity_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Liebe1991'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter_widths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequencies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_dbz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/radar.html#compute_band_reflectivity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.compute_band_reflectivity" title="Link to this definition">#</a></dt>
+<dd><p>Compute intrinsic liquid-water Mie equivalent reflectivity by radar band.</p>
+<p>The PSD must have drop-diameter centers in millimetres as columns and
+concentrations in m^-3 mm^-1. Drops are modeled as homogeneous spheres.
+Results exclude atmospheric/rain-path attenuation and nonspherical-drop
+polarization effects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>psd</strong> (<em>DataFrame</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="process_parsivel.save_dataframes_to_netcdf">
+<span class="sig-prename descclassname"><span class="pre">process_parsivel.</span></span><span class="sig-name descname"><span class="pre">save_dataframes_to_netcdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">psd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">complevel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/process_parsivel/core.html#save_dataframes_to_netcdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#process_parsivel.save_dataframes_to_netcdf" title="Link to this definition">#</a></dt>
+<dd><p>Save parameters, PSD, and moments to one verified NetCDF file.</p>
+<p>Raises a descriptive <code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code> when the directory cannot be created,
+the optional backend is unavailable, writing fails, or no non-empty file is
+produced. On success, logs and returns the exact output filename.</p>
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="piers.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">PIERS Tools</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="py_2dvd/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2DVD ingestion, calculations, and plots</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.get_dataset_from_parsivel"><code class="docutils literal notranslate"><span class="pre">get_dataset_from_parsivel()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.get_integral_parameters"><code class="docutils literal notranslate"><span class="pre">get_integral_parameters()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.discover_input_dates"><code class="docutils literal notranslate"><span class="pre">discover_input_dates()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.load_tables"><code class="docutils literal notranslate"><span class="pre">load_tables()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.process_input"><code class="docutils literal notranslate"><span class="pre">process_input()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.DailyNetCDFResult"><code class="docutils literal notranslate"><span class="pre">DailyNetCDFResult</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.discover_apu_days"><code class="docutils literal notranslate"><span class="pre">discover_apu_days()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.run_daily_netcdf"><code class="docutils literal notranslate"><span class="pre">run_daily_netcdf()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.load_location_timeline"><code class="docutils literal notranslate"><span class="pre">load_location_timeline()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.resolve_location"><code class="docutils literal notranslate"><span class="pre">resolve_location()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.plot_parameters"><code class="docutils literal notranslate"><span class="pre">plot_parameters()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.plot_dsd"><code class="docutils literal notranslate"><span class="pre">plot_dsd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.get_dsd_colormap"><code class="docutils literal notranslate"><span class="pre">get_dsd_colormap()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.plot_integral_parameters"><code class="docutils literal notranslate"><span class="pre">plot_integral_parameters()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.add_band_reflectivities"><code class="docutils literal notranslate"><span class="pre">add_band_reflectivities()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.compute_band_reflectivity"><code class="docutils literal notranslate"><span class="pre">compute_band_reflectivity()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process_parsivel.save_dataframes_to_netcdf"><code class="docutils literal notranslate"><span class="pre">save_dataframes_to_netcdf()</span></code></a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/process_parsivel.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

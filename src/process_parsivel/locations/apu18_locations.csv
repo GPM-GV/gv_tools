@@ -1,0 +1,5 @@
+instrument,latitude,longitude,elevation,city,state,date_range,num_files
+apu18,37.9376016667,-75.4560983333,70.5,Wallops Island,Virginia,2016-10-29 - 2021-08-16,1296
+apu18,37.9334866667,-75.472805,18.1,Wallops Island,Virginia,2021-08-18 - 2021-09-27,35
+apu18,37.934415,-75.4713133333,913.0,Wallops Island,Virginia,2021-09-28 - 2021-12-01,47
+apu18,41.8079183333,-72.2942083333,154.9,Mansfield,Connecticut,2021-12-09 - 2022-04-21,89

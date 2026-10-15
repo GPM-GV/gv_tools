@@ -1,0 +1,871 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>PIERS Tools &#8212; GV Tools 0.40.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/gv_tools.css?v=f6e64a54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="_static/documentation_options.js?v=13a5ab13"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'piers';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Process Parsivel" href="process_parsivel.html" />
+    <link rel="prev" title="MRR2 and MRRPro ingest" href="mrr.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">GV Tools 0.40.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">PIERS Tools</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="piers-tools">
+<h1>PIERS Tools<a class="headerlink" href="#piers-tools" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">piers_tools</span></code> 0.9.0 replaces both <code class="docutils literal notranslate"><span class="pre">piers_gauge_tools</span></code> and
+<code class="docutils literal notranslate"><span class="pre">process_piers_plus</span></code>. It includes packet and daily gauge parsing, daily
+reports, plotting, publishing, standalone-gauge comparisons, PIERS++ day
+processing, AIO processing, and gauge NetCDF export.</p>
+<p id="module-piers_tools">Unified PIERS gauge, platform, and comparison tools.</p>
+<p>The public API combines the former <code class="xref py py-mod docutils literal notranslate"><span class="pre">piers_gauge_tools</span></code> daily-report
+package with the former <code class="docutils literal notranslate"><span class="pre">comp_standalone_gauges</span></code> range-comparison package.
+Application code should import from this module or from the documented
+submodules; the two legacy package names are intentionally not installed.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="piers_tools.build_daily_report">
+<span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">build_daily_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_base_dir</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">continue_on_gauge_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publish_plots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ingest_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'daily'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/pipeline.html#build_daily_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.build_daily_report" title="Link to this definition">#</a></dt>
+<dd><p>Build the full finalized Daily_DF without writing intermediate files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_date</strong> (<em>date</em>)</p></li>
+<li><p><strong>locations</strong> (<em>DataFrame</em>)</p></li>
+<li><p><strong>input_base_dir</strong> (<em>str</em><em> | </em><em>Path</em>)</p></li>
+<li><p><strong>continue_on_gauge_error</strong> (<em>bool</em>)</p></li>
+<li><p><strong>plot_root</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>publish_plots</strong> (<em>bool</em>)</p></li>
+<li><p><strong>ingest_mode</strong> (<em>str</em>)</p></li>
+<li><p><strong>input_paths</strong> (<em>list</em><em>[</em><em>str</em><em> | </em><em>Path</em><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>DataFrame</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="piers_tools.gauge_csv_to_html">
+<span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">gauge_csv_to_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csv_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">coverage_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_link_root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'../Plots'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_maps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/reporting.html#gauge_csv_to_html"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.gauge_csv_to_html" title="Link to this definition">#</a></dt>
+<dd><p>Read a daily report CSV and create its highlighted HTML table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>csv_path</strong> (<em>str</em><em> | </em><em>Path</em>)</p></li>
+<li><p><strong>output_path</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>coverage_date</strong> (<em>date</em>)</p></li>
+<li><p><strong>plot_link_root</strong> (<em>str</em>)</p></li>
+<li><p><strong>enable_maps</strong> (<em>bool</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Path</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="piers_tools.gauge_report_to_html">
+<span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">gauge_report_to_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Gauge_Report.html'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">coverage_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_link_root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'../Plots'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_maps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/reporting.html#gauge_report_to_html"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.gauge_report_to_html" title="Link to this definition">#</a></dt>
+<dd><p>Write a highlighted HTML table for one explicit data-coverage date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataframe</strong> (<em>DataFrame</em>)</p></li>
+<li><p><strong>output_path</strong> (<em>str</em><em> | </em><em>Path</em>)</p></li>
+<li><p><strong>coverage_date</strong> (<em>date</em>)</p></li>
+<li><p><strong>plot_link_root</strong> (<em>str</em>)</p></li>
+<li><p><strong>enable_maps</strong> (<em>bool</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Path</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="piers_tools.generate_gauge_plots">
+<span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">generate_gauge_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gauge_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_data</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">rain_tip_a_mm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rain_tip_b_mm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">station_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publish</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/plotting.html#generate_gauge_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.generate_gauge_plots" title="Link to this definition">#</a></dt>
+<dd><p>Generate the three requested daily time-series plots for one gauge.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gauge_id</strong> (<em>str</em>)</p></li>
+<li><p><strong>data_date</strong> (<em>date</em>)</p></li>
+<li><p><strong>metadata_df</strong> (<em>DataFrame</em>)</p></li>
+<li><p><strong>tip_data</strong> (<em>DataFrame</em>)</p></li>
+<li><p><strong>rain_tip_a_mm</strong> (<em>float</em>)</p></li>
+<li><p><strong>rain_tip_b_mm</strong> (<em>float</em>)</p></li>
+<li><p><strong>station_location</strong> (<em>str</em>)</p></li>
+<li><p><strong>publish</strong> (<em>bool</em>)</p></li>
+<li><p><strong>plot_root</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict[str, <em>Path</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="piers_tools.load_locations">
+<span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">load_locations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">excel_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/pipeline.html#load_locations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.load_locations" title="Link to this definition">#</a></dt>
+<dd><p>Load gauge rows, excluding blanks and the <code class="docutils literal notranslate"><span class="pre">LastUpdate</span></code> footer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>excel_path</strong> (<em>str</em><em> | </em><em>Path</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>DataFrame</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="piers_tools.parse_piers_files">
+<span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">parse_piers_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gauge_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/parsing.html#parse_piers_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.parse_piers_files" title="Link to this definition">#</a></dt>
+<dd><p>Parse one file, a fully specified file list, or compatible directories.</p>
+<p>One metadata row is produced per RSSI packet header, so <code class="docutils literal notranslate"><span class="pre">len(metadata)</span></code>
+is the actual packet count for both daily and individual-packet inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_paths</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>Sequence</em><em>[</em><em>str</em><em> | </em><em>Path</em><em>]</em>)</p></li>
+<li><p><strong>gauge_name</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[<em>DataFrame</em>, <em>DataFrame</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="piers_tools.parse_piers_multiple_files">
+<span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">parse_piers_multiple_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gauge_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/parsing.html#parse_piers_multiple_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.parse_piers_multiple_files" title="Link to this definition">#</a></dt>
+<dd><p>Backward-compatible alias for <a class="reference internal" href="#piers_tools.parse_piers_files" title="piers_tools.parse_piers_files"><code class="xref py py-func docutils literal notranslate"><span class="pre">parse_piers_files()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>gauge_name</strong> (<em>str</em><em> | </em><em>None</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="piers_tools.InputDataError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">InputDataError</span></span><a class="reference internal" href="_modules/piers_tools/comparison.html#InputDataError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.InputDataError" title="Link to this definition">#</a></dt>
+<dd><p>An existing instrument file cannot be read as valid observations.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="piers_tools.circular_mean">
+<span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">circular_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/comparison.html#circular_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.circular_mean" title="Link to this definition">#</a></dt>
+<dd><p>Unweighted circular mean; an undefined resultant returns NaN.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="piers_tools.event_totals">
+<span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">event_totals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">daily_comparison_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/comparison.html#event_totals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.event_totals" title="Link to this definition">#</a></dt>
+<dd><p>Observed rainfall sums and completeness for an inclusive selection of minute labels.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="piers_tools.load_day">
+<span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">load_day</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2026-07-22'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Volumes/TBW/distro'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'WFFpad'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('PIERS0027',</span> <span class="pre">'PIERS0028')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gauges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/comparison.html#load_day"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.load_day" title="Link to this definition">#</a></dt>
+<dd><p>Return 1440 rows with instrument-qualified rain (inch), speed (m/s), direction (degrees).</p>
+<p>Missing files raise FileNotFoundError. Missing observations remain NaN.
+Timestamp labels are minute starts; timezone is unchanged from the input files.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="piers_tools.process_range">
+<span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">process_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'merged'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Volumes/TBW/distro'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'WFFpad'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('PIERS0027',</span> <span class="pre">'PIERS0028')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gauges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/comparison.html#process_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.process_range" title="Link to this definition">#</a></dt>
+<dd><p>Process an inclusive range and save one merged CSV or one CSV per day.</p>
+<p>All requested minutes remain in the result. Unavailable instruments are NaN;
+valid collocated instruments are retained. Diagnostics stay in attrs/in memory.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="piers_tools.read_standalone">
+<span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">read_standalone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'WFFpad'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gauges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/comparison.html#read_standalone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.read_standalone" title="Link to this definition">#</a></dt>
+<dd><p>Read rain observations, reporting unusable input with its full path.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="piers_tools.read_wind">
+<span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">read_wind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">station</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/comparison.html#read_wind"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.read_wind" title="Link to this definition">#</a></dt>
+<dd><p>Read PIERS++ status/direction/speed packets, reporting corrupt rows.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="piers_tools.save_day">
+<span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">save_day</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">daily_comparison_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/comparison.html#save_day"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.save_day" title="Link to this definition">#</a></dt>
+<dd><p>Write exactly one CSV containing the daily DataFrame.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="piers_tools.DailyResult">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">DailyResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">site</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'str'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'date'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'Path'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'Path'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'dict[str,</span> <span class="pre">int]'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'dict[str,</span> <span class="pre">int]'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejected_rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'dict[str,</span> <span class="pre">int]'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_instruments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'tuple[str,</span> <span class="pre">...]'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gauge_tip_mm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'tuple[float,</span> <span class="pre">float]</span> <span class="pre">|</span> <span class="pre">None'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aio_configuration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'str'</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/daily.html#DailyResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.DailyResult" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>site</strong> (<em>str</em>)</p></li>
+<li><p><strong>day</strong> (<em>date</em>)</p></li>
+<li><p><strong>input_dir</strong> (<em>Path</em>)</p></li>
+<li><p><strong>output_dir</strong> (<em>Path</em>)</p></li>
+<li><p><strong>files</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>rows</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>rejected_rows</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>missing_instruments</strong> (<em>tuple</em><em>[</em><em>str</em><em>, </em><em>...</em><em>]</em>)</p></li>
+<li><p><strong>gauge_tip_mm</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>aio_configuration</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="piers_tools.process_day">
+<span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">process_day</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'output'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gauge_status_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">PosixPath('/Users/dwolff/PIERS_Reporting/PIERS_gauges_status.xlsx')</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/daily.html#process_day"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.process_day" title="Link to this definition">#</a></dt>
+<dd><p>Ingest a site/day using a caller-selectable gauge-location workbook.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>site</strong> (<em>str</em>)</p></li>
+<li><p><strong>year</strong> (<em>int</em>)</p></li>
+<li><p><strong>month</strong> (<em>int</em>)</p></li>
+<li><p><strong>day</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="piers_tools.ingest_gauge_range">
+<span class="sig-prename descclassname"><span class="pre">piers_tools.</span></span><span class="sig-name descname"><span class="pre">ingest_gauge_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gauge_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'output'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'PIERS'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accumulation_per_tip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measurement</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TB_A_tips'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/piers_tools/gauge.html#ingest_gauge_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#piers_tools.ingest_gauge_range" title="Link to this definition">#</a></dt>
+<dd><p>Write one 1-minute NetCDF file per day in an inclusive date range.</p>
+<p><code class="docutils literal notranslate"><span class="pre">input_path</span></code> may name one daily CSV or a directory containing daily
+files or multiple packet files. Missing minutes are represented by zero
+tips and zero accumulation. Days having no observations are not written.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_path</strong> (<em>str</em><em> | </em><em>Path</em>)</p></li>
+<li><p><strong>gauge_id</strong> (<em>str</em>)</p></li>
+<li><p><strong>start_date</strong> (<em>str</em><em> | </em><em>date</em><em> | </em><em>Timestamp</em>)</p></li>
+<li><p><strong>end_date</strong> (<em>str</em><em> | </em><em>date</em><em> | </em><em>Timestamp</em>)</p></li>
+<li><p><strong>output_dir</strong> (<em>str</em><em> | </em><em>Path</em>)</p></li>
+<li><p><strong>network</strong> (<em>str</em>)</p></li>
+<li><p><strong>accumulation_per_tip</strong> (<em>float</em>)</p></li>
+<li><p><strong>measurement</strong> (<em>str</em>)</p></li>
+<li><p><strong>latitude</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>longitude</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[<em>Path</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="command-line-programs">
+<h2>Command line programs<a class="headerlink" href="#command-line-programs" title="Link to this heading">#</a></h2>
+<p>The unified wheel installs <code class="docutils literal notranslate"><span class="pre">piers-gauge-report</span></code>, <code class="docutils literal notranslate"><span class="pre">piers-compare-gauges</span></code>,
+<code class="docutils literal notranslate"><span class="pre">piers-plus-process</span></code>, and <code class="docutils literal notranslate"><span class="pre">piers-gauge-ingest</span></code>.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="mrr.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">MRR2 and MRRPro ingest</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="process_parsivel.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Process Parsivel</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.build_daily_report"><code class="docutils literal notranslate"><span class="pre">build_daily_report()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.gauge_csv_to_html"><code class="docutils literal notranslate"><span class="pre">gauge_csv_to_html()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.gauge_report_to_html"><code class="docutils literal notranslate"><span class="pre">gauge_report_to_html()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.generate_gauge_plots"><code class="docutils literal notranslate"><span class="pre">generate_gauge_plots()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.load_locations"><code class="docutils literal notranslate"><span class="pre">load_locations()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.parse_piers_files"><code class="docutils literal notranslate"><span class="pre">parse_piers_files()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.parse_piers_multiple_files"><code class="docutils literal notranslate"><span class="pre">parse_piers_multiple_files()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.InputDataError"><code class="docutils literal notranslate"><span class="pre">InputDataError</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.circular_mean"><code class="docutils literal notranslate"><span class="pre">circular_mean()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.event_totals"><code class="docutils literal notranslate"><span class="pre">event_totals()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.load_day"><code class="docutils literal notranslate"><span class="pre">load_day()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.process_range"><code class="docutils literal notranslate"><span class="pre">process_range()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.read_standalone"><code class="docutils literal notranslate"><span class="pre">read_standalone()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.read_wind"><code class="docutils literal notranslate"><span class="pre">read_wind()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.save_day"><code class="docutils literal notranslate"><span class="pre">save_day()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.DailyResult"><code class="docutils literal notranslate"><span class="pre">DailyResult</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.process_day"><code class="docutils literal notranslate"><span class="pre">process_day()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piers_tools.ingest_gauge_range"><code class="docutils literal notranslate"><span class="pre">ingest_gauge_range()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#command-line-programs">Command line programs</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/piers.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gv_tools"
-version = "0.34.0"
-description = "Read, normalize, analyze, and plot NASA GPM Ground Validation instruments"
+version = "0.40.0"
+description = "Unified NASA GPM Ground Validation, PIERS, and Parsivel processing tools"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
@@ -13,11 +13,16 @@ dependencies = [
   "pandas>=2.0",
   "scipy>=1.15",
   "xarray>=2023.1",
+  "matplotlib>=3.7",
+  "openpyxl>=3.1",
+  "Pillow>=9",
+  "miepython>=3.2,<4",
+  "disdrodb>=1.0",
 ]
 
 [project.optional-dependencies]
 py_2dvd = ["matplotlib>=3.7"]
-parsivel = ["process-parsivel>=1.0.0"]
+parsivel = []
 radar = ["arm-pyart>=2.1", "xradar>=0.10", "cartopy>=0.22"]
 netcdf = ["h5netcdf>=1.3", "h5py>=3.10"]
 test = ["pytest>=7"]
@@ -26,7 +31,6 @@ notebook = ["jupyterlab>=4", "ipykernel>=6", "matplotlib>=3.7"]
 sounding = ["matplotlib>=3.7", "metpy>=1.6", "cfgrib>=0.9.10", "eccodes>=2.32"]
 docs = ["sphinx>=7", "pydata-sphinx-theme>=0.15", "myst-parser>=2"]
 all = [
-  "process-parsivel>=1.0.0",
   "arm-pyart>=2.1",
   "xradar>=0.10",
   "cartopy>=0.22",
@@ -44,6 +48,12 @@ gv-tools = "gv_tools.cli:main"
 gv-tools-2dvd-process = "gv_tools.cli_2dvd:process_main"
 gv-tools-2dvd-plot = "gv_tools.cli_2dvd:plot_main"
 gv-tools-sounding = "gv_tools.util.upper_air_cli:main"
+piers-gauge-report = "piers_tools.cli:main"
+piers-compare-gauges = "piers_tools.comparison_cli:main"
+piers-plus-process = "piers_tools.platform_cli:main"
+piers-gauge-ingest = "piers_tools.gauge_cli:main"
+process-parsivel = "process_parsivel.cli:main"
+process-parsivel-daily = "process_parsivel.daily:daily_main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
@@ -58,3 +68,4 @@ testpaths = ["tests"]
 
 [tool.setuptools.package-data]
 gv_tools = ["data/py_2dvd/*.dat", "data/py_2dvd/*.txt"]
+process_parsivel = ["tables/*", "locations/*.csv"]

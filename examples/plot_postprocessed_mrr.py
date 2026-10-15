@@ -16,11 +16,20 @@ def main() -> None:
     args = parser.parse_args()
 
     dataset = gv_tools.io.read_mrr(args.input.expanduser())
+    product_code = dataset.attrs["mrr_product_code"]
+    requested_output = args.output.expanduser()
+    output = (
+        requested_output
+        if requested_output.stem.endswith(f"_{product_code}")
+        else requested_output.with_name(
+            f"{requested_output.stem}_{product_code}{requested_output.suffix}"
+        )
+    )
     print(dataset)
     gv_tools.graph.plot_mrr_time_height_quicklook(
         dataset,
         ["reflectivity_factor", "radial_velocity", "spectrum_width"],
-        savefig=args.output.expanduser(),
+        savefig=output,
         cmaps={
             "reflectivity_factor": "turbo",
             "radial_velocity": "coolwarm",

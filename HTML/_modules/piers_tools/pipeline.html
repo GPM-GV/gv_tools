@@ -1,0 +1,713 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>piers_tools.pipeline &#8212; GV Tools 0.40.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gv_tools.css?v=f6e64a54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../_static/documentation_options.js?v=13a5ab13"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/piers_tools/pipeline';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">GV Tools 0.40.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">piers_tools.pipeline</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for piers_tools.pipeline</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Orchestrate daily PIERS processing across all configured gauges.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.parsing</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_piers_files</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.plotting</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_gauge_plots</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.platform_plotting</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">create_platform_fallback</span><span class="p">,</span>
+    <span class="n">generate_platform_plot</span><span class="p">,</span>
+    <span class="n">normalize_platform_type</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.processing</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_bucket_tips</span><span class="p">,</span> <span class="n">summarize_gauge_metadata</span>
+
+
+<div class="viewcode-block" id="load_locations">
+<a class="viewcode-back" href="../../piers.html#piers_tools.load_locations">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_locations</span><span class="p">(</span><span class="n">excel_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load gauge rows, excluding blanks and the ``LastUpdate`` footer.&quot;&quot;&quot;</span>
+    <span class="n">location_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">excel_path</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">location_file</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Location workbook does not exist: </span><span class="si">{</span><span class="n">location_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">locations</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">location_file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;PIERS Station Name&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">locations</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Location workbook lacks &#39;PIERS Station Name&#39;&quot;</span><span class="p">)</span>
+    <span class="n">station_names</span> <span class="o">=</span> <span class="n">locations</span><span class="p">[</span><span class="s2">&quot;PIERS Station Name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;string&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="n">station_names</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">station_names</span><span class="o">.</span><span class="n">ne</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">valid</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">station_names</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">casefold</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;lastupdate&quot;</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">locations</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_bias_percent</span><span class="p">(</span><span class="n">rainfall_a_mm</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rainfall_b_mm</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Preserve the established PIERS A-referenced bias calculation.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">rainfall_a_mm</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">rainfall_a_mm</span> <span class="o">-</span> <span class="n">rainfall_b_mm</span><span class="p">)</span> <span class="o">/</span> <span class="n">rainfall_a_mm</span>
+    <span class="k">if</span> <span class="n">rainfall_b_mm</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">rainfall_b_mm</span> <span class="o">-</span> <span class="n">rainfall_a_mm</span><span class="p">)</span> <span class="o">/</span> <span class="n">rainfall_b_mm</span>
+    <span class="k">return</span> <span class="mf">0.0</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_records_for_date</span><span class="p">(</span><span class="n">dataframe</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">data_date</span><span class="p">:</span> <span class="n">date</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return only records timestamped within the requested calendar date.&quot;&quot;&quot;</span>
+    <span class="n">timestamps</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dataframe</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">data_date</span><span class="p">)</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="n">timestamps</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">timestamps</span> <span class="o">&gt;=</span> <span class="n">start</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">timestamps</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">timestamps</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;stable&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="build_daily_report">
+<a class="viewcode-back" href="../../piers.html#piers_tools.build_daily_report">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_daily_report</span><span class="p">(</span>
+    <span class="n">data_date</span><span class="p">:</span> <span class="n">date</span><span class="p">,</span>
+    <span class="n">locations</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">input_base_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">continue_on_gauge_error</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">plot_root</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">publish_plots</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">ingest_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;daily&quot;</span><span class="p">,</span>
+    <span class="n">input_paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build the full finalized Daily_DF without writing intermediate files.&quot;&quot;&quot;</span>
+    <span class="n">base_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">input_base_dir</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+
+    <span class="n">gauge_ids</span> <span class="o">=</span> <span class="n">locations</span><span class="p">[</span><span class="s2">&quot;PIERS Station Name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">gauge_errors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">platform_issues</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">gauge_id</span> <span class="ow">in</span> <span class="n">gauge_ids</span><span class="p">:</span>
+        <span class="n">input_dir</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">base_dir</span>
+            <span class="o">/</span> <span class="n">gauge_id</span>
+            <span class="o">/</span> <span class="nb">str</span><span class="p">(</span><span class="n">data_date</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
+            <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_date</span><span class="o">.</span><span class="n">month</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_date</span><span class="o">.</span><span class="n">day</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ingest_mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span> <span class="s2">&quot;packets&quot;</span><span class="p">}:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;ingest_mode must be &#39;daily&#39; or &#39;packets&#39;&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">input_paths</span><span class="p">:</span>
+                <span class="n">gauge_inputs</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">path</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">input_paths</span>
+                    <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">gauge_id</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+                <span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">gauge_inputs</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;No explicitly supplied file for gauge&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">ingest_mode</span> <span class="o">==</span> <span class="s2">&quot;daily&quot;</span><span class="p">:</span>
+                <span class="n">gauge_inputs</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">input_dir</span>
+                    <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">gauge_id</span><span class="si">}</span><span class="s2">_TB_</span><span class="si">{</span><span class="n">data_date</span><span class="o">.</span><span class="n">year</span><span class="si">:</span><span class="s2">04d</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_date</span><span class="o">.</span><span class="n">month</span><span class="si">:</span><span class="s2">02d</span><span class="si">}{</span><span class="n">data_date</span><span class="o">.</span><span class="n">day</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">_daily.csv&quot;</span>
+                <span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">gauge_inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_dir</span><span class="p">]</span>
+            <span class="n">metadata_df</span><span class="p">,</span> <span class="n">tip_data</span> <span class="o">=</span> <span class="n">parse_piers_files</span><span class="p">(</span><span class="n">gauge_inputs</span><span class="p">,</span> <span class="n">gauge_id</span><span class="p">)</span>
+            <span class="n">metadata_df</span> <span class="o">=</span> <span class="n">_records_for_date</span><span class="p">(</span><span class="n">metadata_df</span><span class="p">,</span> <span class="n">data_date</span><span class="p">)</span>
+            <span class="n">tip_data</span> <span class="o">=</span> <span class="n">_records_for_date</span><span class="p">(</span><span class="n">tip_data</span><span class="p">,</span> <span class="n">data_date</span><span class="p">)</span>
+            <span class="n">tips_a_df</span> <span class="o">=</span> <span class="n">get_bucket_tips</span><span class="p">(</span><span class="n">tip_data</span><span class="p">,</span> <span class="s2">&quot;TB_A_tips&quot;</span><span class="p">)</span>
+            <span class="n">tips_b_df</span> <span class="o">=</span> <span class="n">get_bucket_tips</span><span class="p">(</span><span class="n">tip_data</span><span class="p">,</span> <span class="s2">&quot;TB_B_tips&quot;</span><span class="p">)</span>
+            <span class="n">summary</span> <span class="o">=</span> <span class="n">summarize_gauge_metadata</span><span class="p">(</span><span class="n">locations</span><span class="p">,</span> <span class="n">metadata_df</span><span class="p">)</span>
+            <span class="n">platform_type</span> <span class="o">=</span> <span class="n">normalize_platform_type</span><span class="p">(</span><span class="n">summary</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Gauge type&quot;</span><span class="p">])</span>
+
+            <span class="n">tips_a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tips_a_df</span><span class="p">[</span><span class="s2">&quot;Single_Tip&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+            <span class="n">tips_b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tips_b_df</span><span class="p">[</span><span class="s2">&quot;Single_Tip&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+            <span class="n">rain_tip_a</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">summary</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Rain_Tip_A&quot;</span><span class="p">])</span>
+            <span class="n">rain_tip_b</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">summary</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Rain_Tip_B&quot;</span><span class="p">])</span>
+            <span class="n">rainfall_a_mm</span> <span class="o">=</span> <span class="n">tips_a</span> <span class="o">*</span> <span class="n">rain_tip_a</span>
+            <span class="n">rainfall_b_mm</span> <span class="o">=</span> <span class="n">tips_b</span> <span class="o">*</span> <span class="n">rain_tip_b</span>
+
+            <span class="k">if</span> <span class="n">plot_root</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">gauge_plots</span> <span class="o">=</span> <span class="n">generate_gauge_plots</span><span class="p">(</span>
+                    <span class="n">gauge_id</span><span class="p">,</span>
+                    <span class="n">data_date</span><span class="p">,</span>
+                    <span class="n">metadata_df</span><span class="p">,</span>
+                    <span class="n">tip_data</span><span class="p">,</span>
+                    <span class="n">station_location</span><span class="o">=</span><span class="n">summary</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Station Location&quot;</span><span class="p">],</span>
+                    <span class="n">rain_tip_a_mm</span><span class="o">=</span><span class="n">rain_tip_a</span><span class="p">,</span>
+                    <span class="n">rain_tip_b_mm</span><span class="o">=</span><span class="n">rain_tip_b</span><span class="p">,</span>
+                    <span class="n">publish</span><span class="o">=</span><span class="n">publish_plots</span><span class="p">,</span>
+                    <span class="n">plot_root</span><span class="o">=</span><span class="n">plot_root</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">platform_type</span> <span class="o">!=</span> <span class="s2">&quot;PIERS&quot;</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">generate_platform_plot</span><span class="p">(</span>
+                            <span class="n">gauge_id</span><span class="p">,</span>
+                            <span class="n">platform_type</span><span class="p">,</span>
+                            <span class="n">data_date</span><span class="p">,</span>
+                            <span class="n">input_dir</span><span class="p">,</span>
+                            <span class="n">tip_data</span><span class="p">,</span>
+                            <span class="n">station_location</span><span class="o">=</span><span class="n">summary</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Station Location&quot;</span><span class="p">],</span>
+                            <span class="n">rain_tip_a_mm</span><span class="o">=</span><span class="n">rain_tip_a</span><span class="p">,</span>
+                            <span class="n">rain_tip_b_mm</span><span class="o">=</span><span class="n">rain_tip_b</span><span class="p">,</span>
+                            <span class="n">plot_root</span><span class="o">=</span><span class="n">plot_root</span><span class="p">,</span>
+                        <span class="p">)</span>
+                    <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">,</span> <span class="ne">UnicodeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+                        <span class="n">create_platform_fallback</span><span class="p">(</span>
+                            <span class="n">gauge_plots</span><span class="p">[</span><span class="s2">&quot;rain&quot;</span><span class="p">],</span> <span class="n">gauge_id</span><span class="p">,</span> <span class="n">platform_type</span><span class="p">,</span>
+                            <span class="n">data_date</span><span class="p">,</span> <span class="n">plot_root</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">),</span>
+                        <span class="p">)</span>
+                        <span class="n">platform_issues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">gauge_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">platform_type</span><span class="si">}</span><span class="s2"> instrument plot contains &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;an issue notice (</span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">)&quot;</span>
+                        <span class="p">)</span>
+
+            <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;Tips_A&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tips_a</span>
+            <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;Tips_B&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tips_b</span>
+            <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;Accum_A [mm]&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rainfall_a_mm</span>
+            <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;Accum_B [mm]&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rainfall_b_mm</span>
+            <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;Accum_A [in]&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rainfall_a_mm</span> <span class="o">/</span> <span class="mf">25.4</span>
+            <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;Accum_B [in]&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rainfall_b_mm</span> <span class="o">/</span> <span class="mf">25.4</span>
+            <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;Bias [%]&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_bias_percent</span><span class="p">(</span><span class="n">rainfall_a_mm</span><span class="p">,</span> <span class="n">rainfall_b_mm</span><span class="p">)</span>
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">,</span> <span class="ne">UnicodeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">gauge_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">continue_on_gauge_error</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+            <span class="n">gauge_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">platform_issues</span> <span class="ow">or</span> <span class="n">gauge_errors</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;PIERS report data notices:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">platform_issues</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - </span><span class="si">{</span><span class="n">issue</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">gauge_errors</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - Gauge skipped: </span><span class="si">{</span><span class="n">issue</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">rows</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No gauges were processed successfully&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

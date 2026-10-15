@@ -1,0 +1,3 @@
+instrument,latitude,longitude,elevation,city,state,date_range,num_files
+apu07,37.9346,-75.4708466667,15.6,Wallops Island,Virginia,2016-07-19 - 2017-03-08,162
+apu07,37.9344966667,-75.4707766667,17.7,Wallops Island,Virginia,2017-03-09 - 2025-09-10,2969

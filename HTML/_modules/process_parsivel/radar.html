@@ -1,0 +1,698 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>process_parsivel.radar &#8212; GV Tools 0.40.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gv_tools.css?v=f6e64a54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../_static/documentation_options.js?v=13a5ab13"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/process_parsivel/radar';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">GV Tools 0.40.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">process_parsivel.radar</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for process_parsivel.radar</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Frequency-dependent radar products derived from Parsivel PSDs.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+
+<span class="n">RADAR_BAND_FREQUENCIES_GHZ</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;S&quot;</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span>
+    <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="mf">5.6</span><span class="p">,</span>
+    <span class="s2">&quot;X&quot;</span><span class="p">:</span> <span class="mf">9.4</span><span class="p">,</span>
+    <span class="s2">&quot;Ku&quot;</span><span class="p">:</span> <span class="mf">13.6</span><span class="p">,</span>
+    <span class="s2">&quot;K&quot;</span><span class="p">:</span> <span class="mf">24.0</span><span class="p">,</span>
+    <span class="s2">&quot;Ka&quot;</span><span class="p">:</span> <span class="mf">35.5</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">_BAND_LOOKUP</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">():</span> <span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">RADAR_BAND_FREQUENCIES_GHZ</span><span class="p">}</span>
+<span class="n">_SPEED_OF_LIGHT_MM_GHZ</span> <span class="o">=</span> <span class="mf">299.792458</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_normalize_bands</span><span class="p">(</span><span class="n">bands</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">bands</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">bands</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">RADAR_BAND_FREQUENCIES_GHZ</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bands</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">bands</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">bands</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">bands</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">bands</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bands</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">bands</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">RADAR_BAND_FREQUENCIES_GHZ</span><span class="p">)</span>
+    <span class="n">normalized</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="n">bands</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">normalized</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_BAND_LOOKUP</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">band</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()])</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unknown radar band </span><span class="si">{</span><span class="n">band</span><span class="si">!r}</span><span class="s2">; choose from </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">RADAR_BAND_FREQUENCIES_GHZ</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">normalized</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_diameter_widths</span><span class="p">(</span><span class="n">diameters</span><span class="p">,</span> <span class="n">diameter_widths</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">diameter_widths</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">widths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">diameter_widths</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">diameters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">centers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">widths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">centers</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span>
+                <span class="p">[</span><span class="n">centers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">centers</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">centers</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">],</span>
+                <span class="p">(</span><span class="n">centers</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">centers</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="p">[</span><span class="n">centers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">centers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">centers</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">],</span>
+            <span class="p">))</span>
+            <span class="n">widths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">widths</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">diameters</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">widths</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;diameter_widths must contain one positive width per PSD column&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">widths</span>
+
+
+<div class="viewcode-block" id="compute_band_reflectivity">
+<a class="viewcode-back" href="../../process_parsivel.html#process_parsivel.compute_band_reflectivity">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_band_reflectivity</span><span class="p">(</span>
+    <span class="n">psd</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">bands</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span>
+    <span class="n">water_temperature</span><span class="o">=</span><span class="mf">20.0</span><span class="p">,</span>
+    <span class="n">permittivity_model</span><span class="o">=</span><span class="s2">&quot;Liebe1991&quot;</span><span class="p">,</span>
+    <span class="n">diameter_widths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">frequencies</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">minimum_dbz</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute intrinsic liquid-water Mie equivalent reflectivity by radar band.</span>
+
+<span class="sd">    The PSD must have drop-diameter centers in millimetres as columns and</span>
+<span class="sd">    concentrations in m^-3 mm^-1. Drops are modeled as homogeneous spheres.</span>
+<span class="sd">    Results exclude atmospheric/rain-path attenuation and nonspherical-drop</span>
+<span class="sd">    polarization effects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">psd</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="ow">or</span> <span class="n">psd</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;psd must be a non-empty pandas DataFrame&quot;</span><span class="p">)</span>
+    <span class="n">selected</span> <span class="o">=</span> <span class="n">_normalize_bands</span><span class="p">(</span><span class="n">bands</span><span class="p">)</span>
+    <span class="n">frequency_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">RADAR_BAND_FREQUENCIES_GHZ</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">frequencies</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">band</span><span class="p">,</span> <span class="n">frequency</span> <span class="ow">in</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">canonical</span> <span class="o">=</span> <span class="n">_normalize_bands</span><span class="p">([</span><span class="n">band</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">frequency_map</span><span class="p">[</span><span class="n">canonical</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">frequency</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">frequency_map</span><span class="p">[</span><span class="n">band</span><span class="p">])</span> <span class="ow">or</span> <span class="n">frequency_map</span><span class="p">[</span><span class="n">band</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Radar frequencies must be finite and positive&quot;</span><span class="p">)</span>
+    <span class="n">diameters</span> <span class="o">=</span> <span class="n">psd</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">diameters</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">diameters</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;PSD diameter columns must be positive and increasing&quot;</span><span class="p">)</span>
+    <span class="n">concentrations</span> <span class="o">=</span> <span class="n">psd</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">concentrations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">concentrations</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">concentrations</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span> <span class="n">concentrations</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">widths</span> <span class="o">=</span> <span class="n">_diameter_widths</span><span class="p">(</span><span class="n">diameters</span><span class="p">,</span> <span class="n">diameter_widths</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">miepython</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">disdrodb.scattering.permittivity</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+            <span class="n">get_rayleigh_dielectric_factor</span><span class="p">,</span>
+            <span class="n">get_refractive_index</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+            <span class="s2">&quot;Band reflectivity requires miepython and disdrodb; install with &quot;</span>
+            <span class="s2">&quot;python -m pip install miepython disdrodb&quot;</span>
+        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">psd</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">:</span>
+        <span class="n">frequency</span> <span class="o">=</span> <span class="n">frequency_map</span><span class="p">[</span><span class="n">band</span><span class="p">]</span>
+        <span class="n">wavelength</span> <span class="o">=</span> <span class="n">_SPEED_OF_LIGHT_MM_GHZ</span> <span class="o">/</span> <span class="n">frequency</span>
+        <span class="n">refractive_index</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">get_refractive_index</span><span class="p">(</span>
+            <span class="n">temperature</span><span class="o">=</span><span class="n">water_temperature</span><span class="p">,</span>
+            <span class="n">frequency</span><span class="o">=</span><span class="n">frequency</span><span class="p">,</span>
+            <span class="n">permittivity_model</span><span class="o">=</span><span class="n">permittivity_model</span><span class="p">,</span>
+        <span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="c1"># miepython uses n - ik; DISDRODB permittivity models return n + ik.</span>
+        <span class="n">mie_index</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">(</span><span class="n">refractive_index</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">refractive_index</span><span class="o">.</span><span class="n">imag</span><span class="p">))</span>
+        <span class="n">kw_squared</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">get_rayleigh_dielectric_factor</span><span class="p">(</span><span class="n">refractive_index</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="n">qback</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+            <span class="n">miepython</span><span class="o">.</span><span class="n">efficiencies</span><span class="p">(</span><span class="n">mie_index</span><span class="p">,</span> <span class="n">diameter</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">diameter</span> <span class="ow">in</span> <span class="n">diameters</span>
+        <span class="p">])</span>
+        <span class="n">sigma_back_mm2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">diameters</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">qback</span>
+        <span class="n">eta_mm2_m3</span> <span class="o">=</span> <span class="p">(</span><span class="n">concentrations</span> <span class="o">*</span> <span class="n">widths</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">*</span> <span class="n">sigma_back_mm2</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ze</span> <span class="o">=</span> <span class="n">wavelength</span><span class="o">**</span><span class="mi">4</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">5</span> <span class="o">*</span> <span class="n">kw_squared</span><span class="p">)</span> <span class="o">*</span> <span class="n">eta_mm2_m3</span>
+        <span class="n">dbz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">ze</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">positive</span> <span class="o">=</span> <span class="n">ze</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="n">dbz</span><span class="p">[</span><span class="n">positive</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">ze</span><span class="p">[</span><span class="n">positive</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">minimum_dbz</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dbz</span><span class="p">[</span><span class="n">positive</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">dbz</span><span class="p">[</span><span class="n">positive</span><span class="p">],</span> <span class="nb">float</span><span class="p">(</span><span class="n">minimum_dbz</span><span class="p">))</span>
+        <span class="n">output</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Z_</span><span class="si">{</span><span class="n">band</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ze</span>
+        <span class="n">output</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;dBZ_</span><span class="si">{</span><span class="n">band</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dbz</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;Mie homogeneous liquid-water spheres&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;water_temperature_C&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">water_temperature</span><span class="p">),</span>
+        <span class="s2">&quot;permittivity_model&quot;</span><span class="p">:</span> <span class="n">permittivity_model</span><span class="p">,</span>
+        <span class="s2">&quot;frequencies_GHz&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">band</span><span class="p">:</span> <span class="n">frequency_map</span><span class="p">[</span><span class="n">band</span><span class="p">]</span> <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">},</span>
+        <span class="s2">&quot;attenuation_included&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">output</span></div>
+
+
+
+<div class="viewcode-block" id="add_band_reflectivities">
+<a class="viewcode-back" href="../../process_parsivel.html#process_parsivel.add_band_reflectivities">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_band_reflectivities</span><span class="p">(</span><span class="n">parms</span><span class="p">,</span> <span class="n">psd</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of ``parms`` with band-specific Z and dBZ columns added.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parms</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="ow">or</span> <span class="n">parms</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;parms must be a non-empty pandas DataFrame&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">parms</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">psd</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;parms and psd must have identical time indexes&quot;</span><span class="p">)</span>
+    <span class="n">radar</span> <span class="o">=</span> <span class="n">compute_band_reflectivity</span><span class="p">(</span><span class="n">psd</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">parms</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">radar</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span><span class="p">[</span><span class="n">column</span><span class="p">]</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="nb">getattr</span><span class="p">(</span><span class="n">parms</span><span class="p">,</span> <span class="s2">&quot;attrs&quot;</span><span class="p">,</span> <span class="p">{}),</span> <span class="s2">&quot;band_reflectivity&quot;</span><span class="p">:</span> <span class="n">radar</span><span class="o">.</span><span class="n">attrs</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

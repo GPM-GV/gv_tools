@@ -1,10 +1,10 @@
 # GV Tools
 
-`GV Tools` 0.34.0 is a scientific Python framework for NASA Global Precipitation
-Measurement (GPM) Ground Validation instruments. Version 0.1 establishes the
-common package, metadata and output contracts, and an adapter for APU and PIERS
-data through `process-parsivel`. It also reads PIERS-associated RM Young
-All-in-One weather packets and monthly Met One AIO files directly.
+`GV Tools` 0.40.0 is a scientific Python framework for NASA Global Precipitation
+Measurement (GPM) Ground Validation instruments. This consolidated release
+bundles `piers_tools` 0.9.0 and `process_parsivel` 1.2.1. It replaces the old
+`piers_gauge_tools` and `process_piers_plus` packages while retaining their
+gauge, AIO, PIERS++, reporting, plotting, publishing, and comparison workflows.
 
 ## Model upper-air profiles
 
@@ -14,7 +14,7 @@ cycle, or an inclusive cycle range. The downloaded GRIB2 subset includes
 height, temperature, relative humidity, and U/V wind components.
 
 ```tcsh
-set WORKSPACE = "$HOME/Desktop/Work/GV Tools"
+set WORKSPACE = "/Users/dwolff/Desktop/Work/GV_Tools"
 $HOME/anaconda3/bin/gv-tools-sounding 38.90 -77.00 --model rap --latest \
   --output-dir "$WORKSPACE/Soundings"
 ```
@@ -28,9 +28,9 @@ Install decoding and high-quality Skew-T plotting support with the sounding
 extra:
 
 ```tcsh
-set WORKSPACE = "$HOME/Desktop/Work/GV Tools"
+set WORKSPACE = "/Users/dwolff/Desktop/Work/GV_Tools"
 set PYTHON = "$HOME/anaconda3/bin/python"
-$PYTHON -m pip install "$WORKSPACE/gv_tools/release/gv_tools-0.34.0-py3-none-any.whl[sounding]"
+$PYTHON -m pip install "$WORKSPACE/gv_tools/dist/gv_tools-0.40.0-py3-none-any.whl[sounding]"
 ```
 
 The end-to-end test notebook is
@@ -48,9 +48,11 @@ The wheel is pure Python and works on either platform with Python 3.10 or
 newer. It intentionally contains no third-party packages. Pip obtains required
 dependencies from the configured package index:
 
-```console
-~/anaconda3/bin/python -m pip install "./gv_tools-0.34.0-py3-none-any.whl[parsivel,netcdf]"
-python3 -m gv_tools.cli check
+```tcsh
+set WORKSPACE = "/Users/dwolff/Desktop/Work/GV_Tools"
+set PYTHON = "$HOME/anaconda3/bin/python"
+$PYTHON -m pip install "$WORKSPACE/gv_tools/dist/gv_tools-0.40.0-py3-none-any.whl[netcdf]"
+$PYTHON -m gv_tools.cli check
 ```
 
 To inspect availability before installation, unpack the source ZIP and run the
@@ -61,9 +63,9 @@ Parsivel, and NetCDF dependencies without silently installing anything. Add
 For an offline machine, download third-party wheels separately on a connected
 machine with the same Python and operating-system architecture:
 
-```console
-python3 -m pip download --dest third_party_wheels \
-  "gv_tools[parsivel,netcdf,plot,notebook]"
+```tcsh
+$PYTHON -m pip download --dest third_party_wheels \
+  "gv_tools[netcdf,plot,notebook]"
 ```
 
 Keep that wheelhouse separate from the GV Tools release ZIP.
@@ -75,17 +77,13 @@ editable in the first configuration cell.
 
 ## Install from tcsh
 
-The commands below use the requested Anaconda Python and the supplied Parsivel
-source archive:
+The commands below use the requested Anaconda Python. PIERS Tools and Process
+Parsivel are already included in the wheel:
 
 ```tcsh
-set WORKSPACE = "$HOME/Desktop/Work/GV Tools/gv_tools"
-set PARSIVEL_ZIP = "$HOME/Desktop/Work/Process_Parsivel/process_parsivel-1.0.0-source.zip"
-set BUILD_DIR = `mktemp -d /tmp/gv_tools_install.XXXXXX`
-
-unzip -q "$PARSIVEL_ZIP" -d "$BUILD_DIR"
-~/anaconda3/bin/python -m pip install "$BUILD_DIR/source"
-~/anaconda3/bin/python -m pip install "$WORKSPACE/release/gv_tools-0.34.0-py3-none-any.whl"
+set WORKSPACE = "/Users/dwolff/Desktop/Work/GV_Tools"
+set PYTHON = "$HOME/anaconda3/bin/python"
+$PYTHON -m pip install "$WORKSPACE/gv_tools/dist/gv_tools-0.40.0-py3-none-any.whl"
 ```
 
 For notebook plotting, ensure Jupyter and Matplotlib are installed:
@@ -97,7 +95,7 @@ For notebook plotting, ensure Jupyter and Matplotlib are installed:
 ## Run the supplied notebook from tcsh
 
 ```tcsh
-cd "$HOME/Desktop/Work/GV Tools/gv_tools"
+cd "/Users/dwolff/Desktop/Work/GV_Tools/gv_tools"
 ~/anaconda3/bin/python -m jupyter lab notebooks/RM_Young_AIO_PIERS_sample.ipynb
 ```
 
@@ -107,7 +105,7 @@ Choose the raw Parsivel input and output directory:
 
 ```tcsh
 set INPUT_DIR = "/path/to/PIERS0042/Parsivel/input"
-set OUTPUT_DIR = "$HOME/Desktop/Work/GV Tools/Output"
+set OUTPUT_DIR = "/Users/dwolff/Desktop/Work/GV_Tools/Output"
 
 ~/anaconda3/bin/python -m gv_tools.cli parsivel "$INPUT_DIR" \
   --instrument-id PIERS0042 --site-id WFF \
@@ -172,12 +170,13 @@ instrument adapter.
 
 ## Radar ingest
 
-Install the radar dependency and ingest a raw np1 SIGMET/IRIS volume, a WSR-88D
-NEXRAD Level-II archive, or an NPOL1 CF/Radial NetCDF volume. GV Tools examines
+Install the radar dependency and ingest a Universal Format (UF) volume, a raw
+np1 SIGMET/IRIS volume, a WSR-88D NEXRAD Level-II archive, or an NPOL1
+CF/Radial NetCDF volume. GV Tools examines
 the file signature rather than trusting its extension and returns the native
 Py-ART ``Radar`` object:
 
-```bash
+```tcsh
 python -m pip install 'gv_tools[radar]'
 ```
 
@@ -193,6 +192,9 @@ print(route.family, radar.fields)
 Pass exactly one filename per call. Uncompressed files, gzip, bzip2, and ZIP
 archives containing one radar file are supported; dispatch is based on the
 decompressed file signature rather than its extension.
+For example, compressed NOAA DPQC data can be read directly with
+``gv_tools.io.read_radar("/data/KHGX_volume.uf.gz")``. UF input uses Py-ART's
+``read_uf`` reader; ``XRADAR=True`` warns and falls back to Py-ART for UF.
 Ingest prints ``Radar scan type: PPI``, ``RHI``, or ``BB`` and records the same
 value in ``radar.metadata["gv_tools_scan_type"]``.
 
@@ -381,6 +383,9 @@ postprocessed = gv_tools.io.read_mrr(
     "/Volumes/36TB/MRR/TAMU-CC/reprocessed/nc_files/nc_files_c01_mom/2023/08/22"
 )
 print(postprocessed.reflectivity_factor)
+print(postprocessed.attrs["processing_method"])  # Method of Moments
+print(postprocessed.attrs["mrr_product_code"])   # mom; native MRRPro is org
+print(postprocessed.attrs["site_id"])            # PIERS0030
 ```
 
 Plot selected profile fields in one stacked column. Field names are explicit
@@ -430,9 +435,9 @@ plain or inside ZIP/TGZ/tar.gz, into a Pandas DataFrame. Archives must contain
 exactly one matching drop file and are read without extraction.
 
 ```tcsh
-set WORKSPACE = "$HOME/Desktop/Work/GV Tools"
+set WORKSPACE = "$HOME/Desktop/Work/GV_Tools"
 set PYTHON = "$HOME/anaconda3/bin/python"
-$PYTHON -m pip install "${WORKSPACE}/gv_tools/release/gv_tools-0.34.0-py3-none-any.whl[py_2dvd]"
+$PYTHON -m pip install "${WORKSPACE}/gv_tools/dist/gv_tools-0.40.0-py3-none-any.whl[py_2dvd]"
 $HOME/anaconda3/bin/gv-tools-2dvd-process /path/to/V23022.drops.txt --site WFF --instrument sn37 --output-dir "$WORKSPACE/Output"
 $HOME/anaconda3/bin/gv-tools-2dvd-plot "$WORKSPACE/Output/NetCDF/2023/01/WFF_2023_0122_2DVD_measured_velocity.nc" --output-dir "$WORKSPACE/Output"
 ```

@@ -21,5 +21,5 @@ The installed location can be discovered without hard-coded paths:
 
 The notebooks may be launched from any directory. They use
 ``GV_TOOLS_HOME`` when set and otherwise default to
-``~/Desktop/Work/GV Tools``. Input and output locations can also be overridden
+``~/Desktop/Work/GV_Tools``. Input and output locations can also be overridden
 with the environment variables documented in each configuration cell.

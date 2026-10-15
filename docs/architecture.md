@@ -58,7 +58,8 @@ Radar volumes use the public `gv_tools.io.read_radar()` entry point because Py-A
 fit the daily ``xarray.Dataset`` adapter contract. The ingest inspects the file
 signature, routes raw np1 SIGMET/IRIS volumes to ``read_sigmet()``, WSR-88D
 NEXRAD Level-II archives to ``read_nexrad_archive()``, and NPOL1 CF/Radial
-NetCDF volumes to `read_cfradial()`. Each call reads one radar volume. Gzip,
+NetCDF volumes to `read_cfradial()`, and Universal Format volumes to
+``read_uf()``. Each call reads one radar volume. Gzip,
 bzip2, and single-member ZIP compression are transparent.
 
 MRR is intentionally distinct from this scanning-radar path: its vertically

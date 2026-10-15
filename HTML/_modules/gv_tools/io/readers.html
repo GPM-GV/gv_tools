@@ -1,0 +1,975 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gv_tools.io.readers &#8212; GV Tools 0.40.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gv_tools.css?v=f6e64a54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../_static/documentation_options.js?v=13a5ab13"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/gv_tools/io/readers';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../_static/searchtools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">GV Tools 0.40.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">gv_tools.io.readers</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for gv_tools.io.readers</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Consistent, file-list based readers that hide adapter construction.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">replace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tempfile</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemporaryDirectory</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">..adapters</span><span class="w"> </span><span class="kn">import</span> <span class="n">RawLufftWS800Product</span><span class="p">,</span> <span class="n">RawMetOneAIOProduct</span><span class="p">,</span> <span class="n">RawParsivelProduct</span><span class="p">,</span> <span class="n">RawRMYoungAIOProduct</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..adapters.lufft_ws800</span><span class="w"> </span><span class="kn">import</span> <span class="n">ws800_dataframe</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..ingest_radar</span><span class="w"> </span><span class="kn">import</span> <span class="n">ingest_radar</span><span class="p">,</span> <span class="n">inspect_radar_file</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">InstrumentMetadata</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_adapter</span>
+
+<span class="n">_RM_YOUNG_ID</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(?P&lt;id&gt;PIERS\d+)_WX_&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+<span class="n">_LUFFT_WS800</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(?P&lt;id&gt;PIERS\d+)_WS800_.*\.csv$&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+<span class="n">_METONE_FILE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s2">&quot;AIO_(?P&lt;site&gt;[^_]+)_(?P&lt;year&gt;\d</span><span class="si">{4}</span><span class="s2">)(?P&lt;month&gt;\d</span><span class="si">{2}</span><span class="s2">)\.dat$&quot;</span><span class="p">,</span>
+    <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">_PIERS_PARSIVEL_FILE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s2">&quot;^(?P&lt;id&gt;PIERS\d+)_Parsivel_.+\.zip$&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span>
+<span class="p">)</span>
+<span class="n">_APU_PARSIVEL_FILE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s2">&quot;^(?:APU_)?(?P&lt;id&gt;apu\d+)_.*\.zip$&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span>
+<span class="p">)</span>
+<span class="n">_METADATA_KEYS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;metadata&quot;</span><span class="p">,</span> <span class="s2">&quot;instrument_id&quot;</span><span class="p">,</span> <span class="s2">&quot;site_id&quot;</span><span class="p">,</span> <span class="s2">&quot;timezone&quot;</span><span class="p">,</span> <span class="s2">&quot;manufacturer&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="s2">&quot;serial_number&quot;</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;altitude_m&quot;</span><span class="p">,</span> <span class="s2">&quot;campaign&quot;</span><span class="p">,</span> <span class="s2">&quot;extra&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_resolve_files</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;files must be a list of filenames&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">files</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;files must contain at least one filename&quot;</span><span class="p">)</span>
+    <span class="n">resolved</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;each item in files must be a filename string or Path&quot;</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">is_absolute</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;each input filename must be fully qualified: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;input file does not exist: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">resolved</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">resolved</span><span class="p">))</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">resolved</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;files contains duplicate filenames&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">resolved</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_take_adapter_options</span><span class="p">(</span><span class="n">options</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">parsivel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">_METADATA_KEYS</span> <span class="o">|</span> <span class="p">({</span><span class="s2">&quot;source_platform&quot;</span><span class="p">}</span> <span class="k">if</span> <span class="n">parsivel</span> <span class="k">else</span> <span class="nb">set</span><span class="p">())</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">options</span><span class="p">)</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_single_inferred</span><span class="p">(</span><span class="n">values</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">values</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;could not infer </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2">; pass the identifier explicitly&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;files contain multiple </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2">s: </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">values</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_infer_aio_id</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">_single_inferred</span><span class="p">(</span>
+        <span class="p">{</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">files</span> <span class="k">if</span> <span class="p">(</span><span class="n">match</span> <span class="o">:=</span> <span class="n">_RM_YOUNG_ID</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">))},</span>
+        <span class="s2">&quot;AIO instrument&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_aio_family</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">families</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">_LUFFT_WS800</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+            <span class="n">families</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;lufft_ws800&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">_RM_YOUNG_ID</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+            <span class="n">families</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;rm_young&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">_METONE_FILE</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+            <span class="n">families</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;metone&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;not a recognized AIO file: &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">; expected PIERS####_WX_*.csv, PIERS####_WS800_*.csv, or AIO_SITE_YYYYMM.dat&quot;</span>
+            <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">families</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;AIO_FILES cannot mix different AIO instrument families&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">families</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_infer_metone_site</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">_single_inferred</span><span class="p">(</span>
+        <span class="p">{</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;site&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">files</span> <span class="k">if</span> <span class="p">(</span><span class="n">match</span> <span class="o">:=</span> <span class="n">_METONE_FILE</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">))},</span>
+        <span class="s2">&quot;Met One site&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_infer_parsivel_id</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">identifiers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">_PIERS_PARSIVEL_FILE</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="ow">or</span> <span class="n">_APU_PARSIVEL_FILE</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;not a recognized Parsivel archive: &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">; expected PIERS####_Parsivel_*.zip or apu##_*.zip&quot;</span>
+            <span class="p">)</span>
+        <span class="n">identifier</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
+        <span class="n">identifiers</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+            <span class="n">identifier</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">if</span> <span class="n">identifier</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;piers&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">identifier</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">_single_inferred</span><span class="p">(</span><span class="n">identifiers</span><span class="p">,</span> <span class="s2">&quot;Parsivel instrument&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_parsivel_file_day</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the YYYY-MM-DD encoded in a supported Parsivel archive name.&quot;&quot;&quot;</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(?&lt;!\d)(\d</span><span class="si">{8}</span><span class="s2">)(?:\d</span><span class="si">{2}</span><span class="s2">)?(?!\d)&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;could not infer a date from Parsivel archive: </span><span class="si">{</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid date in Parsivel archive: </span><span class="si">{</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">instrument_id</span><span class="p">,</span> <span class="n">instrument_type</span><span class="p">,</span> <span class="n">site_id</span><span class="p">,</span> <span class="n">manufacturer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">timezone</span><span class="p">,</span> <span class="n">metadata_options</span><span class="p">):</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">instrument_id</span><span class="o">=</span><span class="n">instrument_id</span><span class="p">,</span> <span class="n">instrument_type</span><span class="o">=</span><span class="n">instrument_type</span><span class="p">,</span> <span class="n">site_id</span><span class="o">=</span><span class="n">site_id</span><span class="p">,</span>
+        <span class="n">manufacturer</span><span class="o">=</span><span class="n">manufacturer</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">timezone</span><span class="o">=</span><span class="n">timezone</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata_options</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">InstrumentMetadata</span><span class="p">(</span><span class="o">**</span><span class="n">values</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">replace</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">})</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_rm_young_adapter</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">instrument_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">site_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timezone</span><span class="o">=</span><span class="s2">&quot;UTC&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata_options</span><span class="p">):</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">instrument_id</span><span class="o">=</span><span class="n">instrument_id</span> <span class="ow">or</span> <span class="n">_infer_aio_id</span><span class="p">(</span><span class="n">files</span><span class="p">),</span>
+                     <span class="n">instrument_type</span><span class="o">=</span><span class="s2">&quot;weather_station&quot;</span><span class="p">,</span> <span class="n">site_id</span><span class="o">=</span><span class="n">site_id</span> <span class="ow">or</span> <span class="s2">&quot;WFF&quot;</span><span class="p">,</span>
+                     <span class="n">manufacturer</span><span class="o">=</span><span class="s2">&quot;R.M. Young&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;All-in-One&quot;</span><span class="p">,</span> <span class="n">timezone</span><span class="o">=</span><span class="n">timezone</span><span class="p">,</span>
+                     <span class="n">metadata_options</span><span class="o">=</span><span class="n">metadata_options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">create_adapter</span><span class="p">(</span><span class="s2">&quot;rm_young_aio&quot;</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_lufft_adapter</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">instrument_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">site_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timezone</span><span class="o">=</span><span class="s2">&quot;UTC&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata_options</span><span class="p">):</span>
+    <span class="n">identifiers</span> <span class="o">=</span> <span class="p">{</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">files</span> <span class="k">if</span> <span class="p">(</span><span class="n">match</span> <span class="o">:=</span> <span class="n">_LUFFT_WS800</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">))}</span>
+    <span class="n">identifier</span> <span class="o">=</span> <span class="n">instrument_id</span> <span class="ow">or</span> <span class="n">_single_inferred</span><span class="p">(</span><span class="n">identifiers</span><span class="p">,</span> <span class="s2">&quot;Lufft WS800 instrument&quot;</span><span class="p">)</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">instrument_id</span><span class="o">=</span><span class="n">identifier</span><span class="p">,</span> <span class="n">instrument_type</span><span class="o">=</span><span class="s2">&quot;weather_station&quot;</span><span class="p">,</span>
+                     <span class="n">site_id</span><span class="o">=</span><span class="n">site_id</span> <span class="ow">or</span> <span class="s2">&quot;WFF&quot;</span><span class="p">,</span> <span class="n">manufacturer</span><span class="o">=</span><span class="s2">&quot;OTT HydroMet&quot;</span><span class="p">,</span>
+                     <span class="n">model</span><span class="o">=</span><span class="s2">&quot;Lufft WS800&quot;</span><span class="p">,</span> <span class="n">timezone</span><span class="o">=</span><span class="n">timezone</span><span class="p">,</span> <span class="n">metadata_options</span><span class="o">=</span><span class="n">metadata_options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">create_adapter</span><span class="p">(</span><span class="s2">&quot;lufft_ws800&quot;</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_metone_adapter</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">instrument_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">site_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timezone</span><span class="o">=</span><span class="s2">&quot;UTC&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata_options</span><span class="p">):</span>
+    <span class="n">site</span> <span class="o">=</span> <span class="n">site_id</span> <span class="ow">or</span> <span class="n">_infer_metone_site</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">instrument_id</span><span class="o">=</span><span class="n">instrument_id</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">&quot;AIO_</span><span class="si">{</span><span class="n">site</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                     <span class="n">instrument_type</span><span class="o">=</span><span class="s2">&quot;weather_station&quot;</span><span class="p">,</span> <span class="n">site_id</span><span class="o">=</span><span class="n">site</span><span class="p">,</span>
+                     <span class="n">manufacturer</span><span class="o">=</span><span class="s2">&quot;Met One&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;AIO&quot;</span><span class="p">,</span> <span class="n">timezone</span><span class="o">=</span><span class="n">timezone</span><span class="p">,</span>
+                     <span class="n">metadata_options</span><span class="o">=</span><span class="n">metadata_options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">create_adapter</span><span class="p">(</span><span class="s2">&quot;metone_aio&quot;</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_aio_adapter</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata_options</span><span class="p">):</span>
+    <span class="n">family</span> <span class="o">=</span> <span class="n">_aio_family</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">family</span> <span class="o">==</span> <span class="s2">&quot;lufft_ws800&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_lufft_adapter</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata_options</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">family</span> <span class="o">==</span> <span class="s2">&quot;rm_young&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_rm_young_adapter</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata_options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_metone_adapter</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata_options</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_parsivel_adapter</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">instrument_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">site_id</span><span class="o">=</span><span class="s2">&quot;WFF&quot;</span><span class="p">,</span> <span class="n">timezone</span><span class="o">=</span><span class="s2">&quot;UTC&quot;</span><span class="p">,</span> <span class="n">source_platform</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata_options</span><span class="p">):</span>
+    <span class="n">detected_identifier</span> <span class="o">=</span> <span class="n">_infer_parsivel_id</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="n">identifier</span> <span class="o">=</span> <span class="n">instrument_id</span> <span class="ow">or</span> <span class="n">detected_identifier</span>
+    <span class="k">if</span> <span class="n">identifier</span><span class="o">.</span><span class="n">casefold</span><span class="p">()</span> <span class="o">!=</span> <span class="n">detected_identifier</span><span class="o">.</span><span class="n">casefold</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;instrument_id </span><span class="si">{</span><span class="n">instrument_id</span><span class="si">!r}</span><span class="s2"> does not match filenames for &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">detected_identifier</span><span class="si">!r}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">instrument_id</span><span class="o">=</span><span class="n">identifier</span><span class="p">,</span> <span class="n">instrument_type</span><span class="o">=</span><span class="s2">&quot;disdrometer&quot;</span><span class="p">,</span>
+                     <span class="n">site_id</span><span class="o">=</span><span class="n">site_id</span><span class="p">,</span> <span class="n">manufacturer</span><span class="o">=</span><span class="s2">&quot;OTT HydroMet&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;Parsivel2&quot;</span><span class="p">,</span>
+                     <span class="n">timezone</span><span class="o">=</span><span class="n">timezone</span><span class="p">,</span> <span class="n">metadata_options</span><span class="o">=</span><span class="n">metadata_options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">create_adapter</span><span class="p">(</span><span class="s2">&quot;parsivel&quot;</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">source_platform</span><span class="o">=</span><span class="n">source_platform</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_daily_results</span><span class="p">(</span><span class="n">adapter</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="n">products</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">daily</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">adapter</span><span class="p">,</span> <span class="n">method</span><span class="p">)(</span><span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+        <span class="n">products</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">daily</span><span class="p">[</span><span class="n">day</span><span class="p">]</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">daily</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">products</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the supplied files contain no valid observations&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">products</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_merge_frame</span><span class="p">(</span><span class="n">frames</span><span class="p">):</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;time&quot;</span> <span class="ow">in</span> <span class="n">merged</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">merged</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;stable&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">merged</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;stable&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">merged</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">merged</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">)]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_merge_raw</span><span class="p">(</span><span class="n">products</span><span class="p">):</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="n">products</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="p">(</span><span class="n">RawLufftWS800Product</span><span class="p">,</span> <span class="n">RawRMYoungAIOProduct</span><span class="p">,</span> <span class="n">RawMetOneAIOProduct</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">replace</span><span class="p">(</span>
+            <span class="n">first</span><span class="p">,</span>
+            <span class="n">observations</span><span class="o">=</span><span class="n">_merge_frame</span><span class="p">([</span><span class="n">item</span><span class="o">.</span><span class="n">observations</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">products</span><span class="p">]),</span>
+            <span class="n">source_files</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">({</span><span class="n">name</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">products</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">source_files</span><span class="p">})),</span>
+            <span class="n">rejected_rows</span><span class="o">=</span><span class="nb">sum</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">rejected_rows</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">products</span><span class="p">),</span>
+            <span class="n">duplicate_rows</span><span class="o">=</span><span class="nb">sum</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">duplicate_rows</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">products</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">RawParsivelProduct</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">RawParsivelProduct</span><span class="p">(</span>
+            <span class="n">_merge_frame</span><span class="p">([</span><span class="n">item</span><span class="o">.</span><span class="n">parameters</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">products</span><span class="p">]),</span>
+            <span class="n">_merge_frame</span><span class="p">([</span><span class="n">item</span><span class="o">.</span><span class="n">psd</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">products</span><span class="p">]),</span>
+            <span class="n">_merge_frame</span><span class="p">([</span><span class="n">item</span><span class="o">.</span><span class="n">moments</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">products</span><span class="p">]),</span>
+        <span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unsupported raw product type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">first</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_merge_datasets</span><span class="p">(</span><span class="n">datasets</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+        <span class="n">datasets</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">data_vars</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="s2">&quot;minimal&quot;</span><span class="p">,</span> <span class="n">compat</span><span class="o">=</span><span class="s2">&quot;override&quot;</span><span class="p">,</span>
+        <span class="n">join</span><span class="o">=</span><span class="s2">&quot;outer&quot;</span><span class="p">,</span> <span class="n">combine_attrs</span><span class="o">=</span><span class="s2">&quot;override&quot;</span><span class="p">,</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">sortby</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">merged</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">has_duplicates</span><span class="p">:</span>
+        <span class="n">merged</span> <span class="o">=</span> <span class="n">merged</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=~</span><span class="n">merged</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">))</span>
+    <span class="n">merged</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;source_files&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">files</span><span class="p">)</span>
+    <span class="n">merged</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">merged</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_discover</span><span class="p">(</span><span class="n">adapter</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">day</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">files</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">adapter</span><span class="o">.</span><span class="n">discover</span><span class="p">(</span><span class="n">path</span><span class="p">)})</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_discover_parsivel</span><span class="p">(</span><span class="n">adapter</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
+    <span class="n">dates</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">discovered</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">discover</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">dates</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">discovered</span> <span class="ow">or</span> <span class="p">[</span><span class="n">_parsivel_file_day</span><span class="p">(</span><span class="n">path</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dates</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_parsivel_results</span><span class="p">(</span><span class="n">adapter</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="n">start_date</span> <span class="o">=</span> <span class="n">_parsivel_file_day</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">end_date</span> <span class="o">=</span> <span class="n">_parsivel_file_day</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">end_date</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">start_date</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;the date in the last Parsivel filename precedes the date in the &quot;</span>
+            <span class="s2">&quot;first filename; order files from earliest to latest&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># process_parsivel accepts one file or directory, not an explicit file list.</span>
+    <span class="c1"># A temporary directory of links preserves the user&#39;s exact selection while</span>
+    <span class="c1"># allowing the complete interval to be decoded in one backend invocation.</span>
+    <span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;gv_tools_parsivel_&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">staging_name</span><span class="p">:</span>
+        <span class="n">staging</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">staging_name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+            <span class="p">(</span><span class="n">staging</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">index</span><span class="si">:</span><span class="s2">06d</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">symlink_to</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">daily</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">adapter</span><span class="p">,</span> <span class="n">method</span><span class="p">)(</span>
+            <span class="n">staging</span><span class="p">,</span>
+            <span class="n">_date_interval</span><span class="o">=</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">),</span>
+            <span class="o">**</span><span class="n">options</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="n">products</span> <span class="o">=</span> <span class="p">[</span><span class="n">daily</span><span class="p">[</span><span class="n">day</span><span class="p">]</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">daily</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">products</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the supplied Parsivel files contain no valid observations&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">products</span>
+
+
+<div class="viewcode-block" id="discover_aio">
+<a class="viewcode-back" href="../../../api/io.html#gv_tools.io.discover_aio">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">discover_aio</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata_options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return dates in explicitly supplied RM Young or Met One AIO files.&quot;&quot;&quot;</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">_resolve_files</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_discover</span><span class="p">(</span><span class="n">_aio_adapter</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata_options</span><span class="p">),</span> <span class="n">paths</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="read_aio_raw">
+<a class="viewcode-back" href="../../../api/io.html#gv_tools.io.read_aio_raw">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_aio_raw</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read and merge RM Young or Met One AIO files into one raw product.&quot;&quot;&quot;</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">_resolve_files</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="n">adapter_options</span> <span class="o">=</span> <span class="n">_take_adapter_options</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_merge_raw</span><span class="p">(</span><span class="n">_daily_results</span><span class="p">(</span><span class="n">_aio_adapter</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="o">**</span><span class="n">adapter_options</span><span class="p">),</span> <span class="n">paths</span><span class="p">,</span> <span class="s2">&quot;read_raw&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">))</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_aio_dataframe</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">frame</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">frame</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_ws800_common_xarray</span><span class="p">(</span><span class="n">frame</span><span class="p">):</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_xarray</span><span class="p">()</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span>
+    <span class="n">units</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;air_temperature&quot;</span><span class="p">:</span> <span class="s2">&quot;degree_Celsius&quot;</span><span class="p">,</span> <span class="s2">&quot;relative_humidity&quot;</span><span class="p">:</span> <span class="s2">&quot;percent&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;air_pressure&quot;</span><span class="p">:</span> <span class="s2">&quot;hPa&quot;</span><span class="p">,</span> <span class="s2">&quot;wind_speed&quot;</span><span class="p">:</span> <span class="s2">&quot;m s-1&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;wind_from_direction&quot;</span><span class="p">:</span> <span class="s2">&quot;degree&quot;</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">unit</span> <span class="ow">in</span> <span class="n">units</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">dataset</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unit</span>
+    <span class="k">return</span> <span class="n">dataset</span>
+
+
+<div class="viewcode-block" id="read_aio">
+<a class="viewcode-back" href="../../../api/io.html#gv_tools.io.read_aio">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_aio</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">XARRAY</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read AIO files as pandas (default) or xarray with ``XARRAY=True``.&quot;&quot;&quot;</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">_resolve_files</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="n">adapter_options</span> <span class="o">=</span> <span class="n">_take_adapter_options</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">adapter</span> <span class="o">=</span> <span class="n">_aio_adapter</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="o">**</span><span class="n">adapter_options</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">_aio_family</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;lufft_ws800&quot;</span><span class="p">:</span>
+        <span class="n">products</span> <span class="o">=</span> <span class="n">_daily_results</span><span class="p">(</span><span class="n">adapter</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="s2">&quot;read_raw&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">ws800_dataframe</span><span class="p">(</span><span class="n">_merge_frame</span><span class="p">([</span><span class="n">item</span><span class="o">.</span><span class="n">observations</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">products</span><span class="p">]),</span> <span class="n">common_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">adapter</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">to_attrs</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">_ws800_common_xarray</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="k">if</span> <span class="n">XARRAY</span> <span class="k">else</span> <span class="n">frame</span>
+    <span class="n">datasets</span> <span class="o">=</span> <span class="n">_daily_results</span><span class="p">(</span><span class="n">adapter</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">_merge_datasets</span><span class="p">(</span><span class="n">datasets</span><span class="p">,</span> <span class="n">paths</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dataset</span> <span class="k">if</span> <span class="n">XARRAY</span> <span class="k">else</span> <span class="n">_aio_dataframe</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="read_ws800_full">
+<a class="viewcode-back" href="../../../api/io.html#gv_tools.io.read_ws800_full">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_ws800_full</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">XARRAY</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read and merge every field from Lufft WS800 files as pandas or xarray.</span>
+
+<span class="sd">    Pandas is returned by default. Pass ``XARRAY=True`` for a normalized</span>
+<span class="sd">    :class:`xarray.Dataset`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">_resolve_files</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">_aio_family</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;lufft_ws800&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;files are not recognized PIERS Lufft WS800 CSVs&quot;</span><span class="p">)</span>
+    <span class="n">adapter_options</span> <span class="o">=</span> <span class="n">_take_adapter_options</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">adapter</span> <span class="o">=</span> <span class="n">_lufft_adapter</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="o">**</span><span class="n">adapter_options</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">XARRAY</span><span class="p">:</span>
+        <span class="n">datasets</span> <span class="o">=</span> <span class="n">_daily_results</span><span class="p">(</span><span class="n">adapter</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_merge_datasets</span><span class="p">(</span><span class="n">datasets</span><span class="p">,</span> <span class="n">paths</span><span class="p">)</span>
+    <span class="n">products</span> <span class="o">=</span> <span class="n">_daily_results</span><span class="p">(</span><span class="n">adapter</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="s2">&quot;read_raw&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">ws800_dataframe</span><span class="p">(</span><span class="n">_merge_frame</span><span class="p">([</span><span class="n">item</span><span class="o">.</span><span class="n">observations</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">products</span><span class="p">]))</span>
+    <span class="n">frame</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">adapter</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">to_attrs</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">frame</span></div>
+
+
+
+<div class="viewcode-block" id="discover_metone">
+<a class="viewcode-back" href="../../../api/io.html#gv_tools.io.discover_metone">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">discover_metone</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata_options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compatibility wrapper for :func:`discover_aio`.&quot;&quot;&quot;</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">_resolve_files</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">discover_aio</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata_options</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="read_metone_raw">
+<a class="viewcode-back" href="../../../api/io.html#gv_tools.io.read_metone_raw">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_metone_raw</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compatibility wrapper for :func:`read_aio_raw`.&quot;&quot;&quot;</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">_resolve_files</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">read_aio_raw</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="read_metone">
+<a class="viewcode-back" href="../../../api/io.html#gv_tools.io.read_metone">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_metone</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compatibility wrapper for :func:`read_aio`.&quot;&quot;&quot;</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">_resolve_files</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">read_aio</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="discover_parsivel">
+<a class="viewcode-back" href="../../../api/io.html#gv_tools.io.discover_parsivel">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">discover_parsivel</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata_options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return dates in the explicitly supplied Parsivel files.&quot;&quot;&quot;</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">_resolve_files</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_discover_parsivel</span><span class="p">(</span><span class="n">_parsivel_adapter</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata_options</span><span class="p">),</span> <span class="n">paths</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="read_parsivel_raw">
+<a class="viewcode-back" href="../../../api/io.html#gv_tools.io.read_parsivel_raw">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_parsivel_raw</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read and merge explicitly supplied Parsivel files into one raw product.&quot;&quot;&quot;</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">_resolve_files</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="n">adapter_options</span> <span class="o">=</span> <span class="n">_take_adapter_options</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">parsivel</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_merge_raw</span><span class="p">(</span><span class="n">_parsivel_results</span><span class="p">(</span>
+        <span class="n">_parsivel_adapter</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="o">**</span><span class="n">adapter_options</span><span class="p">),</span> <span class="n">paths</span><span class="p">,</span> <span class="s2">&quot;read_raw&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span>
+    <span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="read_parsivel">
+<a class="viewcode-back" href="../../../api/io.html#gv_tools.io.read_parsivel">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_parsivel</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read and merge every explicitly supplied Parsivel file.&quot;&quot;&quot;</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">_resolve_files</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="n">adapter_options</span> <span class="o">=</span> <span class="n">_take_adapter_options</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">parsivel</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">datasets</span> <span class="o">=</span> <span class="n">_parsivel_results</span><span class="p">(</span>
+        <span class="n">_parsivel_adapter</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="o">**</span><span class="n">adapter_options</span><span class="p">),</span> <span class="n">paths</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">_merge_datasets</span><span class="p">(</span><span class="n">datasets</span><span class="p">,</span> <span class="n">paths</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="read_radar">
+<a class="viewcode-back" href="../../../api/io.html#gv_tools.io.read_radar">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_radar</span><span class="p">(</span><span class="n">radar_file</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">XRADAR</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">reader_options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read one compressed or uncompressed radar file.</span>
+
+<span class="sd">    The file format is detected from its content, including Universal Format,</span>
+<span class="sd">    SIGMET/IRIS, NEXRAD Level II, and CF/Radial NetCDF. ``.gz``, ``.bz2``, and ZIP</span>
+<span class="sd">    compression are handled transparently. The default reads directly with</span>
+<span class="sd">    ARM Py-ART. ``XRADAR=True`` loads through xradar, converts the resulting</span>
+<span class="sd">    DataTree with ``tree.pyart.to_radar()``, and returns the Py-ART Radar.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">radar_file</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;radar_file must be one filename, not a list&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ingest_radar</span><span class="p">(</span><span class="n">radar_file</span><span class="p">,</span> <span class="n">XRADAR</span><span class="o">=</span><span class="n">XRADAR</span><span class="p">,</span> <span class="o">**</span><span class="n">reader_options</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="inspect_radar">
+<a class="viewcode-back" href="../../../api/io.html#gv_tools.io.inspect_radar">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">inspect_radar</span><span class="p">(</span><span class="n">radar_file</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the automatically detected ingest route for one radar file.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">radar_file</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;radar_file must be one filename, not a list&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">inspect_radar_file</span><span class="p">(</span><span class="n">radar_file</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

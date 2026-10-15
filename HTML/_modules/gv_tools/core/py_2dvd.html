@@ -1,0 +1,951 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gv_tools.core.py_2dvd &#8212; GV Tools 0.40.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gv_tools.css?v=f6e64a54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../_static/documentation_options.js?v=13a5ab13"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/gv_tools/core/py_2dvd';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../_static/searchtools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">GV Tools 0.40.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">gv_tools.core.py_2dvd</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for gv_tools.core.py_2dvd</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Literature-based drop integration and diameter spectra in explicit units.</span>
+
+<span class="sd">Only one physical implementation is present; measured and terminal refer to</span>
+<span class="sd">velocity choices, not competing algorithms. Instrument context: Kruger &amp;</span>
+<span class="sd">Krajewski (2002). DSD/integral context: Tokay et al. (2001, 2013). Mass-weighted</span>
+<span class="sd">mean and spread: Williams et al. (2014), DOI 10.1175/JAMC-D-13-076.1.</span>
+
+<span class="sd">The equations below are explicit discrete sampling-volume sums. ``docs/py_2dvd/methods.md``</span>
+<span class="sd">derives the unit conversions and distinguishes these equations from inherited</span>
+<span class="sd">FORTRAN preprocessing conventions. No rainnasa integral implementation is used.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">__version__</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">importlib.resources</span><span class="w"> </span><span class="kn">import</span> <span class="n">files</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">..io.py_2dvd</span><span class="w"> </span><span class="kn">import</span> <span class="n">_file_hash</span>
+
+<span class="n">SAMPLE_SECONDS</span> <span class="o">=</span> <span class="mf">60.0</span>
+<span class="n">MINUTES_PER_DAY</span> <span class="o">=</span> <span class="mi">1440</span>
+<span class="n">WATER_DENSITY_KG_M3</span> <span class="o">=</span> <span class="mf">1000.0</span>
+<span class="n">VELOCITIES</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;terminal&quot;</span><span class="p">,</span> <span class="s2">&quot;measured&quot;</span><span class="p">)</span>
+<span class="n">INTEGRAL_UNITS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;rain_rate&quot;</span><span class="p">:</span> <span class="s2">&quot;mm h-1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;number_concentration&quot;</span><span class="p">:</span> <span class="s2">&quot;m-3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;liquid_water_content&quot;</span><span class="p">:</span> <span class="s2">&quot;g m-3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;reflectivity&quot;</span><span class="p">:</span> <span class="s2">&quot;mm6 m-3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;reflectivity_dbz&quot;</span><span class="p">:</span> <span class="s2">&quot;dBZ&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mass_weighted_diameter&quot;</span><span class="p">:</span> <span class="s2">&quot;mm&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;diameter_std&quot;</span><span class="p">:</span> <span class="s2">&quot;mm&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;minimum_diameter&quot;</span><span class="p">:</span> <span class="s2">&quot;mm&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;maximum_diameter&quot;</span><span class="p">:</span> <span class="s2">&quot;mm&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;drop_count&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">TABLE_NAMES</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;tervel.dat&quot;</span><span class="p">,</span> <span class="s2">&quot;oblateness.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;2dvd_diameter020.txt&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_lookup_table</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read bundled numerical data, so users never need a --tables argument.&quot;&quot;&quot;</span>
+    <span class="n">resource</span> <span class="o">=</span> <span class="n">files</span><span class="p">(</span><span class="s2">&quot;gv_tools&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;py_2dvd&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">resource</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nonfinite lookup table: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">values</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_interpolate_three_nearest</span><span class="p">(</span><span class="n">diameters_mm</span><span class="p">,</span> <span class="n">table_diameters_mm</span><span class="p">,</span> <span class="n">table_values</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reproduce intr.f&#39;s quadratic interpolation through three nearest points.</span>
+
+<span class="sd">    This is not linear interpolation between neighboring rows. Stable distance</span>
+<span class="sd">    sorting keeps the earlier table row in a tie; outside the tabulated range</span>
+<span class="sd">    the same polynomial extrapolates. Blocks bound the temporary distance array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">interpolated_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">diameters_mm</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">start</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">diameters_mm</span><span class="p">),</span> <span class="mi">10000</span><span class="p">):</span>
+        <span class="n">query_diameters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">diameters_mm</span><span class="p">[</span><span class="n">start</span> <span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">10000</span><span class="p">])</span>
+        <span class="n">nearest_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span>
+            <span class="nb">abs</span><span class="p">(</span><span class="n">query_diameters</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">table_diameters_mm</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;stable&quot;</span>
+        <span class="p">)[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">abscissae</span> <span class="o">=</span> <span class="n">table_diameters_mm</span><span class="p">[</span><span class="n">nearest_indices</span><span class="p">]</span>
+        <span class="n">polynomial_values</span> <span class="o">=</span> <span class="n">table_values</span><span class="p">[</span><span class="n">nearest_indices</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># Neville&#39;s recurrence evaluates the quadratic without fitting global</span>
+        <span class="c1"># coefficients, following the arithmetic order used by intr.f.</span>
+        <span class="k">for</span> <span class="n">upper</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">lower</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">upper</span><span class="p">):</span>
+                <span class="n">polynomial_values</span><span class="p">[:,</span> <span class="n">upper</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">polynomial_values</span><span class="p">[:,</span> <span class="n">lower</span><span class="p">]</span>
+                    <span class="o">*</span> <span class="p">(</span><span class="n">query_diameters</span> <span class="o">-</span> <span class="n">abscissae</span><span class="p">[:,</span> <span class="n">upper</span><span class="p">])</span>
+                    <span class="o">-</span> <span class="n">polynomial_values</span><span class="p">[:,</span> <span class="n">upper</span><span class="p">]</span>
+                    <span class="o">*</span> <span class="p">(</span><span class="n">query_diameters</span> <span class="o">-</span> <span class="n">abscissae</span><span class="p">[:,</span> <span class="n">lower</span><span class="p">])</span>
+                <span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">abscissae</span><span class="p">[:,</span> <span class="n">lower</span><span class="p">]</span> <span class="o">-</span> <span class="n">abscissae</span><span class="p">[:,</span> <span class="n">upper</span><span class="p">])</span>
+        <span class="n">interpolated_values</span><span class="p">[</span><span class="n">start</span> <span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">query_diameters</span><span class="p">)]</span> <span class="o">=</span> <span class="n">polynomial_values</span><span class="p">[</span>
+            <span class="p">:,</span> <span class="mi">2</span>
+        <span class="p">]</span>
+    <span class="k">return</span> <span class="n">interpolated_values</span>
+
+
+<div class="viewcode-block" id="prepare_drops">
+<a class="viewcode-back" href="../../../api/core.html#gv_tools.core.prepare_drops">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">prepare_drops</span><span class="p">(</span><span class="n">raw_data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy with derived diameter, terminal velocity and explicit QC.</span>
+
+<span class="sd">    These inherited conventions preserve the full package&#39;s selected sample:</span>
+
+<span class="sd">    * Diameter is (6 V / pi)**0.333, retaining dropbydrop.f&#39;s exponent rather</span>
+<span class="sd">      than silently replacing it with an exact cube root.</span>
+<span class="sd">    * Terminal velocity is interpolated from tervel.dat (cm/s -&gt; m/s).</span>
+<span class="sd">    * Strict velocity bounds use 0.5 and 1.5 times that interpolated value.</span>
+<span class="sd">    * For reported diameter &gt;= 6 mm, terminal velocity is then overridden by</span>
+<span class="sd">      9.65 - 10.3 exp(-0.6 D) m/s. The QC bounds deliberately remain the earlier</span>
+<span class="sd">      interpolation bounds, as in the source pipeline.</span>
+<span class="sd">    * After the first backward hour/minute jump, remaining rows are rejected.</span>
+<span class="sd">      Seconds alone do not trigger this legacy condition. Input is not sorted.</span>
+<span class="sd">    * Derived diameter must be &lt;= 10 mm. Axis ratio is retained diagnostically;</span>
+<span class="sd">      the supplied oblateness table does not impose an additional filter.</span>
+
+<span class="sd">    Neither raw_data nor its metadata is mutated. Values are not yet rounded.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Expected the DataFrame returned by ingest_raw&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">{</span><span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="s2">&quot;instrument_id&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">raw_data</span><span class="o">.</span><span class="n">attrs</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing source metadata; read the file with ingest_raw first&quot;</span><span class="p">)</span>
+    <span class="n">drops</span> <span class="o">=</span> <span class="n">raw_data</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">velocity_table</span> <span class="o">=</span> <span class="n">_lookup_table</span><span class="p">(</span><span class="s2">&quot;tervel.dat&quot;</span><span class="p">)[:</span><span class="mi">60</span><span class="p">]</span>
+    <span class="n">axis_ratio_table</span> <span class="o">=</span> <span class="n">_lookup_table</span><span class="p">(</span><span class="s2">&quot;oblateness.txt&quot;</span><span class="p">)[:</span><span class="mi">69</span><span class="p">]</span>
+    <span class="n">drops</span><span class="p">[</span><span class="s2">&quot;diameter_mm&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span> <span class="o">*</span> <span class="n">drops</span><span class="o">.</span><span class="n">drop_volume_mm3</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.333</span>
+    <span class="n">interpolated_velocity</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">_interpolate_three_nearest</span><span class="p">(</span>
+            <span class="n">drops</span><span class="o">.</span><span class="n">diameter_mm</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">velocity_table</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">velocity_table</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="o">/</span> <span class="mf">100.0</span>
+    <span class="p">)</span>
+    <span class="n">drops</span><span class="p">[</span><span class="s2">&quot;expected_axis_ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_interpolate_three_nearest</span><span class="p">(</span>
+        <span class="n">drops</span><span class="o">.</span><span class="n">diameter_mm</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">axis_ratio_table</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">axis_ratio_table</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">drops</span><span class="p">[</span><span class="s2">&quot;velocity_lower_m_s&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">interpolated_velocity</span>
+    <span class="n">drops</span><span class="p">[</span><span class="s2">&quot;velocity_upper_m_s&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">interpolated_velocity</span>
+    <span class="n">large_drop</span> <span class="o">=</span> <span class="n">drops</span><span class="o">.</span><span class="n">reported_diameter_mm</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mf">6.0</span>
+    <span class="n">interpolated_velocity</span><span class="p">[</span><span class="n">large_drop</span><span class="p">]</span> <span class="o">=</span> <span class="mf">9.65</span> <span class="o">-</span> <span class="mf">10.3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+        <span class="o">-</span><span class="mf">0.6</span> <span class="o">*</span> <span class="n">drops</span><span class="o">.</span><span class="n">reported_diameter_mm</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[</span><span class="n">large_drop</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">drops</span><span class="p">[</span><span class="s2">&quot;terminal_velocity_m_s&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">interpolated_velocity</span>
+    <span class="n">drops</span><span class="p">[</span><span class="s2">&quot;velocity_ok&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">drops</span><span class="o">.</span><span class="n">measured_velocity_m_s</span> <span class="o">&gt;</span> <span class="n">drops</span><span class="o">.</span><span class="n">velocity_lower_m_s</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span>
+        <span class="n">drops</span><span class="o">.</span><span class="n">measured_velocity_m_s</span> <span class="o">&lt;</span> <span class="n">drops</span><span class="o">.</span><span class="n">velocity_upper_m_s</span>
+    <span class="p">)</span>
+    <span class="n">clock_minutes</span> <span class="o">=</span> <span class="p">(</span><span class="n">drops</span><span class="o">.</span><span class="n">hour</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="n">drops</span><span class="o">.</span><span class="n">minute</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">drops</span><span class="p">):</span>
+        <span class="n">backward_clock_seen</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">clock_minutes</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">drops</span><span class="p">[</span><span class="s2">&quot;time_ok&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="o">~</span><span class="n">backward_clock_seen</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">drops</span><span class="p">[</span><span class="s2">&quot;time_ok&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="n">drops</span><span class="p">[</span><span class="s2">&quot;accepted&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">drops</span><span class="o">.</span><span class="n">time_ok</span> <span class="o">&amp;</span> <span class="n">drops</span><span class="o">.</span><span class="n">velocity_ok</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">drops</span><span class="o">.</span><span class="n">diameter_mm</span> <span class="o">&lt;=</span> <span class="mf">10.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">drops</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_selected_physical_inputs</span><span class="p">(</span><span class="n">prepared_drops</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Select first, then reproduce the validated intermediate text precision.</span>
+
+<span class="sd">    D, both velocities, and area were historically written with three decimals</span>
+<span class="sd">    and read into single precision. Retaining that convention avoids changing</span>
+<span class="sd">    drop/bin assignments during this cleanup. Subsequent integration is float64.</span>
+<span class="sd">    This compatibility convention is NOT a claim that the papers require rounding.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">selected</span> <span class="o">=</span> <span class="n">prepared_drops</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">prepared_drops</span><span class="o">.</span><span class="n">accepted</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">physical_columns</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;diameter_mm&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;measured_velocity_m_s&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;terminal_velocity_m_s&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sampling_area_mm2&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">physical_columns</span><span class="p">:</span>
+        <span class="n">rounded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">[</span><span class="n">column</span><span class="p">]])</span>
+        <span class="n">selected</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">rounded</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">physical_columns</span><span class="p">)]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="ow">or</span> <span class="p">(</span><span class="n">values</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+        <span class="ow">or</span> <span class="p">(</span><span class="n">values</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+    <span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Accepted drops require nonnegative diameter and positive area/velocities after rounding&quot;</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">selected</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_diameter_bins</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return nominal centers/width and historical half-open membership edges.</span>
+
+<span class="sd">    Nominal centers come from the first 50 rows of 2dvd_diameter020.txt. Membership</span>
+<span class="sd">    edges retain repeated float32 additions of 0.2 mm (the final edge is slightly</span>
+<span class="sd">    below 10 mm). Normalization uses exactly 0.2 mm, not the tiny irregular edge</span>
+<span class="sd">    differences. An upper-edge drop belongs to the next bin; the final upper edge</span>
+<span class="sd">    is excluded. Keeping these rules preserves the validated drop-count comparison.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bin_table</span> <span class="o">=</span> <span class="n">_lookup_table</span><span class="p">(</span><span class="s2">&quot;2dvd_diameter020.txt&quot;</span><span class="p">)[:</span><span class="mi">50</span><span class="p">]</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">bin_table</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">50</span>
+        <span class="ow">or</span> <span class="n">bin_table</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">2</span>
+        <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">bin_table</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.2</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">bin_table</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="mf">0.2</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Expected 50 nominal 0.2-mm diameter bins&quot;</span><span class="p">)</span>
+    <span class="n">edges_mm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">51</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">51</span><span class="p">):</span>
+        <span class="n">edges_mm</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">edges_mm</span><span class="p">[</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">bin_table</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">edges_mm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="calculate_products">
+<a class="viewcode-back" href="../../../api/core.html#gv_tools.core.calculate_products">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_products</span><span class="p">(</span><span class="n">raw_data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate integral parameters and DSD together; return two Xarray Datasets.</span>
+
+<span class="sd">    For each selected drop j, A_j is its supplied effective area in m², v_j the</span>
+<span class="sd">    chosen velocity in m/s, and T=60 s. Its concentration contribution is</span>
+<span class="sd">    w_j = 1/(A_j v_j T) [m^-3]. Define M_k = sum(D_j**k w_j), with D in mm.</span>
+
+<span class="sd">    NT=M0; Z=M6; LWC=(pi/6)*1e-3*M3 [g/m³]; Dm=M4/M3.</span>
+<span class="sd">    Mass-spectrum variance=sum((D-Dm)**2 D**3 w)/M3 (Williams et al., 2014).</span>
+<span class="sd">    Rain rate is a per-drop volume flux: sum((pi/6)*(D*1e-3)**3/(A*T)),</span>
+<span class="sd">    converted from m/s to mm/h by 3.6e6. Velocity cancels from this flux.</span>
+<span class="sd">    DSD for bin i is sum(w_j in bin i)/0.2 [m^-3 mm^-1].</span>
+
+<span class="sd">    Integrals use individual diameters, not bin-center approximations to D³ or</span>
+<span class="sd">    D⁶. The DSD is a histogram in concentration per diameter, NOT raw counts.</span>
+<span class="sd">    Both velocity choices are returned; no RainNASA integral code is included.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prepared</span> <span class="o">=</span> <span class="n">prepare_drops</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+    <span class="n">drops</span> <span class="o">=</span> <span class="n">_selected_physical_inputs</span><span class="p">(</span><span class="n">prepared</span><span class="p">)</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">raw_data</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">])</span>
+    <span class="n">minute_index</span> <span class="o">=</span> <span class="p">(</span><span class="n">drops</span><span class="o">.</span><span class="n">hour</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="n">drops</span><span class="o">.</span><span class="n">minute</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">diameter_mm</span> <span class="o">=</span> <span class="n">drops</span><span class="o">.</span><span class="n">diameter_mm</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">diameter_m</span> <span class="o">=</span> <span class="n">diameter_mm</span> <span class="o">*</span> <span class="mf">1e-3</span>
+    <span class="n">sampling_area_m2</span> <span class="o">=</span> <span class="n">drops</span><span class="o">.</span><span class="n">sampling_area_mm2</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1e-6</span>
+    <span class="n">all_minutes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="n">MINUTES_PER_DAY</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;min&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">sum_per_minute</span><span class="p">(</span><span class="n">contribution</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Accumulate one physical contribution per drop into its minute slot.</span>
+
+<span class="sd">        Repeated minute indices must add, not overwrite. minlength retains all</span>
+<span class="sd">        1440 slots, including gaps before the first and after the last record.</span>
+<span class="sd">        Explicit float output also handles an empty input without integer NaN</span>
+<span class="sd">        assignment problems when the missing-data policy is applied below.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span>
+            <span class="n">minute_index</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">contribution</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="n">MINUTES_PER_DAY</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="n">accepted_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">minute_index</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="n">MINUTES_PER_DAY</span><span class="p">)</span>
+    <span class="n">has_drops</span> <span class="o">=</span> <span class="n">accepted_count</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="n">minimum_diameter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">MINUTES_PER_DAY</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+    <span class="n">maximum_diameter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">MINUTES_PER_DAY</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">minimum_diameter</span><span class="p">,</span> <span class="n">minute_index</span><span class="p">,</span> <span class="n">diameter_mm</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">maximum_diameter</span><span class="p">,</span> <span class="n">minute_index</span><span class="p">,</span> <span class="n">diameter_mm</span><span class="p">)</span>
+    <span class="n">minimum_diameter</span><span class="p">[</span><span class="o">~</span><span class="n">has_drops</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">maximum_diameter</span><span class="p">[</span><span class="o">~</span><span class="n">has_drops</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+    <span class="n">centers_mm</span><span class="p">,</span> <span class="n">edges_mm</span> <span class="o">=</span> <span class="n">_diameter_bins</span><span class="p">()</span>
+    <span class="n">bin_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">edges_mm</span><span class="p">,</span> <span class="n">diameter_mm</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">in_bin</span> <span class="o">=</span> <span class="p">(</span><span class="n">bin_index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">bin_index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">centers_mm</span><span class="p">))</span>
+    <span class="n">bin_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">MINUTES_PER_DAY</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">centers_mm</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="c1"># Indexed accumulation counts every drop, including repeated minute/bin pairs.</span>
+    <span class="c1"># Ordinary indexed += would lose repeated-index contributions.</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">bin_counts</span><span class="p">,</span> <span class="p">(</span><span class="n">minute_index</span><span class="p">[</span><span class="n">in_bin</span><span class="p">],</span> <span class="n">bin_index</span><span class="p">[</span><span class="n">in_bin</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">per_drop_volume_m3</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">6.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">diameter_m</span><span class="o">**</span><span class="mi">3</span>
+    <span class="n">rain_rate</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sum_per_minute</span><span class="p">(</span><span class="n">per_drop_volume_m3</span> <span class="o">/</span> <span class="p">(</span><span class="n">sampling_area_m2</span> <span class="o">*</span> <span class="n">SAMPLE_SECONDS</span><span class="p">))</span> <span class="o">*</span> <span class="mf">3.6e6</span>
+    <span class="p">)</span>
+    <span class="c1"># Keep the established reporting mask separate from calculated values.</span>
+    <span class="c1"># This is inherited processing policy, not a universal literature threshold.</span>
+    <span class="n">output_valid</span> <span class="o">=</span> <span class="p">((</span><span class="n">accepted_count</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">rain_rate</span> <span class="o">&gt;=</span> <span class="mf">0.01</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">all_minutes</span><span class="p">,</span> <span class="s2">&quot;velocity&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">VELOCITIES</span><span class="p">)})</span>
+    <span class="n">spectra</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">branch_parameters</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">velocity_name</span> <span class="ow">in</span> <span class="n">VELOCITIES</span><span class="p">:</span>
+        <span class="n">velocity_m_s</span> <span class="o">=</span> <span class="n">drops</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">velocity_name</span><span class="si">}</span><span class="s2">_velocity_m_s&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">sample_volume_m3</span> <span class="o">=</span> <span class="n">sampling_area_m2</span> <span class="o">*</span> <span class="n">velocity_m_s</span> <span class="o">*</span> <span class="n">SAMPLE_SECONDS</span>
+        <span class="n">drop_concentration_per_m3</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">sample_volume_m3</span>
+        <span class="n">third_moment</span> <span class="o">=</span> <span class="n">sum_per_minute</span><span class="p">(</span><span class="n">diameter_mm</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="n">drop_concentration_per_m3</span><span class="p">)</span>
+        <span class="n">fourth_moment</span> <span class="o">=</span> <span class="n">sum_per_minute</span><span class="p">(</span><span class="n">diameter_mm</span><span class="o">**</span><span class="mi">4</span> <span class="o">*</span> <span class="n">drop_concentration_per_m3</span><span class="p">)</span>
+        <span class="n">sixth_moment</span> <span class="o">=</span> <span class="n">sum_per_minute</span><span class="p">(</span><span class="n">diameter_mm</span><span class="o">**</span><span class="mi">6</span> <span class="o">*</span> <span class="n">drop_concentration_per_m3</span><span class="p">)</span>
+        <span class="n">mean_mass_diameter_mm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span>
+            <span class="n">fourth_moment</span><span class="p">,</span>
+            <span class="n">third_moment</span><span class="p">,</span>
+            <span class="n">out</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">MINUTES_PER_DAY</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>
+            <span class="n">where</span><span class="o">=</span><span class="n">third_moment</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">mass_variance_numerator</span> <span class="o">=</span> <span class="n">sum_per_minute</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">diameter_mm</span> <span class="o">-</span> <span class="n">mean_mass_diameter_mm</span><span class="p">[</span><span class="n">minute_index</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="o">*</span> <span class="n">diameter_mm</span><span class="o">**</span><span class="mi">3</span>
+            <span class="o">*</span> <span class="n">drop_concentration_per_m3</span>
+        <span class="p">)</span>
+        <span class="n">mass_variance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span>
+            <span class="n">mass_variance_numerator</span><span class="p">,</span>
+            <span class="n">third_moment</span><span class="p">,</span>
+            <span class="n">out</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">MINUTES_PER_DAY</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>
+            <span class="n">where</span><span class="o">=</span><span class="n">third_moment</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">branch_parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;rain_rate&quot;</span><span class="p">:</span> <span class="n">rain_rate</span><span class="p">,</span>
+                <span class="s2">&quot;number_concentration&quot;</span><span class="p">:</span> <span class="n">sum_per_minute</span><span class="p">(</span><span class="n">drop_concentration_per_m3</span><span class="p">),</span>
+                <span class="s2">&quot;liquid_water_content&quot;</span><span class="p">:</span> <span class="n">sum_per_minute</span><span class="p">(</span>
+                    <span class="n">WATER_DENSITY_KG_M3</span> <span class="o">*</span> <span class="n">per_drop_volume_m3</span> <span class="o">*</span> <span class="n">drop_concentration_per_m3</span>
+                <span class="p">)</span>
+                <span class="o">*</span> <span class="mf">1000.0</span><span class="p">,</span>  <span class="c1"># kg/m³ -&gt; g/m³</span>
+                <span class="s2">&quot;reflectivity&quot;</span><span class="p">:</span> <span class="n">sixth_moment</span><span class="p">,</span>
+                <span class="s2">&quot;reflectivity_dbz&quot;</span><span class="p">:</span> <span class="mi">10</span>
+                <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sixth_moment</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sixth_moment</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
+                <span class="s2">&quot;mass_weighted_diameter&quot;</span><span class="p">:</span> <span class="n">mean_mass_diameter_mm</span><span class="p">,</span>
+                <span class="s2">&quot;diameter_std&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mass_variance</span><span class="p">),</span>
+                <span class="s2">&quot;minimum_diameter&quot;</span><span class="p">:</span> <span class="n">minimum_diameter</span><span class="p">,</span>
+                <span class="s2">&quot;maximum_diameter&quot;</span><span class="p">:</span> <span class="n">maximum_diameter</span><span class="p">,</span>
+                <span class="s2">&quot;drop_count&quot;</span><span class="p">:</span> <span class="n">accepted_count</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+        <span class="n">spectrum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">bin_counts</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">at</span><span class="p">(</span>
+            <span class="n">spectrum</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">minute_index</span><span class="p">[</span><span class="n">in_bin</span><span class="p">],</span> <span class="n">bin_index</span><span class="p">[</span><span class="n">in_bin</span><span class="p">]),</span>
+            <span class="n">drop_concentration_per_m3</span><span class="p">[</span><span class="n">in_bin</span><span class="p">]</span> <span class="o">/</span> <span class="mf">0.2</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">spectra</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span>
+
+    <span class="c1"># Assemble time-by-velocity arrays in the declared velocity order. Counts</span>
+    <span class="c1"># remain zero in empty minutes; physical bulk values become NaN rather than</span>
+    <span class="c1"># asserting dry conditions during a period with unknown instrument uptime.</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">units</span> <span class="ow">in</span> <span class="n">INTEGRAL_UNITS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">branch</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="k">for</span> <span class="n">branch</span> <span class="ow">in</span> <span class="n">branch_parameters</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">!=</span> <span class="s2">&quot;drop_count&quot;</span><span class="p">:</span>
+            <span class="n">values</span><span class="p">[</span><span class="o">~</span><span class="n">has_drops</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="n">parameters</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;velocity&quot;</span><span class="p">),</span> <span class="n">values</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">units</span><span class="p">})</span>
+    <span class="n">dsd</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;dsd&quot;</span><span class="p">:</span> <span class="p">(</span>
+                <span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;diameter&quot;</span><span class="p">,</span> <span class="s2">&quot;velocity&quot;</span><span class="p">),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">spectra</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
+                <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;m-3 mm-1&quot;</span><span class="p">},</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;bin_drop_count&quot;</span><span class="p">:</span> <span class="p">((</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;diameter&quot;</span><span class="p">),</span> <span class="n">bin_counts</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">}),</span>
+            <span class="s2">&quot;bin_lower_mm&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;diameter&quot;</span><span class="p">,</span> <span class="n">edges_mm</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;mm&quot;</span><span class="p">}),</span>
+            <span class="s2">&quot;bin_upper_mm&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;diameter&quot;</span><span class="p">,</span> <span class="n">edges_mm</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;mm&quot;</span><span class="p">}),</span>
+            <span class="s2">&quot;bin_width_mm&quot;</span><span class="p">:</span> <span class="p">((),</span> <span class="mf">0.2</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;mm&quot;</span><span class="p">}),</span>
+        <span class="p">},</span>
+        <span class="n">coords</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">all_minutes</span><span class="p">,</span>
+            <span class="s2">&quot;diameter&quot;</span><span class="p">:</span> <span class="n">centers_mm</span><span class="p">,</span>
+            <span class="s2">&quot;velocity&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">VELOCITIES</span><span class="p">),</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">dsd</span><span class="o">.</span><span class="n">diameter</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="s2">&quot;mm&quot;</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;Nominal drop diameter bin center&quot;</span><span class="p">)</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">raw_data</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;gv_tools&quot;</span><span class="p">,</span>
+        <span class="n">package_version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
+        <span class="n">source_implementation</span><span class="o">=</span><span class="s2">&quot;py_2dvd_lite 0.1.2&quot;</span><span class="p">,</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;literature&quot;</span><span class="p">,</span>
+        <span class="n">accepted_rows</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">accepted_count</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span>
+        <span class="n">sample_seconds</span><span class="o">=</span><span class="n">SAMPLE_SECONDS</span><span class="p">,</span>
+        <span class="n">water_density_kg_m3</span><span class="o">=</span><span class="n">WATER_DENSITY_KG_M3</span><span class="p">,</span>
+        <span class="n">processing_conventions</span><span class="o">=</span><span class="s2">&quot;Inherited dropbydrop QC; three-decimal/float32 inputs; float32 bin edges&quot;</span><span class="p">,</span>
+        <span class="n">reporting_threshold</span><span class="o">=</span><span class="s2">&quot;accepted_count &gt; 10 and rain_rate &gt;= 0.01 mm/h&quot;</span><span class="p">,</span>
+        <span class="n">missing_policy</span><span class="o">=</span><span class="s2">&quot;No accepted drops: bulk NaN except count=0; DSD/counts zero; output_valid=0; no uptime inference&quot;</span><span class="p">,</span>
+        <span class="n">reflectivity_assumption</span><span class="o">=</span><span class="s2">&quot;Liquid-water Rayleigh D6 moment, not Mie or polarimetric reflectivity&quot;</span><span class="p">,</span>
+        <span class="n">references</span><span class="o">=</span><span class="s2">&quot;Tokay et al. 2001, 2013; Kruger &amp; Krajewski 2002; Williams et al. 2014; docs/py_2dvd/references.md&quot;</span><span class="p">,</span>
+        <span class="n">table_sha256</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="n">name</span><span class="p">:</span> <span class="n">_file_hash</span><span class="p">(</span><span class="n">files</span><span class="p">(</span><span class="s2">&quot;gv_tools&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;py_2dvd&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">TABLE_NAMES</span>
+            <span class="p">}</span>
+        <span class="p">),</span>
+        <span class="n">created_utc</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+        <span class="n">ai_provenance</span><span class="o">=</span><span class="s2">&quot;OpenAI Codex; exact deployed model identifier unavailable&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">raw_minute_index</span> <span class="o">=</span> <span class="p">(</span><span class="n">raw_data</span><span class="o">.</span><span class="n">hour</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="n">raw_data</span><span class="o">.</span><span class="n">minute</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">dsd</span><span class="p">):</span>
+        <span class="n">product</span><span class="p">[</span><span class="s2">&quot;output_valid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">output_valid</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">})</span>
+        <span class="n">product</span><span class="p">[</span><span class="s2">&quot;raw_drop_count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">,</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">raw_minute_index</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="n">MINUTES_PER_DAY</span><span class="p">),</span>
+            <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">},</span>
+        <span class="p">)</span>
+        <span class="c1"># Independent dictionaries prevent later edits to one product&#39;s metadata</span>
+        <span class="c1"># from changing its sibling. Shared coordinates/masks enable strict export.</span>
+        <span class="n">product</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">dsd</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_integral_parameters">
+<a class="viewcode-back" href="../../../api/core.html#gv_tools.core.calculate_integral_parameters">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_integral_parameters</span><span class="p">(</span><span class="n">raw_data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate and return literature integral parameters from raw drop records.</span>
+
+<span class="sd">    raw_data must be the DataFrame from ingest_raw, including attrs for date,</span>
+<span class="sd">    site and instrument. Its rows and metadata are not modified. Returns a</span>
+<span class="sd">    Dataset with time (1440 minutes) and velocity (terminal, measured) dimensions;</span>
+<span class="sd">    all ten integral variables carry units. output_valid is a reporting mask,</span>
+<span class="sd">    not a replacement for stored values; raw_drop_count describes acquisition.</span>
+
+<span class="sd">    This convenience call computes the shared products and returns the integral</span>
+<span class="sd">    half. Calling it and calculate_dsd separately repeats that computation. Use</span>
+<span class="sd">    calculate_products when both are needed. No cache can become stale after</span>
+<span class="sd">    a caller edits raw data; no output files or figures are produced here.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">calculate_products</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_dsd">
+<a class="viewcode-back" href="../../../api/core.html#gv_tools.core.calculate_dsd">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_dsd</span><span class="p">(</span><span class="n">raw_data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate and return literature number concentration per diameter bin.</span>
+
+<span class="sd">    raw_data has the same contract as calculate_integral_parameters. Returns</span>
+<span class="sd">    dsd(time, diameter, velocity) in m^-3 mm^-1, shared bin_drop_count, lower/upper</span>
+<span class="sd">    edges, nominal width, reporting mask and raw counts. Neither raw_data nor</span>
+<span class="sd">    its attributes are changed. The diameter coordinate holds nominal centers;</span>
+<span class="sd">    membership uses stored edges as explained in _diameter_bins.</span>
+
+<span class="sd">    Empty bins contain zero; masking and logarithmic display belong to graph.py.</span>
+<span class="sd">    Use calculate_products to obtain both this Dataset and integral parameters</span>
+<span class="sd">    in one pass. No files are written and no plotting backend is initialized.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">calculate_products</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

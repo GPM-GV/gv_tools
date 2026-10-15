@@ -1,0 +1,3 @@
+instrument,latitude,longitude,elevation,city,state,date_range,num_files
+apu23,38.012365,-75.455075,13.4,Welbourne,Maryland,2016-10-26 - 2021-01-12,1496
+apu23,38.0121383333,-75.45503,10.3,Welbourne,Maryland,2021-01-13 - 2025-07-29,1584

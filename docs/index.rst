@@ -17,6 +17,8 @@ ARM Py-ART, so users can discover related operations in one place.
 
    userguide
    mrr
+   piers
+   process_parsivel
    py_2dvd/index
    api/index
    notebooks

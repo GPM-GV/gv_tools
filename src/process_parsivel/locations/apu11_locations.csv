@@ -1,0 +1,4 @@
+instrument,latitude,longitude,elevation,city,state,date_range,num_files
+apu11,37.9441983333,-75.46372,7.7,Accomack County,Virginia,2016-10-28 - 2020-06-24,1202
+apu11,37.94419,-75.4638433333,25.3,Accomack County,Virginia,2020-06-25 - 2020-07-28,34
+apu11,37.9441983333,-75.4637416667,6.5,Accomack County,Virginia,2020-07-29 - 2024-03-11,1121

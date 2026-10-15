@@ -1,0 +1,4 @@
+instrument,latitude,longitude,elevation,city,state,date_range,num_files
+apu10,37.9342483333,-75.4714016667,-5.4,Wallops Island,Virginia,2021-10-01 - 2022-02-09,132
+apu10,37.9342533333,-75.4712833333,9.0,Wallops Island,Virginia,2022-02-10 - 2023-02-14,341
+apu10,37.9342383333,-75.47139,13.3,Wallops Island,Virginia,2023-02-15 - 2025-09-10,923

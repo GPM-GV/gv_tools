@@ -1,0 +1,846 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gv_tools.io.py_2dvd &#8212; GV Tools 0.40.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gv_tools.css?v=f6e64a54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../_static/documentation_options.js?v=13a5ab13"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/gv_tools/io/py_2dvd';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../_static/searchtools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">GV Tools 0.40.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../userguide.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../piers.html">
+    PIERS Tools
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../process_parsivel.html">
+    Process Parsivel
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../py_2dvd/index.html">
+    2DVD ingestion, calculations, and plots
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../output-conventions.html">
+    Output conventions
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">gv_tools.io.py_2dvd</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for gv_tools.io.py_2dvd</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Read individual 2DVD drops and export scientific products.</span>
+
+<span class="sd">This module performs I/O only: it never filters drops, integrates a spectrum,</span>
+<span class="sd">plots data, or silently writes extracted archive members. See ``core.py`` for</span>
+<span class="sd">those physical calculations and ``docs/py_2dvd/methods.md`` for the derivation.</span>
+
+<span class="sd">Format authority is the user-supplied ``load_drop_file.pro`` (record indices)</span>
+<span class="sd">and ``dropbydrop.f`` (split numeric clock). These are file-format references,</span>
+<span class="sd">not journal specifications. Kruger &amp; Krajewski (2002), DOI</span>
+<span class="sd">10.1175/1520-0426(2002)019&lt;0602:TDVDAD&gt;2.0.CO;2, describes the instrument.</span>
+
+<span class="sd">AI assistance: OpenAI Codex. Package provenance and references are in the guide.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stat</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tarfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">zipfile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hashlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">sha256</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+
+<span class="c1"># Order is the normalized numeric layout: three clock fields, five physical</span>
+<span class="c1"># measurements, then eight camera measurements. Units live in the names so an</span>
+<span class="c1"># area in mm² cannot easily be confused with the m² used by the physics code.</span>
+<span class="n">DROP_COLUMNS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;hour&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;minute&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;second&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;reported_diameter_mm&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;drop_volume_mm3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;measured_velocity_m_s&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;axis_ratio&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sampling_area_mm2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;camera_a_height_mm&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;camera_b_height_mm&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;camera_a_width_mm&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;camera_b_width_mm&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;camera_a_min_index&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;camera_a_max_index&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;camera_b_min_index&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;camera_b_max_index&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">DROP_FILENAME</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;V(\d</span><span class="si">{2}</span><span class="s2">)(\d</span><span class="si">{3}</span><span class="s2">)\.drops\.txt&quot;</span><span class="p">)</span>
+<span class="n">CLOCK_TOKEN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(\d{1,2}):(\d</span><span class="si">{2}</span><span class="s2">):(\d</span><span class="si">{2}</span><span class="s2">(?:\.\d+)?)&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="date_from_filename">
+<a class="viewcode-back" href="../../../api/io.html#gv_tools.io.date_from_filename">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">date_from_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">date</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decode VYYDDD.drops.txt; optional date disambiguates the century.</span>
+
+<span class="sd">    YY=23 and DDD=022 mean 2023-01-22. Without an explicit date, YY is interpreted</span>
+<span class="sd">    in 2000–2099. Invalid day-of-year values, including 366 in a non-leap year,</span>
+<span class="sd">    raise ValueError. An explicit date must agree with both YY and DDD.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">DROP_FILENAME</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Expected a drop filename of the form VYYDDD.drops.txt&quot;</span><span class="p">)</span>
+    <span class="n">short_year</span><span class="p">,</span> <span class="n">day_of_year</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">())</span>
+    <span class="n">requested_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="k">if</span> <span class="n">date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="n">requested_date</span><span class="o">.</span><span class="n">year</span> <span class="k">if</span> <span class="n">requested_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">2000</span> <span class="o">+</span> <span class="n">short_year</span>
+    <span class="n">day</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">day_of_year</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">day_of_year</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">day</span><span class="o">.</span><span class="n">year</span> <span class="o">!=</span> <span class="n">year</span> <span class="ow">or</span> <span class="n">year</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">!=</span> <span class="n">short_year</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid year or day-of-year in input filename&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">requested_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">requested_date</span> <span class="o">!=</span> <span class="n">day</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Explicit date must match the filename at midnight, without a timezone&quot;</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">day</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_single_member</span><span class="p">(</span><span class="n">member_names</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ignore unrelated files and macOS resource forks; require one drop file.&quot;&quot;&quot;</span>
+    <span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">name</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">member_names</span>
+        <span class="k">if</span> <span class="s2">&quot;__MACOSX&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">parts</span>
+        <span class="ow">and</span> <span class="n">DROP_FILENAME</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Archive must contain exactly one drop file; found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">candidates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="nd">@contextmanager</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_open_input</span><span class="p">(</span><span class="n">input_path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Yield a binary stream and its logical filename, closing both afterward.</span>
+
+<span class="sd">    Archive member names are labels, never filesystem destinations. ZIP symbolic</span>
+<span class="sd">    links and tar links/directories are excluded. No extract/extractall operation</span>
+<span class="sd">    is used. Only a single matching day is accepted, avoiding an ambiguous merge.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">suffix</span> <span class="o">=</span> <span class="n">input_path</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">suffix</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.zip&quot;</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">input_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">archive</span><span class="p">:</span>
+            <span class="n">regular_files</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">member</span>
+                <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">archive</span><span class="o">.</span><span class="n">infolist</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">member</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_ISLNK</span><span class="p">(</span><span class="n">member</span><span class="o">.</span><span class="n">external_attr</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span>
+            <span class="p">]</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">_single_member</span><span class="p">([</span><span class="n">member</span><span class="o">.</span><span class="n">filename</span> <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">regular_files</span><span class="p">])</span>
+            <span class="n">member</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">regular_files</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">filename</span> <span class="o">==</span> <span class="n">filename</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">archive</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">member</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">stream</span><span class="p">,</span> <span class="n">filename</span>
+    <span class="k">elif</span> <span class="n">suffix</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;.tgz&quot;</span><span class="p">,</span> <span class="s2">&quot;.tar.gz&quot;</span><span class="p">)):</span>
+        <span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">input_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r:gz&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">archive</span><span class="p">:</span>
+            <span class="n">regular_files</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">member</span> <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">archive</span><span class="o">.</span><span class="n">getmembers</span><span class="p">()</span> <span class="k">if</span> <span class="n">member</span><span class="o">.</span><span class="n">isfile</span><span class="p">()</span>
+            <span class="p">]</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">_single_member</span><span class="p">([</span><span class="n">member</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">regular_files</span><span class="p">])</span>
+            <span class="n">member</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">regular_files</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">filename</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">archive</span><span class="o">.</span><span class="n">extractfile</span><span class="p">(</span><span class="n">member</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">stream</span><span class="p">,</span> <span class="n">filename</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">input_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">stream</span><span class="p">,</span> <span class="n">input_path</span><span class="o">.</span><span class="n">name</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_parse_record</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">line_number</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalize one record without shifting the camera fields.</span>
+
+<span class="sd">    Split-time records have 16 numeric tokens. Clock-string records have a</span>
+<span class="sd">    HH:MM:SS.sss token, five physical values, optionally 0–2 uninterpreted source</span>
+<span class="sd">    metadata tokens, and eight camera values. In the supplied IDL reader the</span>
+<span class="sd">    two metadata tokens are a[6] and a[7]; camera A height is a[8]. Those metadata</span>
+<span class="sd">    tokens are retained as strings rather than guessed or converted to numbers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="s2">&quot;:&quot;</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">clock</span> <span class="o">=</span> <span class="n">CLOCK_TOKEN</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">clock</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Line </span><span class="si">{</span><span class="n">line_number</span><span class="si">}</span><span class="s2">: invalid clock-string record&quot;</span><span class="p">)</span>
+        <span class="n">metadata_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">-</span> <span class="mi">14</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">6</span> <span class="p">:</span> <span class="mi">6</span> <span class="o">+</span> <span class="n">metadata_count</span><span class="p">]</span>
+        <span class="n">numeric_tokens</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="nb">list</span><span class="p">(</span><span class="n">clock</span><span class="o">.</span><span class="n">groups</span><span class="p">())</span> <span class="o">+</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">+</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">6</span> <span class="o">+</span> <span class="n">metadata_count</span> <span class="p">:]</span>
+        <span class="p">)</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;clock_string_</span><span class="si">{</span><span class="n">metadata_count</span><span class="si">}</span><span class="s2">_extra&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">16</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Line </span><span class="si">{</span><span class="n">line_number</span><span class="si">}</span><span class="s2">: expected 16 split-time columns&quot;</span><span class="p">)</span>
+        <span class="n">numeric_tokens</span> <span class="o">=</span> <span class="n">tokens</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="s2">&quot;split_time&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">numeric_tokens</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Line </span><span class="si">{</span><span class="n">line_number</span><span class="si">}</span><span class="s2">: nonnumeric physical measurement&quot;</span>
+        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">error</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Line </span><span class="si">{</span><span class="n">line_number</span><span class="si">}</span><span class="s2">: nonfinite physical measurement&quot;</span><span class="p">)</span>
+    <span class="n">hour</span><span class="p">,</span> <span class="n">minute</span><span class="p">,</span> <span class="n">second</span> <span class="o">=</span> <span class="n">values</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span>
+        <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">hour</span> <span class="o">&lt;</span> <span class="mi">24</span>
+        <span class="ow">and</span> <span class="n">hour</span><span class="o">.</span><span class="n">is_integer</span><span class="p">()</span>
+        <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">minute</span> <span class="o">&lt;</span> <span class="mi">60</span>
+        <span class="ow">and</span> <span class="n">minute</span><span class="o">.</span><span class="n">is_integer</span><span class="p">()</span>
+        <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">second</span> <span class="o">&lt;</span> <span class="mi">60</span>
+    <span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Line </span><span class="si">{</span><span class="n">line_number</span><span class="si">}</span><span class="s2">: invalid clock values&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Line </span><span class="si">{</span><span class="n">line_number</span><span class="si">}</span><span class="s2">: negative drop volume&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">values</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">layout</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_file_hash</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute a SHA-256 in bounded chunks rather than loading a whole archive.&quot;&quot;&quot;</span>
+    <span class="n">digest</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">),</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+            <span class="n">digest</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">digest</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="ingest_raw">
+<a class="viewcode-back" href="../../../api/io.html#gv_tools.io.ingest_raw">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ingest_raw</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="s2">&quot;WFF&quot;</span><span class="p">,</span> <span class="n">instrument</span><span class="o">=</span><span class="s2">&quot;sn37&quot;</span><span class="p">,</span> <span class="n">date</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read one plain/ZIP/TGZ day into a DataFrame without scientific filtering.</span>
+
+<span class="sd">    The first two physical lines are headers, following both supplied readers.</span>
+<span class="sd">    Blank data lines are ignored; malformed nonblank lines fail with their</span>
+<span class="sd">    original line number. Records remain in input order: sorting here would</span>
+<span class="sd">    conceal backward clock jumps from quality control. Subsecond times are</span>
+<span class="sd">    retained. The source contains no timezone, so timestamps remain naive.</span>
+
+<span class="sd">    Each returned row is one detected object, not a concentration or a spectrum.</span>
+<span class="sd">    Source filenames, the date/site/instrument, layouts, row count, and hashes</span>
+<span class="sd">    are stored in DataFrame.attrs. The content hash includes headers and blank</span>
+<span class="sd">    lines and is computed on uncompressed bytes during the same read pass.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[A-Za-z0-9_-]+&quot;</span><span class="p">,</span> <span class="n">site</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;site must contain only letters, digits, underscore or hyphen&quot;</span><span class="p">)</span>
+    <span class="n">input_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">datafile</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="n">records</span><span class="p">,</span> <span class="n">metadata_records</span><span class="p">,</span> <span class="n">layouts</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">content_digest</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">()</span>
+    <span class="n">header_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">with</span> <span class="n">_open_input</span><span class="p">(</span><span class="n">input_path</span><span class="p">)</span> <span class="k">as</span> <span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">logical_filename</span><span class="p">):</span>
+        <span class="n">observation_date</span> <span class="o">=</span> <span class="n">date_from_filename</span><span class="p">(</span><span class="n">logical_filename</span><span class="p">,</span> <span class="n">date</span><span class="o">=</span><span class="n">date</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line_number</span><span class="p">,</span> <span class="n">binary_line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">content_digest</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">binary_line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">line_number</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">header_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+            <span class="n">tokens</span> <span class="o">=</span> <span class="n">binary_line</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8-sig&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">tokens</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">values</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">layout</span> <span class="o">=</span> <span class="n">_parse_record</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">line_number</span><span class="p">)</span>
+            <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+            <span class="n">metadata_records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
+            <span class="n">layouts</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">header_count</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input must contain the two required header lines&quot;</span><span class="p">)</span>
+    <span class="n">raw_drops</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">DROP_COLUMNS</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">metadata_records</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)):</span>
+        <span class="n">raw_drops</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;source_extra_</span><span class="si">{</span><span class="n">index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">fields</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">fields</span> <span class="ow">in</span> <span class="n">metadata_records</span>
+        <span class="p">]</span>
+    <span class="n">seconds_since_midnight</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">raw_drops</span><span class="o">.</span><span class="n">hour</span> <span class="o">*</span> <span class="mi">3600</span> <span class="o">+</span> <span class="n">raw_drops</span><span class="o">.</span><span class="n">minute</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="n">raw_drops</span><span class="o">.</span><span class="n">second</span>
+    <span class="p">)</span>
+    <span class="n">raw_drops</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">observation_date</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span>
+        <span class="n">seconds_since_midnight</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;s&quot;</span>
+    <span class="p">)</span>
+    <span class="n">raw_drops</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;site&quot;</span><span class="p">:</span> <span class="n">site</span><span class="p">,</span>
+        <span class="s2">&quot;instrument_id&quot;</span><span class="p">:</span> <span class="n">instrument</span><span class="p">,</span>
+        <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">observation_date</span><span class="o">.</span><span class="n">date</span><span class="p">()),</span>
+        <span class="s2">&quot;source_file&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">input_path</span><span class="p">),</span>
+        <span class="s2">&quot;source_member&quot;</span><span class="p">:</span> <span class="n">logical_filename</span><span class="p">,</span>
+        <span class="s2">&quot;source_sha256&quot;</span><span class="p">:</span> <span class="n">_file_hash</span><span class="p">(</span><span class="n">input_path</span><span class="p">),</span>
+        <span class="s2">&quot;source_data_sha256&quot;</span><span class="p">:</span> <span class="n">content_digest</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span>
+        <span class="s2">&quot;source_layouts&quot;</span><span class="p">:</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">layouts</span><span class="p">))</span> <span class="ow">or</span> <span class="s2">&quot;empty&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;input_rows&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw_drops</span><span class="p">),</span>
+        <span class="s2">&quot;timezone&quot;</span><span class="p">:</span> <span class="s2">&quot;Unspecified in source; timestamps are naive&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">raw_drops</span></div>
+
+
+
+<div class="viewcode-block" id="save_products">
+<a class="viewcode-back" href="../../../api/io.html#gv_tools.io.save_products">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">save_products</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">dsd</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;Output&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save separate measured/terminal products to NetCDF/YYYY/MM and CSV/YYYY/MM.</span>
+
+<span class="sd">    Returns eight paths keyed by measured_netcdf, terminal_netcdf, and the</span>
+<span class="sd">    corresponding ``measured_``/``terminal_`` integral_csv, dsd_csv and provenance keys.</span>
+
+<span class="sd">    No scientific recalculation occurs here. NetCDF preserves dimensions, units</span>
+<span class="sd">    and provenance; CSV tables expose explicit time/velocity/diameter columns.</span>
+<span class="sd">    Products must describe the same source and common coordinates/masks. The</span>
+<span class="sd">    default output root is Output relative to the current working directory.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">..core.py_2dvd</span><span class="w"> </span><span class="kn">import</span> <span class="n">INTEGRAL_UNITS</span>
+
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="s2">&quot;instrument_id&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;source_data_sha256&quot;</span><span class="p">,</span> <span class="s2">&quot;source_sha256&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">!=</span> <span class="n">dsd</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Products differ in </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">; calculate from the same raw data&quot;</span>
+            <span class="p">)</span>
+    <span class="n">products</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">parameters</span><span class="p">,</span> <span class="n">dsd</span><span class="p">],</span> <span class="n">join</span><span class="o">=</span><span class="s2">&quot;exact&quot;</span><span class="p">,</span> <span class="n">compat</span><span class="o">=</span><span class="s2">&quot;equals&quot;</span><span class="p">,</span> <span class="n">combine_attrs</span><span class="o">=</span><span class="s2">&quot;override&quot;</span>
+    <span class="p">)</span>
+    <span class="n">site</span> <span class="o">=</span> <span class="n">products</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;site&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[A-Za-z0-9_-]+&quot;</span><span class="p">,</span> <span class="n">site</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid site metadata&quot;</span><span class="p">)</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">products</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">])</span>
+    <span class="n">basename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">site</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">date</span><span class="si">:</span><span class="s2">%Y_%m%d</span><span class="si">}</span><span class="s2">_2DVD&quot;</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+    <span class="n">netcdf_directory</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="s2">&quot;NetCDF&quot;</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">date</span><span class="si">:</span><span class="s2">%Y/%m</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">csv_directory</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="s2">&quot;CSV&quot;</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">date</span><span class="si">:</span><span class="s2">%Y/%m</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">netcdf_directory</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">csv_directory</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Keep a length-one velocity dimension so exported datasets use the same</span>
+    <span class="c1"># selection/plotting API as in-memory products, without mixing branches.</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">..core.py_2dvd</span><span class="w"> </span><span class="kn">import</span> <span class="n">VELOCITIES</span>
+
+    <span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">dsd</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;velocity&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">product</span><span class="o">.</span><span class="n">dims</span> <span class="ow">or</span> <span class="nb">set</span><span class="p">(</span><span class="n">product</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">set</span><span class="p">(</span><span class="n">VELOCITIES</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;save_products requires both measured and terminal velocity products&quot;</span><span class="p">)</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">velocity</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;measured&quot;</span><span class="p">,</span> <span class="s2">&quot;terminal&quot;</span><span class="p">):</span>
+        <span class="n">stem</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">basename</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">velocity</span><span class="si">}</span><span class="s2">_velocity&quot;</span>
+        <span class="n">branch_paths</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;netcdf&quot;</span><span class="p">:</span> <span class="n">netcdf_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stem</span><span class="si">}</span><span class="s2">.nc&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;integral_csv&quot;</span><span class="p">:</span> <span class="n">csv_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stem</span><span class="si">}</span><span class="s2">_integral.csv&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;dsd_csv&quot;</span><span class="p">:</span> <span class="n">csv_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stem</span><span class="si">}</span><span class="s2">_DSD.csv&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;provenance&quot;</span><span class="p">:</span> <span class="n">netcdf_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stem</span><span class="si">}</span><span class="s2">_provenance.json&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">branch</span> <span class="o">=</span> <span class="n">products</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">velocity</span><span class="o">=</span><span class="p">[</span><span class="n">velocity</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">branch</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;velocity_basis&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocity</span>
+        <span class="n">branch</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">branch_paths</span><span class="p">[</span><span class="s2">&quot;netcdf&quot;</span><span class="p">],</span> <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;scipy&quot;</span><span class="p">)</span>
+        <span class="n">parameters</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">velocity</span><span class="o">=</span><span class="p">[</span><span class="n">velocity</span><span class="p">])[</span>
+            <span class="nb">list</span><span class="p">(</span><span class="n">INTEGRAL_UNITS</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;output_valid&quot;</span><span class="p">]</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">branch_paths</span><span class="p">[</span><span class="s2">&quot;integral_csv&quot;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">dsd</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">velocity</span><span class="o">=</span><span class="p">[</span><span class="n">velocity</span><span class="p">])[</span>
+            <span class="p">[</span><span class="s2">&quot;dsd&quot;</span><span class="p">,</span> <span class="s2">&quot;bin_drop_count&quot;</span><span class="p">,</span> <span class="s2">&quot;output_valid&quot;</span><span class="p">]</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">branch_paths</span><span class="p">[</span><span class="s2">&quot;dsd_csv&quot;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">branch_paths</span><span class="p">[</span><span class="s2">&quot;provenance&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">branch</span><span class="o">.</span><span class="n">attrs</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">paths</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">velocity</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">kind</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">path</span> <span class="k">for</span> <span class="n">kind</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">branch_paths</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+    <span class="k">return</span> <span class="n">paths</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

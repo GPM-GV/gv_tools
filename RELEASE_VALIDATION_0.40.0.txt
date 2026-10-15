@@ -1,0 +1,18 @@
+GV Tools 0.40.0 release validation
+Date: 2026-10-15
+Python: /Users/dwolff/anaconda3/bin/python
+
+Results
+- Full test suite: 240 passed, 3 subtests passed, 11 non-fatal upstream warnings.
+- Sphinx HTML build: succeeded with warnings treated as errors.
+- HTML title: GV Tools 0.40.0 documentation.
+- Wheel installation with --no-deps: succeeded.
+- Installed versions: gv_tools 0.40.0, piers_tools 0.9.0,
+  process_parsivel 1.2.1.
+- Version 0.40.0 satisfies gv_tools>=0.33 and gv-tools>=0.35.0.
+- Legacy import names piers_gauge_tools and process_piers_plus: absent.
+- Distribution directory contains only current 0.40.0 artifacts and checksums.
+
+Build command
+~/anaconda3/bin/python -m build --no-isolation --outdir dist
+
