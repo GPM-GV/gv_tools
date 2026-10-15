@@ -7,8 +7,7 @@ public objects exported by that namespace.
 .. toctree::
    :maxdepth: 2
 
-   core
    io
    config
-   correct
    graph
+   util

@@ -1,12 +1,20 @@
 Notebooks
 =========
 
-Release notebooks are kept in the project-level ``notebooks`` folder:
+Release notebooks are kept in the project-level ``notebooks`` folder. Start
+with ``check_gv_tools.ipynb`` to configure, load, and plot every supported
+instrument family using explicit input and figure paths.
 
-* ``GV_Tools_PIERS0042_20260810.ipynb``
-* ``GV_Tools_Ingest_Demonstration.ipynb`` (canonical master notebook)
-* ``MetOne_AIO_GAIL_sample.ipynb``
-* ``RM_Young_AIO_PIERS_sample.ipynb``
+The validation notebook defines ``WORKSPACE``, ``PACKAGE_DIRECTORY``, and
+``OUTPUT_DIRECTORY`` on separate configuration lines. ``OUTPUT_DIRECTORY`` is
+set to ``WORKSPACE / "Output"`` so figures are never written inside the package
+directory or one of its subdirectories.
+
+* ``check_gv_tools.ipynb`` (complete instrument ingest and plotting check)
+* ``Ingest_WSR88D.ipynb``
+* ``MRRPro_Postprocessed_Ingest_and_Display.ipynb`` (hourly collection ingest
+  and extensively configurable time-height displays)
+* ``Upper_Air_Sounding_Downloads.ipynb`` (download, decode, and Skew-T test)
 
 The installed location can be discovered without hard-coded paths:
 
@@ -16,7 +24,5 @@ The installed location can be discovered without hard-coded paths:
 
    notebooks = Path("notebooks")
 
-The notebooks may be launched from any directory. They use
-``GV_TOOLS_HOME`` when set and otherwise default to
-``~/Desktop/Work/GV Tools``. Input and output locations can also be overridden
-with the environment variables documented in each configuration cell.
+The notebooks may be launched from any directory. Input and output locations
+are controlled by the clean variables in each configuration cell.

@@ -16,6 +16,18 @@ def _pyplot():
     return plt
 
 
+def _required_output(output=None, savefig=None) -> Path:
+    if output is not None and savefig is not None:
+        raise ValueError("use either output or savefig, not both")
+    value = savefig if savefig is not None else output
+    if value is None:
+        raise ValueError("a full output filename is required")
+    destination = Path(value).expanduser()
+    if not destination.name or not destination.suffix:
+        raise ValueError("output must include an image filename with an extension")
+    return destination
+
+
 def _time_series_dataset(data):
     """Return an xarray Dataset from an AIO Dataset or pandas DataFrame."""
     if isinstance(data, xr.Dataset):
@@ -39,7 +51,14 @@ def _time_series_dataset(data):
 
 def _dataset_plot_title(dataset, plot_name, *, date=None, title=None):
     """Return a title containing site, observation date, and instrument."""
-    site = str(dataset.attrs.get("site_id", "")).strip() or "Unknown site"
+    site = next(
+        (
+            str(dataset.attrs.get(key, "")).strip()
+            for key in ("site_id", "site_name", "facility", "location")
+            if str(dataset.attrs.get(key, "")).strip()
+        ),
+        "Unknown site",
+    )
     instrument = next(
         (str(dataset.attrs.get(key, "")).strip() for key in ("instrument_id", "instrument_name", "model", "mrr_model")
          if str(dataset.attrs.get(key, "")).strip()),
@@ -99,14 +118,7 @@ def plot_aio_quicklook(
         raise ValueError("dataset must contain at least one time observation")
     if direction_bins < 4:
         raise ValueError("direction_bins must be at least 4")
-    if output is not None and savefig is not None:
-        raise ValueError("use either output or savefig, not both")
-    if savefig is not None:
-        save_path = Path(savefig).expanduser()
-        if not save_path.is_absolute() or not save_path.name or not save_path.suffix:
-            raise ValueError("savefig must be a full path including an image filename")
-    else:
-        save_path = None if output is None else Path(output).expanduser()
+    save_path = _required_output(output, savefig)
 
     plt = _pyplot()
     figure = plt.figure(figsize=(16, 13))
@@ -227,6 +239,7 @@ def plot_aio_wind_rose(
 ):
     """Plot direction/speed occurrence percentages and return Figure, Axes, and frequencies."""
     dataset = _time_series_dataset(dataset)
+    destination = _required_output(output)
     if direction_bins < 4:
         raise ValueError("direction_bins must be at least 4")
     for name in ("wind_speed", "wind_from_direction"):
@@ -257,10 +270,8 @@ def plot_aio_wind_rose(
     axis.set_theta_direction(-1)
     axis.set_title(_dataset_plot_title(dataset, "AIO wind rose", title=title), pad=20)
     axis.legend(labels, title="Wind speed (m/s)", loc="upper left", bbox_to_anchor=(1.05, 1.0))
-    if output is not None:
-        destination = Path(output).expanduser()
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        figure.savefig(destination, dpi=150, bbox_inches="tight")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    figure.savefig(destination, dpi=150, bbox_inches="tight")
     return figure, axis, frequencies
 
 
@@ -288,14 +299,7 @@ def plot_ws800_full_quicklook(
         raise ValueError("data must contain at least one time observation")
     if not np.isfinite(linewidth) or linewidth <= 0:
         raise ValueError("linewidth must be positive")
-    if output is not None and savefig is not None:
-        raise ValueError("use either output or savefig, not both")
-    if savefig is not None:
-        save_path = Path(savefig).expanduser()
-        if not save_path.is_absolute() or not save_path.name or not save_path.suffix:
-            raise ValueError("savefig must be a full path including an image filename")
-    else:
-        save_path = None if output is None else Path(output).expanduser()
+    save_path = _required_output(output, savefig)
 
     groups = (
         ("Air temperature", "Temperature (°C)", ("air_temperature",), ("air_temp_",)),
@@ -414,14 +418,7 @@ def plot_radar_ppi_quicklook(
     ):
         if value is not None and (not np.isfinite(value) or value <= 0):
             raise ValueError(f"{name} must be positive or None")
-    if output is not None and savefig is not None:
-        raise ValueError("use either output or savefig, not both")
-    if savefig is not None:
-        save_path = Path(savefig).expanduser()
-        if not save_path.is_absolute() or not save_path.name or not save_path.suffix:
-            raise ValueError("savefig must be a full path including an image filename")
-    else:
-        save_path = None if output is None else Path(output).expanduser()
+    save_path = _required_output(output, savefig)
 
     radar_range_km = float(np.nanmax(np.asarray(radar.range["data"], dtype=float))) / 1000.0
     plot_range_km = radar_range_km if max_range_km is None else float(max_range_km)
@@ -589,14 +586,7 @@ def plot_radar_rhi_quicklook(
         raise ValueError("min_height_km must be less than max_height_km")
     if colorbar_orientation not in {"vertical", "horizontal"}:
         raise ValueError("colorbar_orientation must be 'vertical' or 'horizontal'")
-    if output is not None and savefig is not None:
-        raise ValueError("use either output or savefig, not both")
-    if savefig is not None:
-        save_path = Path(savefig).expanduser()
-        if not save_path.is_absolute() or not save_path.name or not save_path.suffix:
-            raise ValueError("savefig must be a full path including an image filename")
-    else:
-        save_path = None if output is None else Path(output).expanduser()
+    save_path = _required_output(output, savefig)
 
     symbol_items = [] if symbols is None else [symbols] if isinstance(symbols, dict) else list(symbols)
     required_symbol_keys = {"Location", "Color", "Symbol", "Size"}
@@ -677,190 +667,6 @@ def plot_radar_rhi_quicklook(
     return figure
 
 
-def plot_radar_bb_zdr_calibration(
-    radar,
-    output: str | Path | None = None,
-    *,
-    savefig: str | Path | None = None,
-    field: str | None = None,
-    sweep: int = 0,
-    min_range_km: float = 0.5,
-    max_range_km: float | None = None,
-    zdr_bounds: tuple[float, float] = (-3.0, 3.0),
-    histogram_bins: int = 60,
-    statistic: str = "median",
-    reflectivity_field: str | None = None,
-    reflectivity_bounds_dbz: tuple[float, float] | None = None,
-    min_samples: int = 10,
-    density_cmap: str = "viridis",
-    title: str | None = None,
-    figsize=(15, 8),
-    dpi: int = 150,
-):
-    """Plot a birdbath ZDR calibration diagnostic and estimated correction.
-
-    The reported bias is the selected center statistic of valid vertical ZDR
-    samples. The recommended additive correction is the negative of that bias.
-    Optional reflectivity bounds can isolate the desired calibration regime.
-    """
-    try:
-        import pyart
-    except ImportError as exc:
-        raise ImportError("birdbath ZDR calibration plots require arm-pyart; install the 'radar' extra") from exc
-
-    scan_type = str(getattr(radar, "scan_type", "")).lower()
-    metadata = getattr(radar, "metadata", {})
-    recorded_type = str(metadata.get("gv_tools_scan_type", "")).upper()
-    is_birdbath = recorded_type == "BB" or scan_type in {"bb", "birdbath", "bird_bath", "vertical_pointing"}
-    if not is_birdbath:
-        raise ValueError(f"plot_radar_bb_zdr_calibration requires a BB radar volume, found {recorded_type or scan_type}")
-    sweep = int(sweep)
-    nsweeps = int(getattr(radar, "nsweeps", 0))
-    if sweep < 0 or sweep >= nsweeps:
-        raise ValueError(f"sweep must be between 0 and {max(nsweeps - 1, 0)}")
-    fields = getattr(radar, "fields", {})
-    if field is None:
-        preferred = (
-            "differential_reflectivity", "corrected_differential_reflectivity",
-            "ZDR", "ZDRC", "DR", "ZD",
-        )
-        field = next((name for name in preferred if name in fields), None)
-    if field is None or field not in fields:
-        raise ValueError(f"no ZDR field was selected; choose from {sorted(fields)}")
-    if len(zdr_bounds) != 2 or zdr_bounds[0] >= zdr_bounds[1]:
-        raise ValueError("zdr_bounds must be an increasing (minimum, maximum) pair")
-    if min_range_km < 0 or max_range_km is not None and min_range_km >= max_range_km:
-        raise ValueError("range bounds must be non-negative and increasing")
-    if histogram_bins < 5:
-        raise ValueError("histogram_bins must be at least 5")
-    if statistic not in {"median", "mean"}:
-        raise ValueError("statistic must be 'median' or 'mean'")
-    if min_samples < 1:
-        raise ValueError("min_samples must be positive")
-    if output is not None and savefig is not None:
-        raise ValueError("use either output or savefig, not both")
-    if savefig is not None:
-        save_path = Path(savefig).expanduser()
-        if not save_path.is_absolute() or not save_path.name or not save_path.suffix:
-            raise ValueError("savefig must be a full path including an image filename")
-    else:
-        save_path = None if output is None else Path(output).expanduser()
-
-    start = int(np.asarray(radar.sweep_start_ray_index["data"])[sweep])
-    end = int(np.asarray(radar.sweep_end_ray_index["data"])[sweep]) + 1
-    zdr = np.ma.asarray(fields[field]["data"])[start:end]
-    ranges_km = np.asarray(radar.range["data"], dtype=float) / 1000.0
-    elevation = np.deg2rad(np.asarray(radar.elevation["data"], dtype=float)[start:end])[:, None]
-    heights_km = np.sin(elevation) * ranges_km[None, :]
-    valid = ~np.ma.getmaskarray(zdr) & np.isfinite(np.ma.filled(zdr, np.nan))
-    valid &= ranges_km[None, :] >= min_range_km
-    if max_range_km is not None:
-        valid &= ranges_km[None, :] <= max_range_km
-    valid &= np.ma.filled(zdr >= zdr_bounds[0], False) & np.ma.filled(zdr <= zdr_bounds[1], False)
-
-    reflectivity_note = "No reflectivity filter"
-    if reflectivity_bounds_dbz is not None:
-        if len(reflectivity_bounds_dbz) != 2 or reflectivity_bounds_dbz[0] >= reflectivity_bounds_dbz[1]:
-            raise ValueError("reflectivity_bounds_dbz must be an increasing pair")
-        if reflectivity_field is None:
-            reflectivity_candidates = ("reflectivity", "corrected_reflectivity", "DBZ", "DBZ_F", "DZ", "CZ")
-            reflectivity_field = next((name for name in reflectivity_candidates if name in fields), None)
-        if reflectivity_field is None or reflectivity_field not in fields:
-            raise ValueError("reflectivity_bounds_dbz requires an available reflectivity_field")
-        reflectivity = np.ma.asarray(fields[reflectivity_field]["data"])[start:end]
-        low_dbz, high_dbz = reflectivity_bounds_dbz
-        valid &= np.ma.filled(reflectivity >= low_dbz, False) & np.ma.filled(reflectivity <= high_dbz, False)
-        reflectivity_note = f"{reflectivity_field}: {low_dbz:g} to {high_dbz:g} dBZ"
-
-    zdr_values = np.asarray(zdr)[valid].astype(float)
-    height_values = heights_km[valid].astype(float)
-    if zdr_values.size < min_samples:
-        raise ValueError(f"only {zdr_values.size} valid ZDR samples remain; min_samples={min_samples}")
-    center = float(np.nanmedian(zdr_values) if statistic == "median" else np.nanmean(zdr_values))
-    correction = -center
-    mean = float(np.nanmean(zdr_values))
-    standard_deviation = float(np.nanstd(zdr_values))
-
-    gate_profile = np.ma.masked_where(~valid, zdr)
-    profile = np.ma.median(gate_profile, axis=0).filled(np.nan)
-    gates_with_samples = np.any(valid, axis=0)
-    profile_height = np.full(ranges_km.shape, np.nan, dtype=float)
-    profile_height[gates_with_samples] = np.nanmedian(
-        np.where(valid[:, gates_with_samples], heights_km[:, gates_with_samples], np.nan), axis=0
-    )
-    profile_valid = np.isfinite(profile) & np.isfinite(profile_height)
-
-    plt = _pyplot()
-    figure, (profile_axis, histogram_axis) = plt.subplots(
-        1, 2, figsize=figsize, gridspec_kw={"width_ratios": (1.7, 1.0), "wspace": 0.18}
-    )
-    density = profile_axis.hexbin(
-        zdr_values, height_values, gridsize=(55, 45), bins="log", mincnt=1,
-        cmap=density_cmap, extent=(zdr_bounds[0], zdr_bounds[1], 0, float(np.nanmax(height_values))),
-    )
-    density_colorbar = figure.colorbar(density, ax=profile_axis, pad=0.02)
-    density_colorbar.set_label("Samples per bin", fontsize=12)
-    profile_axis.plot(profile[profile_valid], profile_height[profile_valid], color="white", linewidth=3.2, label="Gate median")
-    profile_axis.plot(profile[profile_valid], profile_height[profile_valid], color="black", linewidth=1.3)
-    profile_axis.axvline(0.0, color="white", linestyle="--", linewidth=1.5, label="Expected 0 dB")
-    profile_axis.axvline(center, color="magenta", linestyle="-", linewidth=2.0, label=f"{statistic.title()} bias")
-    profile_axis.set_xlim(*zdr_bounds)
-    profile_axis.set_ylim(bottom=0)
-    profile_axis.set_xlabel("Differential reflectivity, ZDR (dB)", fontsize=13)
-    profile_axis.set_ylabel("Height above radar (km)", fontsize=13)
-    profile_axis.grid(True, alpha=0.25)
-    profile_axis.legend(loc="best", fontsize=10)
-
-    histogram_axis.hist(zdr_values, bins=histogram_bins, range=zdr_bounds, color="steelblue", edgecolor="white", alpha=0.9)
-    histogram_axis.axvline(0.0, color="black", linestyle="--", linewidth=1.5, label="Expected 0 dB")
-    histogram_axis.axvline(center, color="magenta", linewidth=2.0, label=f"{statistic.title()} = {center:+.3f} dB")
-    histogram_axis.set_xlim(*zdr_bounds)
-    histogram_axis.set_xlabel("Differential reflectivity, ZDR (dB)", fontsize=13)
-    histogram_axis.set_ylabel("Gate samples", fontsize=13)
-    histogram_axis.grid(True, alpha=0.25)
-    histogram_axis.legend(loc="best", fontsize=10)
-    summary = (
-        f"Valid samples: {zdr_values.size:,}\n"
-        f"Median: {np.nanmedian(zdr_values):+.3f} dB\n"
-        f"Mean: {mean:+.3f} dB\n"
-        f"Std. dev.: {standard_deviation:.3f} dB\n\n"
-        f"Estimated ZDR bias: {center:+.3f} dB\n"
-        f"Recommended additive correction: {correction:+.3f} dB\n\n"
-        f"{reflectivity_note}"
-    )
-    histogram_axis.text(
-        0.98, 0.96, summary, transform=histogram_axis.transAxes, ha="right", va="top",
-        fontsize=10.5, linespacing=1.35,
-        bbox={"boxstyle": "round,pad=0.6", "facecolor": "white", "edgecolor": "0.4", "alpha": 0.92},
-    )
-    for axis in (profile_axis, histogram_axis):
-        axis.tick_params(labelsize=11)
-
-    timestamp = pyart.util.datetime_from_radar(radar)
-    sweep_elevation = np.asarray(radar.elevation["data"], dtype=float)[start:end]
-    median_elevation = float(np.nanmedian(sweep_elevation))
-    verbose_title = _radar_plot_title(
-        metadata, timestamp, "Birdbath ZDR Calibration",
-        details=(
-            f" | Sweep {sweep} of {nsweeps - 1} | Elevation {median_elevation:.2f}° | "
-            f"Correction {correction:+.3f} dB"
-        ),
-        title=title,
-    )
-    figure.suptitle(verbose_title, fontsize=16, y=0.99)
-    figure.subplots_adjust(top=0.87, bottom=0.11, left=0.08, right=0.96)
-    figure.gv_tools_zdr_calibration = {
-        "field": field, "statistic": statistic, "bias_db": center,
-        "additive_correction_db": correction, "sample_count": int(zdr_values.size),
-    }
-    if save_path is not None:
-        save_path.parent.mkdir(parents=True, exist_ok=True)
-        figure.savefig(save_path, dpi=dpi, bbox_inches="tight")
-        plt.close(figure)
-        print(f"Plot saved to {save_path}")
-    return figure
-
-
 def plot_mrr_time_height_quicklook(
     dataset: xr.Dataset,
     fields: list[str] | tuple[str, ...],
@@ -899,21 +705,29 @@ def plot_mrr_time_height_quicklook(
         raise ValueError("height_range_km must be an increasing pair")
     if time_range is not None and (len(time_range) != 2 or np.datetime64(time_range[0]) >= np.datetime64(time_range[1])):
         raise ValueError("time_range must be an increasing pair")
-    if output is not None and savefig is not None:
-        raise ValueError("use either output or savefig, not both")
-    if savefig is not None:
-        save_path = Path(savefig).expanduser()
-        if not save_path.is_absolute() or not save_path.name or not save_path.suffix:
-            raise ValueError("savefig must be a full path including an image filename")
-    else:
-        save_path = None if output is None else Path(output).expanduser()
+    save_path = _required_output(output, savefig)
 
     def setting(value, field_name, default=None):
         if isinstance(value, dict):
             return value.get(field_name, default)
         return value if value is not None else default
 
-    field_labels = {} if field_labels is None else field_labels
+    default_field_labels = {
+        "reflectivity_factor": "Reflectivity",
+        "Ze": "Reflectivity",
+        "Zea": "Reflectivity",
+        "MRR_Z": "Reflectivity",
+        "radial_velocity": "Velocity",
+        "VEL": "Velocity",
+        "MRR_W": "Velocity",
+        "spectrum_width": "Spectrum Width",
+        "WIDTH": "Spectrum Width",
+        "precipitation_rate": "Rain Rate",
+        "rain_rate": "Rain Rate",
+        "RR": "Rain Rate",
+        "MRR_RR": "Rain Rate",
+    }
+    field_labels = {**default_field_labels, **(field_labels or {})}
     prepared = []
     for name in fields:
         variable = dataset[name]
@@ -972,11 +786,11 @@ def plot_mrr_time_height_quicklook(
             orientation="horizontal" if horizontal_colorbar else "vertical", pad=0.08 if horizontal_colorbar else 0.02,
         )
         variable = dataset[name]
-        units = str(variable.attrs.get("units", "")).strip()
         long_name = str(variable.attrs.get("long_name", variable.attrs.get("standard_name", name))).replace("_", " ")
-        colorbar.set_label(field_labels.get(name, f"{long_name} ({units})" if units else long_name), fontsize=11)
+        display_label = field_labels.get(name, long_name)
+        colorbar.set_label(display_label, fontsize=11)
         axis.set_ylabel("Height (km)", fontsize=12)
-        axis.set_title(field_labels.get(name, long_name), loc="left", fontsize=13, fontweight="semibold")
+        axis.set_title(display_label, loc="left", fontsize=13, fontweight="bold")
         axis.grid(grid, color="0.35", alpha=0.28, linewidth=0.7)
         axis.tick_params(labelsize=10)
         if height_range_km is not None:
@@ -989,12 +803,28 @@ def plot_mrr_time_height_quicklook(
     axes[-1].set_xlabel("Time (UTC)", fontsize=12)
     start_time = np.datetime_as_string(times[0].astype("datetime64[s]"), unit="s")
     end_time = np.datetime_as_string(times[-1].astype("datetime64[s]"), unit="s")
-    verbose_title = (
-        _dataset_plot_title(dataset, f"{model} time–height profiles", title=title)
-        + f"\n{start_time} to {end_time} UTC"
+    raw_instrument = str(dataset.attrs.get("instrument_id", "")).strip()
+    if not raw_instrument:
+        raw_instrument = str(dataset.attrs.get("instrument_name", "")).strip()
+        if "ID:" in raw_instrument:
+            raw_instrument = raw_instrument.split("ID:", 1)[1].split(",", 1)[0].strip()
+    instrument = raw_instrument or model
+    site = next(
+        (str(dataset.attrs.get(key, "")).strip() for key in ("site_id", "site_name", "facility", "location")
+         if str(dataset.attrs.get(key, "")).strip()),
+        "",
     )
+    observation_date = np.datetime_as_string(times[0].astype("datetime64[D]"), unit="D")
+    context = " | ".join(item for item in (site, observation_date) if item)
+    verbose_title = f"{title or f'{instrument} time–height'}\n{context}\n{start_time} to {end_time} UTC"
     figure.suptitle(verbose_title, fontsize=16, y=0.995)
-    figure.subplots_adjust(top=max(0.84, 0.94 - 0.02 / panel_count), bottom=0.08, left=0.08, right=0.94, hspace=0.26)
+    figure.subplots_adjust(
+        top=0.86,
+        bottom=0.08,
+        left=0.08,
+        right=0.92,
+        hspace=0.32,
+    )
     if save_path is not None:
         save_path.parent.mkdir(parents=True, exist_ok=True)
         figure.savefig(save_path, dpi=dpi, bbox_inches="tight")
@@ -1012,7 +842,7 @@ def plot_parsivel_quicklook(
     title: str | None = None,
     cmap="viridis",
     colorbar_bounds: tuple[float, float] | None = None,
-    colorbar_location: str = "right",
+    colorbar_location: str = "top",
     dsd_yrange: tuple[float, float] | None = None,
 ):
     """Plot one UTC day of Parsivel DSD and precipitation parameters.
@@ -1020,7 +850,7 @@ def plot_parsivel_quicklook(
     The six rows contain DSD, dBZ, rain rate, liquid-water content,
     concentration, and number of drops.
 
-    ``savefig`` must be a full path including an image filename. The legacy
+    ``savefig`` must include an image filename and may be relative. The legacy
     positional ``output`` argument remains supported, but cannot be combined
     with ``savefig``. ``colorbar_bounds`` and ``dsd_yrange`` are two-item ``(minimum, maximum)``
     pairs. ``colorbar_location`` accepts ``"left"``, ``"right"``, ``"top"``,
@@ -1041,14 +871,7 @@ def plot_parsivel_quicklook(
         raise ValueError("dataset must contain at least one time observation")
     if "drop_diameter" not in dataset.coords:
         raise ValueError("dataset must contain a drop_diameter coordinate")
-    if output is not None and savefig is not None:
-        raise ValueError("use either output or savefig, not both")
-    if savefig is not None:
-        save_path = Path(savefig).expanduser()
-        if not save_path.is_absolute() or not save_path.name or not save_path.suffix:
-            raise ValueError("savefig must be a full path including an image filename")
-    else:
-        save_path = None if output is None else Path(output).expanduser()
+    save_path = _required_output(output, savefig)
 
     def _validated_range(value, name):
         if value is None:
@@ -1102,7 +925,7 @@ def plot_parsivel_quicklook(
     colorbar_geometry = {
         "right": ([1.015, 0.0, 0.018, 1.0], "vertical"),
         "left": ([-0.075, 0.0, 0.018, 1.0], "vertical"),
-        "top": ([0.0, 1.13, 1.0, 0.06], "horizontal"),
+        "top": ([0.25, 0.80, 0.50, 0.10], "horizontal"),
         "bottom": ([0.0, -0.28, 1.0, 0.06], "horizontal"),
     }
     bounds, orientation = colorbar_geometry[colorbar_location]
@@ -1130,6 +953,9 @@ def plot_parsivel_quicklook(
         axis.tick_params(axis="both", labelsize=12)
     axes[5].xaxis.set_major_locator(mdates.HourLocator(interval=1))
     axes[5].xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+    axes[5].tick_params(axis="x", labelrotation=45)
+    for label in axes[5].get_xticklabels():
+        label.set_horizontalalignment("right")
 
     date_text = str(selected_day)
     axes[0].set_title(

@@ -17,6 +17,7 @@ _ADAPTERS: dict[str, type[InstrumentAdapter]] = {
 
 
 def register_adapter(name: str, adapter: type[InstrumentAdapter], *, replace=False) -> None:
+    """Register an adapter class under a case-insensitive public name."""
     key = name.strip().lower()
     if not key:
         raise ValueError("adapter name must not be empty")
@@ -28,10 +29,12 @@ def register_adapter(name: str, adapter: type[InstrumentAdapter], *, replace=Fal
 
 
 def available_adapters() -> tuple[str, ...]:
+    """Return registered adapter names in deterministic order."""
     return tuple(sorted(_ADAPTERS))
 
 
 def create_adapter(name, metadata, **options) -> InstrumentAdapter:
+    """Instantiate a registered adapter with instrument metadata and options."""
     key = name.strip().lower()
     try:
         adapter = _ADAPTERS[key]

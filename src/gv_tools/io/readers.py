@@ -6,6 +6,7 @@ from dataclasses import replace
 from pathlib import Path
 import re
 from tempfile import TemporaryDirectory
+from collections.abc import Sequence
 from typing import Any
 
 import pandas as pd
@@ -35,24 +36,60 @@ _METADATA_KEYS = {
 }
 
 
-def _resolve_files(files: list[str | Path]) -> list[Path]:
-    if not isinstance(files, list):
-        raise TypeError("files must be a list of filenames")
-    if not files:
-        raise ValueError("files must contain at least one filename")
+def _resolve_files(files: str | Path | Sequence[str | Path]) -> list[Path]:
+    """Resolve one file, a directory, or an explicit sequence of files.
+
+    Directories are scanned recursively.  Instrument-specific readers validate
+    that the resulting files belong to one compatible instrument family.
+    """
+    items = [files] if isinstance(files, (str, Path)) else list(files)
+    if not items:
+        raise ValueError("input must contain at least one filename or directory")
     resolved = []
-    for filename in files:
+    for filename in items:
         if not isinstance(filename, (str, Path)):
-            raise TypeError("each item in files must be a filename string or Path")
+            raise TypeError("each input must be a filename or directory string or Path")
         path = Path(filename).expanduser()
         if not path.is_absolute():
-            raise ValueError(f"each input filename must be fully qualified: {path}")
-        if not path.is_file():
-            raise FileNotFoundError(f"input file does not exist: {path}")
-        resolved.append(path.resolve())
-    if len(set(resolved)) != len(resolved):
-        raise ValueError("files contains duplicate filenames")
-    return resolved
+            raise ValueError(f"each input path must be fully qualified: {path}")
+        if path.is_file():
+            resolved.append(path.resolve())
+        elif path.is_dir():
+            resolved.extend(item.resolve() for item in sorted(path.rglob("*")) if item.is_file())
+        else:
+            raise FileNotFoundError(f"input path does not exist: {path}")
+    unique = list(dict.fromkeys(resolved))
+    if not unique:
+        raise FileNotFoundError("input directories contain no files")
+    return unique
+
+
+def _daily_files(paths: list[Path]) -> list[Path]:
+    """Prefer consolidated daily products when packets are also present."""
+    daily = [path for path in paths if "_daily." in path.name.casefold()]
+    return daily or paths
+
+
+def _aio_files(files) -> list[Path]:
+    paths = _resolve_files(files)
+    selected = [
+        path for path in paths
+        if _RM_YOUNG_ID.search(path.name) or _LUFFT_WS800.search(path.name) or _METONE_FILE.match(path.name)
+    ]
+    if not selected:
+        raise FileNotFoundError("input contains no recognized AIO weather-station files")
+    return _daily_files(selected)
+
+
+def _parsivel_files(files) -> list[Path]:
+    paths = _resolve_files(files)
+    selected = [
+        path for path in paths
+        if _PIERS_PARSIVEL_FILE.match(path.name) or _APU_PARSIVEL_FILE.match(path.name)
+    ]
+    if not selected:
+        raise ValueError("not a recognized Parsivel archive in the supplied input")
+    return _daily_files(selected)
 
 
 def _take_adapter_options(options: dict[str, Any], *, parsivel=False) -> dict[str, Any]:
@@ -277,13 +314,13 @@ def _parsivel_results(adapter, files, method, **options):
 
 def discover_aio(files, **metadata_options):
     """Return dates in explicitly supplied RM Young or Met One AIO files."""
-    paths = _resolve_files(files)
+    paths = _aio_files(files)
     return _discover(_aio_adapter(paths, **metadata_options), paths)
 
 
 def read_aio_raw(files, **options):
     """Read and merge RM Young or Met One AIO files into one raw product."""
-    paths = _resolve_files(files)
+    paths = _aio_files(files)
     adapter_options = _take_adapter_options(options)
     return _merge_raw(_daily_results(_aio_adapter(paths, **adapter_options), paths, "read_raw", **options))
 
@@ -307,7 +344,7 @@ def _ws800_common_xarray(frame):
 
 def read_aio(files, *, XARRAY=False, **options):
     """Read AIO files as pandas (default) or xarray with ``XARRAY=True``."""
-    paths = _resolve_files(files)
+    paths = _aio_files(files)
     adapter_options = _take_adapter_options(options)
     adapter = _aio_adapter(paths, **adapter_options)
     if _aio_family(paths) == "lufft_ws800":
@@ -326,7 +363,7 @@ def read_ws800_full(files, *, XARRAY=False, **options):
     Pandas is returned by default. Pass ``XARRAY=True`` for a normalized
     :class:`xarray.Dataset`.
     """
-    paths = _resolve_files(files)
+    paths = _aio_files(files)
     if _aio_family(paths) != "lufft_ws800":
         raise ValueError("files are not recognized PIERS Lufft WS800 CSVs")
     adapter_options = _take_adapter_options(options)
@@ -342,31 +379,31 @@ def read_ws800_full(files, *, XARRAY=False, **options):
 
 def discover_metone(files, **metadata_options):
     """Compatibility wrapper for :func:`discover_aio`."""
-    paths = _resolve_files(files)
+    paths = _aio_files(files)
     return discover_aio(paths, **metadata_options)
 
 
 def read_metone_raw(files, **options):
     """Compatibility wrapper for :func:`read_aio_raw`."""
-    paths = _resolve_files(files)
+    paths = _aio_files(files)
     return read_aio_raw(paths, **options)
 
 
 def read_metone(files, **options):
     """Compatibility wrapper for :func:`read_aio`."""
-    paths = _resolve_files(files)
+    paths = _aio_files(files)
     return read_aio(paths, **options)
 
 
 def discover_parsivel(files, **metadata_options):
     """Return dates in the explicitly supplied Parsivel files."""
-    paths = _resolve_files(files)
+    paths = _parsivel_files(files)
     return _discover_parsivel(_parsivel_adapter(paths, **metadata_options), paths)
 
 
 def read_parsivel_raw(files, **options):
     """Read and merge explicitly supplied Parsivel files into one raw product."""
-    paths = _resolve_files(files)
+    paths = _parsivel_files(files)
     adapter_options = _take_adapter_options(options, parsivel=True)
     return _merge_raw(_parsivel_results(
         _parsivel_adapter(paths, **adapter_options), paths, "read_raw", **options
@@ -375,7 +412,7 @@ def read_parsivel_raw(files, **options):
 
 def read_parsivel(files, **options):
     """Read and merge every explicitly supplied Parsivel file."""
-    paths = _resolve_files(files)
+    paths = _parsivel_files(files)
     adapter_options = _take_adapter_options(options, parsivel=True)
     datasets = _parsivel_results(
         _parsivel_adapter(paths, **adapter_options), paths, "read", **options
@@ -384,21 +421,21 @@ def read_parsivel(files, **options):
 
 
 def read_radar(radar_file, *, XRADAR=False, **reader_options):
-    """Read one compressed or uncompressed radar file.
+    """Read one or more compressed or uncompressed radar files.
 
-    The file format is detected from its content, including SIGMET/IRIS,
-    NEXRAD Level II, and CF/Radial NetCDF. ``.gz``, ``.bz2``, and ZIP
+    The file format is detected from its content, including Universal Format,
+    SIGMET/IRIS, NEXRAD Level II, and CF/Radial NetCDF. ``.gz``, ``.bz2``, and ZIP
     compression are handled transparently. The default reads directly with
     ARM Py-ART. ``XRADAR=True`` loads through xradar, converts the resulting
     DataTree with ``tree.pyart.to_radar()``, and returns the Py-ART Radar.
     """
-    if isinstance(radar_file, (list, tuple, set)):
-        raise TypeError("radar_file must be one filename, not a list")
-    return ingest_radar(radar_file, XRADAR=XRADAR, **reader_options)
+    paths = _resolve_files(radar_file)
+    products = [ingest_radar(path, XRADAR=XRADAR, **reader_options) for path in paths]
+    return products[0] if len(products) == 1 else products
 
 
 def inspect_radar(radar_file):
-    """Return the automatically detected ingest route for one radar file."""
-    if isinstance(radar_file, (list, tuple, set)):
-        raise TypeError("radar_file must be one filename, not a list")
-    return inspect_radar_file(radar_file)
+    """Return automatically detected ingest routes for one or more files."""
+    paths = _resolve_files(radar_file)
+    routes = [inspect_radar_file(path) for path in paths]
+    return routes[0] if len(routes) == 1 else routes

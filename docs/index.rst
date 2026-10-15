@@ -1,9 +1,9 @@
 GV Tools
 ========
 
-GV Tools reads, normalizes, validates, writes, and plots NASA GPM Ground
-Validation instrument data. Its public interface is divided by task, like
-ARM Py-ART, so users can discover related operations in one place.
+GV Tools reads NASA GPM Ground Validation instrument data into pandas or
+xarray objects and saves user-directed figures. It does not select data-output
+paths or perform downstream scientific analyses.
 
 .. code-block:: python
 
@@ -16,14 +16,14 @@ ARM Py-ART, so users can discover related operations in one place.
    :maxdepth: 2
 
    userguide
+   dependencies
    mrr
-   py_2dvd/index
    api/index
    notebooks
    examples
+   supported-instruments
    architecture
    metadata
-   output-conventions
 
 Indices
 -------

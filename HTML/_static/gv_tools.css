@@ -1,0 +1,16 @@
+:root {
+  --pst-color-primary: #2f6f8f;
+  --pst-color-link: #276f91;
+}
+
+.bd-header {
+  border-bottom: 1px solid var(--pst-color-border);
+}
+
+.bd-main .bd-content .bd-article-container {
+  max-width: 60rem;
+}
+
+code.literal {
+  color: #28739b;
+}

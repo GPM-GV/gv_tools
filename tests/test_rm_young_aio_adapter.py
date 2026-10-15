@@ -55,6 +55,18 @@ def test_converts_configured_source_timezone_to_utc(tmp_path):
     assert pd.Timestamp(dataset.time.values[0]) == pd.Timestamp("2026-08-10 10:00:13")
 
 
+def test_reads_consolidated_daily_filename_and_comma_delimiter(tmp_path):
+    source = packet(
+        tmp_path / "PIERS0042_WX_20260810_daily.csv",
+        "20260810060013,0 004.27 103.1 27.1 66.0 1013.7\n",
+    )
+    adapter = RMYoungAIOAdapter(metadata())
+    assert adapter.discover(tmp_path) == ["2026-08-10"]
+    dataset = adapter.read(source)["2026-08-10"]
+    assert dataset.sizes["time"] == 1
+    assert dataset.wind_speed.item() == pytest.approx(4.27)
+
+
 def test_directory_read_returns_every_discovered_day_and_registry(tmp_path):
     packet(tmp_path / "PIERS0042_WX_20260810060005.csv")
     packet(tmp_path / "PIERS0042_WX_20260811060005.csv", "20260811060013 0 1 2 3 4 5\n")

@@ -12,8 +12,3 @@ radar plotting uses the Py-ART-compatible object returned by
    :undoc-members:
    :show-inheritance:
 
-2DVD
-----
-
-.. automodule:: gv_tools.graph.py_2dvd
-   :members: plot_integral_parameters, plot_dsd

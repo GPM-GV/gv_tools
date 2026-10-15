@@ -3,7 +3,7 @@
 GV Tools separates instrument-specific decoding from scientific products:
 
 ```text
-raw files -> adapter -> normalized xarray.Dataset -> QC/analysis -> output/plots
+raw files -> reader/adapter -> pandas or xarray object -> user analysis/output
 ```
 
 Instrument adapters implement the low-level decoding contract and may partition
@@ -12,8 +12,8 @@ instrument the same interface: an explicit file-path list, optional date bounds,
 and a single merged return product. All downstream code consumes that normalized
 product and must not rely on manufacturer field names or raw file layouts.
 
-The Parsivel adapter deliberately calls the existing `process_parsivel` public
-API rather than copying its formulas. `read_raw()` returns a typed
+The Parsivel adapter calls the private decoder bundled with GV Tools.
+`read_raw()` returns a typed
 `RawParsivelProduct`; `read()` normalizes its parameter, DSD, and moment tables
 into one dataset. Instrument-aware discovery prevents files for another APU or
 PIERS platform from contributing dates.
@@ -30,14 +30,14 @@ and exposes the same raw-versus-normalized workflow and ingest accounting.
 MRR2 and MRRPro use a separate `gv_tools.io.read_mrr()` regime. MRR files
 are already scientific NetCDF products, so they do not pass through a surface
 instrument adapter or the scanning-radar Py-ART route. The reader identifies
-MRR2 versus MRRPro from the dataset schema, normalizes MRR2 Unix timestamps,
-records the detected model, and returns the native multidimensional
-`xarray.Dataset`.
+MRR2, native MRRPro, and C. Williams post-processed MRRPro from the dataset
+schema, normalizes MRR2 Unix timestamps, records the detected model, and
+returns the native multidimensional `xarray.Dataset`. Multi-file inputs are
+loaded, sorted, de-duplicated, and concatenated along time without Dask.
 
-Outputs are staged in the destination filesystem before atomic replacement.
-The typed version 0.2 manifest records checksums, platform, and temporal
-coverage. Public imports are lazy so the dependency checker remains usable in
-a minimal environment.
+GV Tools does not write scientific data products. Figure functions write only
+to the filename supplied by the caller. Public imports are lazy so the
+dependency checker remains usable in a minimal environment.
 
 ## Adding an instrument
 
@@ -57,7 +57,8 @@ Radar volumes use the public `gv_tools.io.read_radar()` entry point because Py-A
 fit the daily ``xarray.Dataset`` adapter contract. The ingest inspects the file
 signature, routes raw np1 SIGMET/IRIS volumes to ``read_sigmet()``, WSR-88D
 NEXRAD Level-II archives to ``read_nexrad_archive()``, and NPOL1 CF/Radial
-NetCDF volumes to `read_cfradial()`. Each call reads one radar volume. Gzip,
+NetCDF volumes to `read_cfradial()`, and Universal Format volumes to
+``read_uf()``. Each call reads one radar volume. Gzip,
 bzip2, and single-member ZIP compression are transparent.
 
 MRR is intentionally distinct from this scanning-radar path: its vertically

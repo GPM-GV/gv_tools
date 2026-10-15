@@ -1,4 +1,4 @@
-"""Readers, instrument adapters, and product writers."""
+"""Instrument readers and adapters that return pandas or xarray objects."""
 
 from ..adapters import (
     InstrumentAdapter,
@@ -14,8 +14,8 @@ from ..adapters import (
 )
 from ..ingest_radar import RadarIngestRoute, ingest_radar, inspect_radar_file
 from ..mrr import read_mrr
-from ..outputs import output_directory, write_product
 from ..registry import available_adapters, create_adapter, register_adapter
+from .gauge import read_gauge
 from .readers import (
     discover_aio,
     discover_metone,
@@ -51,7 +51,6 @@ __all__ = [
     "ingest_radar",
     "inspect_radar_file",
     "inspect_radar",
-    "output_directory",
     "register_adapter",
     "read_aio",
     "read_aio_raw",
@@ -61,10 +60,10 @@ __all__ = [
     "read_parsivel",
     "read_parsivel_raw",
     "read_radar",
+    "read_gauge",
     "read_ws800_full",
-    "write_product",
 ]
 
-from .py_2dvd import ingest_raw, save_products
+from .py_2dvd import ingest_raw
 read_2dvd = ingest_raw
-__all__ += ["read_2dvd", "ingest_raw", "save_products"]
+__all__ += ["read_2dvd", "ingest_raw"]

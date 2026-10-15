@@ -9,6 +9,7 @@ import pytest
 import numpy as np
 
 from gv_tools import ingest_radar, inspect_radar_file
+from gv_tools.io import read_radar
 
 module = import_module("gv_tools.ingest_radar")
 
@@ -80,6 +81,51 @@ def test_inspect_nexrad_level2_content(tmp_path, signature):
     assert route.family == "WSR-88D"
     assert route.file_format == "NEXRAD Level II"
     assert route.reader == "read_nexrad_archive"
+
+
+@pytest.mark.parametrize("compressed", [False, True])
+def test_inspect_uf_content_compressed_or_uncompressed(tmp_path, compressed):
+    payload = b"\x00\x00\xe8\x20UF" + b"universal format data"
+    source = tmp_path / ("volume.uf.gz" if compressed else "volume.uf")
+    if compressed:
+        with gzip.open(source, "wb") as stream:
+            stream.write(payload)
+    else:
+        source.write_bytes(payload)
+
+    route = inspect_radar_file(source)
+
+    assert route.family == "UF"
+    assert route.file_format == "Universal Format"
+    assert route.reader == "read_uf"
+
+
+def test_io_read_radar_dispatches_to_uf_reader(tmp_path, monkeypatch):
+    source = tmp_path / "volume.uf"
+    source.write_bytes(b"\x00\x00\xe8\x20UFpayload")
+    calls = []
+    radar = SimpleNamespace(scan_type="ppi", metadata={})
+    fake = SimpleNamespace(
+        io=SimpleNamespace(
+            read_uf=lambda path, **options: calls.append((path, options)) or radar
+        )
+    )
+    monkeypatch.setattr(module, "_pyart", lambda: fake)
+
+    assert read_radar(source, file_field_names=True) is radar
+    assert calls == [(str(source), {"file_field_names": True})]
+
+
+def test_ingest_uf_xradar_request_falls_back_to_pyart(tmp_path, monkeypatch):
+    source = tmp_path / "volume.uf"
+    source.write_bytes(b"\x00\x00\xe8\x20UFpayload")
+    radar = SimpleNamespace(scan_type="ppi", metadata={})
+    fake = SimpleNamespace(io=SimpleNamespace(read_uf=lambda path: radar))
+    monkeypatch.setattr(module, "_pyart", lambda: fake)
+
+    with pytest.warns(UserWarning, match="not supported for UF"):
+        assert ingest_radar(source, XRADAR=True) is radar
+    assert radar.metadata["XRADAR"] == 0
 
 
 def test_ingest_dispatches_to_sigmet_reader(tmp_path, monkeypatch):

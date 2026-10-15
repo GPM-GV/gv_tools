@@ -33,6 +33,7 @@ _NEXRAD_LEVEL2_SIGNATURES = (b"AR2V", b"ARCHIVE2.")
 _GZIP_SIGNATURE = b"\x1f\x8b"
 _BZIP2_SIGNATURE = b"BZh"
 _ZIP_SIGNATURE = b"PK\x03\x04"
+_UF_SIGNATURE = b"UF"
 
 
 def _pyart() -> Any:
@@ -92,9 +93,10 @@ def inspect_radar_file(path: str | Path) -> RadarIngestRoute:
     """Inspect file bytes and return the supported radar ingest route.
 
     Raw ``np1`` files are SIGMET/IRIS volumes, NPOL1 products are CF/Radial
-    NetCDF files, and WSR-88D files are NEXRAD Level-II archives. Detection
-    intentionally uses format signatures rather than extensions because
-    operational archives do not always preserve names.
+    NetCDF files, WSR-88D files are NEXRAD Level-II archives, and Universal
+    Format files contain a ``UF`` mandatory-header marker. Detection uses
+    format signatures rather than extensions because operational archives do
+    not always preserve names.
     """
     source = _source(path)
     signature = _uncompressed_signature(source)
@@ -107,11 +109,15 @@ def inspect_radar_file(path: str | Path) -> RadarIngestRoute:
         return RadarIngestRoute("NPOL1", "NetCDF3", "read_cfradial")
     if signature.startswith(_HDF5_SIGNATURE):
         return RadarIngestRoute("NPOL1", "NetCDF4/HDF5", "read_cfradial")
+    # UF records may begin directly with the mandatory header or with a
+    # four-byte Fortran record-length word, as in NOAA DPQC archives.
+    if signature.startswith(_UF_SIGNATURE) or signature[4:6] == _UF_SIGNATURE:
+        return RadarIngestRoute("UF", "Universal Format", "read_uf")
 
     preview = signature[:8].hex(" ") or "<empty>"
     raise ValueError(
         "unsupported radar format; expected raw np1 (SIGMET/IRIS), "
-        "WSR-88D (NEXRAD Level II), or NPOL1 (CF/Radial NetCDF), "
+        "WSR-88D (NEXRAD Level II), NPOL1 (CF/Radial NetCDF), or UF, "
         f"first bytes: {preview}"
     )
 
@@ -228,17 +234,17 @@ def ingest_radar(path: str | Path, *, XRADAR: bool = False, **reader_options: An
     """Read a supported radar file with the content-selected Py-ART reader.
 
     Parameters after *path* are forwarded unchanged to ``read_sigmet``,
-    ``read_nexrad_archive``, or ``read_cfradial``. The returned object is a
-    :class:`pyart.core.Radar`.
+    ``read_nexrad_archive``, ``read_cfradial``, or ``read_uf``. The returned
+    object is a :class:`pyart.core.Radar`.
     """
     source = _source(path)
     route = inspect_radar_file(source)
     use_xradar = XRADAR
-    if XRADAR and route.reader == "read_nexrad_archive":
+    if XRADAR and route.reader in {"read_nexrad_archive", "read_uf"}:
+        format_name = "NEXRAD Level-II" if route.reader == "read_nexrad_archive" else "UF"
         warnings.warn(
-            "XRADAR=True cannot reliably convert multi-sweep NEXRAD Level-II "
-            "volumes with unequal gate counts to a Py-ART Radar; using Py-ART "
-            "read_nexrad_archive instead",
+            f"XRADAR=True is not supported for {format_name} input; using "
+            f"Py-ART {route.reader} instead",
             UserWarning,
             stacklevel=2,
         )

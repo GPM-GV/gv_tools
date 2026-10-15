@@ -1,0 +1,1378 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>gv_tools.io &#8212; GV Tools 0.50.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/gv_tools.css?v=f6e64a54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../_static/documentation_options.js?v=6270e14a"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/io';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="gv_tools.config" href="config.html" />
+    <link rel="prev" title="API Reference Manual" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">GV Tools 0.50.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../dependencies.html">
+    Dependencies
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../supported-instruments.html">
+    Supported instruments and methods
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../dependencies.html">
+    Dependencies
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../supported-instruments.html">
+    Supported instruments and methods
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">gv_tools.io</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">gv_tools.config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph.html">gv_tools.graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">Utilities</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">API Reference Manual</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">gv_tools.io</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-gv_tools.io">
+<span id="gv-tools-io"></span><h1>gv_tools.io<a class="headerlink" href="#module-gv_tools.io" title="Link to this heading">#</a></h1>
+<p>Instrument readers and adapters that return pandas or xarray objects.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="gv_tools.io.InstrumentAdapter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">InstrumentAdapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/base.html#InstrumentAdapter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.InstrumentAdapter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Translate instrument-specific input into normalized GV products.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>metadata</strong> (<em>InstrumentMetadata</em>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.InstrumentAdapter.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#gv_tools.io.InstrumentAdapter.name" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.InstrumentAdapter.discover">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">discover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/base.html#InstrumentAdapter.discover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.InstrumentAdapter.discover" title="Link to this definition">#</a></dt>
+<dd><p>Return the dates available below <em>input_path</em> as YYYY-MM-DD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_path</strong> (<em>str</em><em> | </em><em>Path</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.InstrumentAdapter.read">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/base.html#InstrumentAdapter.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.InstrumentAdapter.read" title="Link to this definition">#</a></dt>
+<dd><p>Read and normalize products keyed by YYYY-MM-DD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_path</strong> (<em>str</em><em> | </em><em>Path</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict[str, <em>Dataset</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gv_tools.io.LufftWS800Adapter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">LufftWS800Adapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/lufft_ws800.html#LufftWS800Adapter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.LufftWS800Adapter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gv_tools.io.InstrumentAdapter" title="gv_tools.adapters.base.InstrumentAdapter"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstrumentAdapter</span></code></a></p>
+<p>Read <code class="docutils literal notranslate"><span class="pre">PIERS####_WS800_*_daily.csv</span></code> files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>metadata</strong> (<em>InstrumentMetadata</em>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.LufftWS800Adapter.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'lufft_ws800'</span></span><a class="headerlink" href="#gv_tools.io.LufftWS800Adapter.name" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.LufftWS800Adapter.discover">
+<span class="sig-name descname"><span class="pre">discover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/lufft_ws800.html#LufftWS800Adapter.discover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.LufftWS800Adapter.discover" title="Link to this definition">#</a></dt>
+<dd><p>Return ISO dates represented by a WS800 daily file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.LufftWS800Adapter.read_raw">
+<span class="sig-name descname"><span class="pre">read_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/lufft_ws800.html#LufftWS800Adapter.read_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.LufftWS800Adapter.read_raw" title="Link to this definition">#</a></dt>
+<dd><p>Decode a WS800 file into day-keyed raw products.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.LufftWS800Adapter.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/lufft_ws800.html#LufftWS800Adapter.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.LufftWS800Adapter.read" title="Link to this definition">#</a></dt>
+<dd><p>Decode and normalize a WS800 file into day-keyed datasets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.LufftWS800Adapter.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejected_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duplicate_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/lufft_ws800.html#LufftWS800Adapter.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.LufftWS800Adapter.normalize" title="Link to this definition">#</a></dt>
+<dd><p>Convert decoded WS800 observations to the common xarray schema.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gv_tools.io.MetOneAIOAdapter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">MetOneAIOAdapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/metone_aio.html#MetOneAIOAdapter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.MetOneAIOAdapter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gv_tools.io.InstrumentAdapter" title="gv_tools.adapters.base.InstrumentAdapter"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstrumentAdapter</span></code></a></p>
+<p>Read <code class="docutils literal notranslate"><span class="pre">AIO_SITE_YYYYMM.dat</span></code> monthly Met One AIO files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>metadata</strong> (<em>InstrumentMetadata</em>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.MetOneAIOAdapter.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'metone_aio'</span></span><a class="headerlink" href="#gv_tools.io.MetOneAIOAdapter.name" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.MetOneAIOAdapter.discover">
+<span class="sig-name descname"><span class="pre">discover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/metone_aio.html#MetOneAIOAdapter.discover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.MetOneAIOAdapter.discover" title="Link to this definition">#</a></dt>
+<dd><p>Return days covered by valid observations in matching monthly files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_path</strong> (<em>str</em><em> | </em><em>Path</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.MetOneAIOAdapter.read_raw">
+<span class="sig-name descname"><span class="pre">read_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/metone_aio.html#MetOneAIOAdapter.read_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.MetOneAIOAdapter.read_raw" title="Link to this definition">#</a></dt>
+<dd><p>Decode Met One source files into day-keyed raw products.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.MetOneAIOAdapter.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/metone_aio.html#MetOneAIOAdapter.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.MetOneAIOAdapter.read" title="Link to this definition">#</a></dt>
+<dd><p>Decode and normalize Met One files into day-keyed datasets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.MetOneAIOAdapter.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejected_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duplicate_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/metone_aio.html#MetOneAIOAdapter.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.MetOneAIOAdapter.normalize" title="Link to this definition">#</a></dt>
+<dd><p>Convert decoded Met One observations to the common xarray schema.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gv_tools.io.ParsivelAdapter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">ParsivelAdapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_platform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ParsivelSourcePlatform.AUTO</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/parsivel.html#ParsivelAdapter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.ParsivelAdapter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gv_tools.io.InstrumentAdapter" title="gv_tools.adapters.base.InstrumentAdapter"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstrumentAdapter</span></code></a></p>
+<p>Ingest APU or PIERS Parsivel data and normalize its derived tables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metadata</strong> (<em>InstrumentMetadata</em>)</p></li>
+<li><p><strong>source_platform</strong> (<em>str</em><em> | </em><a class="reference internal" href="#gv_tools.io.ParsivelSourcePlatform" title="gv_tools.io.ParsivelSourcePlatform"><em>ParsivelSourcePlatform</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.ParsivelAdapter.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'parsivel'</span></span><a class="headerlink" href="#gv_tools.io.ParsivelAdapter.name" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.ParsivelAdapter.discover">
+<span class="sig-name descname"><span class="pre">discover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/parsivel.html#ParsivelAdapter.discover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.ParsivelAdapter.discover" title="Link to this definition">#</a></dt>
+<dd><p>Return ISO dates represented by compatible source files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_path</strong> (<em>str</em><em> | </em><em>Path</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.ParsivelAdapter.read_raw">
+<span class="sig-name descname"><span class="pre">read_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/parsivel.html#ParsivelAdapter.read_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.ParsivelAdapter.read_raw" title="Link to this definition">#</a></dt>
+<dd><p>Decode source files without applying the GV normalized schema.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.ParsivelAdapter.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/parsivel.html#ParsivelAdapter.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.ParsivelAdapter.read" title="Link to this definition">#</a></dt>
+<dd><p>Decode and normalize source data into day-keyed xarray datasets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.ParsivelAdapter.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">psd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moments</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/parsivel.html#ParsivelAdapter.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.ParsivelAdapter.normalize" title="Link to this definition">#</a></dt>
+<dd><p>Combine the processor’s three DataFrames into one GV Dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Dataset</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gv_tools.io.ParsivelSourcePlatform">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">ParsivelSourcePlatform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/parsivel.html#ParsivelSourcePlatform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.ParsivelSourcePlatform" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Supported Parsivel archive families.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.ParsivelSourcePlatform.AUTO">
+<span class="sig-name descname"><span class="pre">AUTO</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'auto'</span></span><a class="headerlink" href="#gv_tools.io.ParsivelSourcePlatform.AUTO" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.ParsivelSourcePlatform.APU">
+<span class="sig-name descname"><span class="pre">APU</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'apu'</span></span><a class="headerlink" href="#gv_tools.io.ParsivelSourcePlatform.APU" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.ParsivelSourcePlatform.PIERS">
+<span class="sig-name descname"><span class="pre">PIERS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'piers'</span></span><a class="headerlink" href="#gv_tools.io.ParsivelSourcePlatform.PIERS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gv_tools.io.RMYoungAIOAdapter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">RMYoungAIOAdapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/rm_young_aio.html#RMYoungAIOAdapter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.RMYoungAIOAdapter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gv_tools.io.InstrumentAdapter" title="gv_tools.adapters.base.InstrumentAdapter"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstrumentAdapter</span></code></a></p>
+<p>Read the six-field RM Young AIO <code class="docutils literal notranslate"><span class="pre">PIERS####_WX_*.csv</span></code> stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>metadata</strong> (<em>InstrumentMetadata</em>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RMYoungAIOAdapter.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'rm_young_aio'</span></span><a class="headerlink" href="#gv_tools.io.RMYoungAIOAdapter.name" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.RMYoungAIOAdapter.discover">
+<span class="sig-name descname"><span class="pre">discover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/rm_young_aio.html#RMYoungAIOAdapter.discover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.RMYoungAIOAdapter.discover" title="Link to this definition">#</a></dt>
+<dd><p>Return dates represented by matching PIERS WX daily or packet files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_path</strong> (<em>str</em><em> | </em><em>Path</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.RMYoungAIOAdapter.read_raw">
+<span class="sig-name descname"><span class="pre">read_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/rm_young_aio.html#RMYoungAIOAdapter.read_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.RMYoungAIOAdapter.read_raw" title="Link to this definition">#</a></dt>
+<dd><p>Decode daily or packet input into typed, day-keyed pandas products.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.RMYoungAIOAdapter.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/rm_young_aio.html#RMYoungAIOAdapter.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.RMYoungAIOAdapter.read" title="Link to this definition">#</a></dt>
+<dd><p>Decode and normalize R.M. Young files into day-keyed datasets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gv_tools.io.RMYoungAIOAdapter.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejected_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duplicate_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/rm_young_aio.html#RMYoungAIOAdapter.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.RMYoungAIOAdapter.normalize" title="Link to this definition">#</a></dt>
+<dd><p>Convert decoded observations to the common GV xarray schema.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gv_tools.io.RadarIngestRoute">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">RadarIngestRoute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">family</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/ingest_radar.html#RadarIngestRoute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.RadarIngestRoute" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The input family and Py-ART reader selected for a radar file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>family</strong> (<em>str</em>)</p></li>
+<li><p><strong>file_format</strong> (<em>str</em>)</p></li>
+<li><p><strong>reader</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RadarIngestRoute.family">
+<span class="sig-name descname"><span class="pre">family</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#gv_tools.io.RadarIngestRoute.family" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RadarIngestRoute.file_format">
+<span class="sig-name descname"><span class="pre">file_format</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#gv_tools.io.RadarIngestRoute.file_format" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RadarIngestRoute.reader">
+<span class="sig-name descname"><span class="pre">reader</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#gv_tools.io.RadarIngestRoute.reader" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gv_tools.io.RawMetOneAIOProduct">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">RawMetOneAIOProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejected_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duplicate_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/metone_aio.html#RawMetOneAIOProduct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.RawMetOneAIOProduct" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Decoded observations and ingest accounting for one UTC day.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>observations</strong> (<em>DataFrame</em>)</p></li>
+<li><p><strong>source_files</strong> (<em>tuple</em><em>[</em><em>str</em><em>, </em><em>...</em><em>]</em>)</p></li>
+<li><p><strong>rejected_rows</strong> (<em>int</em>)</p></li>
+<li><p><strong>duplicate_rows</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RawMetOneAIOProduct.observations">
+<span class="sig-name descname"><span class="pre">observations</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></span><a class="headerlink" href="#gv_tools.io.RawMetOneAIOProduct.observations" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RawMetOneAIOProduct.source_files">
+<span class="sig-name descname"><span class="pre">source_files</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#gv_tools.io.RawMetOneAIOProduct.source_files" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RawMetOneAIOProduct.rejected_rows">
+<span class="sig-name descname"><span class="pre">rejected_rows</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#gv_tools.io.RawMetOneAIOProduct.rejected_rows" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RawMetOneAIOProduct.duplicate_rows">
+<span class="sig-name descname"><span class="pre">duplicate_rows</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#gv_tools.io.RawMetOneAIOProduct.duplicate_rows" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gv_tools.io.RawLufftWS800Product">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">RawLufftWS800Product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejected_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duplicate_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/lufft_ws800.html#RawLufftWS800Product"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.RawLufftWS800Product" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Decoded WS800 observations and source-accounting metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>observations</strong> (<em>DataFrame</em>)</p></li>
+<li><p><strong>source_files</strong> (<em>tuple</em><em>[</em><em>str</em><em>, </em><em>...</em><em>]</em>)</p></li>
+<li><p><strong>rejected_rows</strong> (<em>int</em>)</p></li>
+<li><p><strong>duplicate_rows</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RawLufftWS800Product.observations">
+<span class="sig-name descname"><span class="pre">observations</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></span><a class="headerlink" href="#gv_tools.io.RawLufftWS800Product.observations" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RawLufftWS800Product.source_files">
+<span class="sig-name descname"><span class="pre">source_files</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#gv_tools.io.RawLufftWS800Product.source_files" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RawLufftWS800Product.rejected_rows">
+<span class="sig-name descname"><span class="pre">rejected_rows</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#gv_tools.io.RawLufftWS800Product.rejected_rows" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RawLufftWS800Product.duplicate_rows">
+<span class="sig-name descname"><span class="pre">duplicate_rows</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#gv_tools.io.RawLufftWS800Product.duplicate_rows" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gv_tools.io.RawParsivelProduct">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">RawParsivelProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">psd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moments</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/parsivel.html#RawParsivelProduct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.RawParsivelProduct" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The three tables returned by process-parsivel for one day.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>DataFrame</em>)</p></li>
+<li><p><strong>psd</strong> (<em>DataFrame</em>)</p></li>
+<li><p><strong>moments</strong> (<em>DataFrame</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RawParsivelProduct.parameters">
+<span class="sig-name descname"><span class="pre">parameters</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></span><a class="headerlink" href="#gv_tools.io.RawParsivelProduct.parameters" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RawParsivelProduct.psd">
+<span class="sig-name descname"><span class="pre">psd</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></span><a class="headerlink" href="#gv_tools.io.RawParsivelProduct.psd" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RawParsivelProduct.moments">
+<span class="sig-name descname"><span class="pre">moments</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></span><a class="headerlink" href="#gv_tools.io.RawParsivelProduct.moments" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gv_tools.io.RawRMYoungAIOProduct">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">RawRMYoungAIOProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejected_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duplicate_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/rm_young_aio.html#RawRMYoungAIOProduct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.RawRMYoungAIOProduct" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Decoded observations and source-accounting information for one UTC day.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>observations</strong> (<em>DataFrame</em>)</p></li>
+<li><p><strong>source_files</strong> (<em>tuple</em><em>[</em><em>str</em><em>, </em><em>...</em><em>]</em>)</p></li>
+<li><p><strong>rejected_rows</strong> (<em>int</em>)</p></li>
+<li><p><strong>duplicate_rows</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RawRMYoungAIOProduct.observations">
+<span class="sig-name descname"><span class="pre">observations</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></span><a class="headerlink" href="#gv_tools.io.RawRMYoungAIOProduct.observations" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RawRMYoungAIOProduct.source_files">
+<span class="sig-name descname"><span class="pre">source_files</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#gv_tools.io.RawRMYoungAIOProduct.source_files" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RawRMYoungAIOProduct.rejected_rows">
+<span class="sig-name descname"><span class="pre">rejected_rows</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#gv_tools.io.RawRMYoungAIOProduct.rejected_rows" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RawRMYoungAIOProduct.duplicate_rows">
+<span class="sig-name descname"><span class="pre">duplicate_rows</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#gv_tools.io.RawRMYoungAIOProduct.duplicate_rows" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.available_adapters">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">available_adapters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/registry.html#available_adapters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.available_adapters" title="Link to this definition">#</a></dt>
+<dd><p>Return registered adapter names in deterministic order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[str, …]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.create_adapter">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">create_adapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/registry.html#create_adapter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.create_adapter" title="Link to this definition">#</a></dt>
+<dd><p>Instantiate a registered adapter with instrument metadata and options.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#gv_tools.io.InstrumentAdapter" title="gv_tools.adapters.base.InstrumentAdapter"><em>InstrumentAdapter</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.discover_aio">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">discover_aio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata_options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#discover_aio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.discover_aio" title="Link to this definition">#</a></dt>
+<dd><p>Return dates in explicitly supplied RM Young or Met One AIO files.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.discover_metone">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">discover_metone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata_options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#discover_metone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.discover_metone" title="Link to this definition">#</a></dt>
+<dd><p>Compatibility wrapper for <a class="reference internal" href="#gv_tools.io.discover_aio" title="gv_tools.io.discover_aio"><code class="xref py py-func docutils literal notranslate"><span class="pre">discover_aio()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.discover_parsivel">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">discover_parsivel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata_options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#discover_parsivel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.discover_parsivel" title="Link to this definition">#</a></dt>
+<dd><p>Return dates in the explicitly supplied Parsivel files.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.ingest_radar">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">ingest_radar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">XRADAR</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">reader_options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/ingest_radar.html#ingest_radar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.ingest_radar" title="Link to this definition">#</a></dt>
+<dd><p>Read a supported radar file with the content-selected Py-ART reader.</p>
+<p>Parameters after <em>path</em> are forwarded unchanged to <code class="docutils literal notranslate"><span class="pre">read_sigmet</span></code>,
+<code class="docutils literal notranslate"><span class="pre">read_nexrad_archive</span></code>, <code class="docutils literal notranslate"><span class="pre">read_cfradial</span></code>, or <code class="docutils literal notranslate"><span class="pre">read_uf</span></code>. The returned
+object is a <code class="xref py py-class docutils literal notranslate"><span class="pre">pyart.core.Radar</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em><em> | </em><em>Path</em>)</p></li>
+<li><p><strong>XRADAR</strong> (<em>bool</em>)</p></li>
+<li><p><strong>reader_options</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Any</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.inspect_radar_file">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">inspect_radar_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/ingest_radar.html#inspect_radar_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.inspect_radar_file" title="Link to this definition">#</a></dt>
+<dd><p>Inspect file bytes and return the supported radar ingest route.</p>
+<p>Raw <code class="docutils literal notranslate"><span class="pre">np1</span></code> files are SIGMET/IRIS volumes, NPOL1 products are CF/Radial
+NetCDF files, WSR-88D files are NEXRAD Level-II archives, and Universal
+Format files contain a <code class="docutils literal notranslate"><span class="pre">UF</span></code> mandatory-header marker. Detection uses
+format signatures rather than extensions because operational archives do
+not always preserve names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em><em> | </em><em>Path</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#gv_tools.io.RadarIngestRoute" title="gv_tools.ingest_radar.RadarIngestRoute"><em>RadarIngestRoute</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.inspect_radar">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">inspect_radar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radar_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#inspect_radar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.inspect_radar" title="Link to this definition">#</a></dt>
+<dd><p>Return automatically detected ingest routes for one or more files.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.register_adapter">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">register_adapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapter</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/registry.html#register_adapter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.register_adapter" title="Link to this definition">#</a></dt>
+<dd><p>Register an adapter class under a case-insensitive public name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>)</p></li>
+<li><p><strong>adapter</strong> (<em>type</em><em>[</em><a class="reference internal" href="#gv_tools.io.InstrumentAdapter" title="gv_tools.adapters.base.InstrumentAdapter"><em>InstrumentAdapter</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.read_aio">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_aio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">XARRAY</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#read_aio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.read_aio" title="Link to this definition">#</a></dt>
+<dd><p>Read AIO files as pandas (default) or xarray with <code class="docutils literal notranslate"><span class="pre">XARRAY=True</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.read_aio_raw">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_aio_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#read_aio_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.read_aio_raw" title="Link to this definition">#</a></dt>
+<dd><p>Read and merge RM Young or Met One AIO files into one raw product.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.read_metone">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_metone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#read_metone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.read_metone" title="Link to this definition">#</a></dt>
+<dd><p>Compatibility wrapper for <a class="reference internal" href="#gv_tools.io.read_aio" title="gv_tools.io.read_aio"><code class="xref py py-func docutils literal notranslate"><span class="pre">read_aio()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.read_metone_raw">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_metone_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#read_metone_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.read_metone_raw" title="Link to this definition">#</a></dt>
+<dd><p>Compatibility wrapper for <a class="reference internal" href="#gv_tools.io.read_aio_raw" title="gv_tools.io.read_aio_raw"><code class="xref py py-func docutils literal notranslate"><span class="pre">read_aio_raw()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.read_mrr">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_mrr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">open_dataset_options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/mrr.html#read_mrr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.read_mrr" title="Link to this definition">#</a></dt>
+<dd><p>Read one or more MRR2 or MRRPro products into an xarray Dataset.</p>
+<p><code class="docutils literal notranslate"><span class="pre">file</span></code> may be a NetCDF/ZIP file, a directory of <code class="docutils literal notranslate"><span class="pre">*.nc</span></code> files, a glob,
+or a sequence of files. Multiple files are loaded and concatenated in
+chronological order along <code class="docutils literal notranslate"><span class="pre">time</span></code>. Options are forwarded to
+<code class="xref py py-func docutils literal notranslate"><span class="pre">xarray.open_dataset()</span></code>.
+MRR2’s non-CF Unix timestamp is converted to <code class="docutils literal notranslate"><span class="pre">datetime64[ns]</span></code> in UTC;
+MRRPro’s CF time coordinate is decoded by xarray. The detected instrument
+model is recorded in the dataset attribute <code class="docutils literal notranslate"><span class="pre">mrr_model</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>Sequence</em><em>[</em><em>str</em><em> | </em><em>Path</em><em>]</em>)</p></li>
+<li><p><strong>open_dataset_options</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Dataset</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.read_parsivel">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_parsivel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#read_parsivel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.read_parsivel" title="Link to this definition">#</a></dt>
+<dd><p>Read and merge every explicitly supplied Parsivel file.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.read_parsivel_raw">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_parsivel_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#read_parsivel_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.read_parsivel_raw" title="Link to this definition">#</a></dt>
+<dd><p>Read and merge explicitly supplied Parsivel files into one raw product.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.read_radar">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_radar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radar_file</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">XRADAR</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">reader_options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#read_radar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.read_radar" title="Link to this definition">#</a></dt>
+<dd><p>Read one or more compressed or uncompressed radar files.</p>
+<p>The file format is detected from its content, including Universal Format,
+SIGMET/IRIS, NEXRAD Level II, and CF/Radial NetCDF. <code class="docutils literal notranslate"><span class="pre">.gz</span></code>, <code class="docutils literal notranslate"><span class="pre">.bz2</span></code>, and ZIP
+compression are handled transparently. The default reads directly with
+ARM Py-ART. <code class="docutils literal notranslate"><span class="pre">XRADAR=True</span></code> loads through xradar, converts the resulting
+DataTree with <code class="docutils literal notranslate"><span class="pre">tree.pyart.to_radar()</span></code>, and returns the Py-ART Radar.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.read_gauge">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_gauge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">gauge_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measurement</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/gauge.html#read_gauge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.read_gauge" title="Link to this definition">#</a></dt>
+<dd><p>Read gauge packets into a pandas DataFrame without resampling or writing.</p>
+<p><code class="docutils literal notranslate"><span class="pre">source</span></code> may be one full-path filename, a directory, or an explicit
+sequence of files/directories. Optional filters never aggregate the data.
+Set <code class="docutils literal notranslate"><span class="pre">return_metadata=True</span></code> to return <code class="docutils literal notranslate"><span class="pre">(observations,</span> <span class="pre">packet_metadata)</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>Sequence</em><em>[</em><em>str</em><em> | </em><em>Path</em><em>]</em>)</p></li>
+<li><p><strong>gauge_id</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>measurement</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>return_metadata</strong> (<em>bool</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.read_ws800_full">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_ws800_full</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">XARRAY</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#read_ws800_full"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.read_ws800_full" title="Link to this definition">#</a></dt>
+<dd><p>Read and merge every field from Lufft WS800 files as pandas or xarray.</p>
+<p>Pandas is returned by default. Pass <code class="docutils literal notranslate"><span class="pre">XARRAY=True</span></code> for a normalized
+<code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.read_2dvd">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_2dvd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datafile</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">site</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'WFF'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sn37'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gv_tools.io.read_2dvd" title="Link to this definition">#</a></dt>
+<dd><p>Read one plain/ZIP/TGZ day into a DataFrame without scientific filtering.</p>
+<p>The first two physical lines are headers, following both supplied readers.
+Blank data lines are ignored; malformed nonblank lines fail with their
+original line number. Records remain in input order: sorting here would
+conceal backward clock jumps from quality control. Subsecond times are
+retained. The source contains no timezone, so timestamps remain naive.</p>
+<p>Each returned row is one detected object, not a concentration or a spectrum.
+Source filenames, the date/site/instrument, layouts, row count, and hashes
+are stored in DataFrame.attrs. The content hash includes headers and blank
+lines and is computed on uncompressed bytes during the same read pass.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.ingest_raw">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">ingest_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datafile</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">site</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'WFF'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sn37'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/py_2dvd.html#ingest_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.ingest_raw" title="Link to this definition">#</a></dt>
+<dd><p>Read one plain/ZIP/TGZ day into a DataFrame without scientific filtering.</p>
+<p>The first two physical lines are headers, following both supplied readers.
+Blank data lines are ignored; malformed nonblank lines fail with their
+original line number. Records remain in input order: sorting here would
+conceal backward clock jumps from quality control. Subsecond times are
+retained. The source contains no timezone, so timestamps remain naive.</p>
+<p>Each returned row is one detected object, not a concentration or a spectrum.
+Source filenames, the date/site/instrument, layouts, row count, and hashes
+are stored in DataFrame.attrs. The content hash includes headers and blank
+lines and is computed on uncompressed bytes during the same read pass.</p>
+</dd></dl>
+
+<section id="dvd">
+<h2>2DVD<a class="headerlink" href="#dvd" title="Link to this heading">#</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">gv_tools.io.read_2dvd</span></code> for the supported public reader. It returns a
+pandas DataFrame containing one row per detected drop.</p>
+<p id="module-gv_tools.io.py_2dvd">Read individual 2DVD drop records into a pandas DataFrame.</p>
+<p>This module performs I/O only: it never filters drops, integrates a spectrum,
+plots data, or silently writes extracted archive members.</p>
+<p>Format authority is the user-supplied <code class="docutils literal notranslate"><span class="pre">load_drop_file.pro</span></code> (record indices)
+and <code class="docutils literal notranslate"><span class="pre">dropbydrop.f</span></code> (split numeric clock). These are file-format references,
+not journal specifications. Kruger &amp; Krajewski (2002), DOI
+10.1175/1520-0426(2002)019&lt;0602:TDVDAD&gt;2.0.CO;2, describes the instrument.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.py_2dvd.date_from_filename">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.py_2dvd.</span></span><span class="sig-name descname"><span class="pre">date_from_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/py_2dvd.html#date_from_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.py_2dvd.date_from_filename" title="Link to this definition">#</a></dt>
+<dd><p>Decode VYYDDD.drops.txt; optional date disambiguates the century.</p>
+<p>YY=23 and DDD=022 mean 2023-01-22. Without an explicit date, YY is interpreted
+in 2000–2099. Invalid day-of-year values, including 366 in a non-leap year,
+raise ValueError. An explicit date must agree with both YY and DDD.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.py_2dvd.ingest_raw">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.py_2dvd.</span></span><span class="sig-name descname"><span class="pre">ingest_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datafile</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">site</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'WFF'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sn37'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/py_2dvd.html#ingest_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.py_2dvd.ingest_raw" title="Link to this definition">#</a></dt>
+<dd><p>Read one plain/ZIP/TGZ day into a DataFrame without scientific filtering.</p>
+<p>The first two physical lines are headers, following both supplied readers.
+Blank data lines are ignored; malformed nonblank lines fail with their
+original line number. Records remain in input order: sorting here would
+conceal backward clock jumps from quality control. Subsecond times are
+retained. The source contains no timezone, so timestamps remain naive.</p>
+<p>Each returned row is one detected object, not a concentration or a spectrum.
+Source filenames, the date/site/instrument, layouts, row count, and hashes
+are stored in DataFrame.attrs. The content hash includes headers and blank
+lines and is computed on uncompressed bytes during the same read pass.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">API Reference Manual</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="config.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">gv_tools.config</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.InstrumentAdapter"><code class="docutils literal notranslate"><span class="pre">InstrumentAdapter</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.InstrumentAdapter.name"><code class="docutils literal notranslate"><span class="pre">InstrumentAdapter.name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.InstrumentAdapter.discover"><code class="docutils literal notranslate"><span class="pre">InstrumentAdapter.discover()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.InstrumentAdapter.read"><code class="docutils literal notranslate"><span class="pre">InstrumentAdapter.read()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.LufftWS800Adapter"><code class="docutils literal notranslate"><span class="pre">LufftWS800Adapter</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.LufftWS800Adapter.name"><code class="docutils literal notranslate"><span class="pre">LufftWS800Adapter.name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.LufftWS800Adapter.discover"><code class="docutils literal notranslate"><span class="pre">LufftWS800Adapter.discover()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.LufftWS800Adapter.read_raw"><code class="docutils literal notranslate"><span class="pre">LufftWS800Adapter.read_raw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.LufftWS800Adapter.read"><code class="docutils literal notranslate"><span class="pre">LufftWS800Adapter.read()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.LufftWS800Adapter.normalize"><code class="docutils literal notranslate"><span class="pre">LufftWS800Adapter.normalize()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.MetOneAIOAdapter"><code class="docutils literal notranslate"><span class="pre">MetOneAIOAdapter</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.MetOneAIOAdapter.name"><code class="docutils literal notranslate"><span class="pre">MetOneAIOAdapter.name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.MetOneAIOAdapter.discover"><code class="docutils literal notranslate"><span class="pre">MetOneAIOAdapter.discover()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.MetOneAIOAdapter.read_raw"><code class="docutils literal notranslate"><span class="pre">MetOneAIOAdapter.read_raw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.MetOneAIOAdapter.read"><code class="docutils literal notranslate"><span class="pre">MetOneAIOAdapter.read()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.MetOneAIOAdapter.normalize"><code class="docutils literal notranslate"><span class="pre">MetOneAIOAdapter.normalize()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.ParsivelAdapter"><code class="docutils literal notranslate"><span class="pre">ParsivelAdapter</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.ParsivelAdapter.name"><code class="docutils literal notranslate"><span class="pre">ParsivelAdapter.name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.ParsivelAdapter.discover"><code class="docutils literal notranslate"><span class="pre">ParsivelAdapter.discover()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.ParsivelAdapter.read_raw"><code class="docutils literal notranslate"><span class="pre">ParsivelAdapter.read_raw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.ParsivelAdapter.read"><code class="docutils literal notranslate"><span class="pre">ParsivelAdapter.read()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.ParsivelAdapter.normalize"><code class="docutils literal notranslate"><span class="pre">ParsivelAdapter.normalize()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.ParsivelSourcePlatform"><code class="docutils literal notranslate"><span class="pre">ParsivelSourcePlatform</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.ParsivelSourcePlatform.AUTO"><code class="docutils literal notranslate"><span class="pre">ParsivelSourcePlatform.AUTO</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.ParsivelSourcePlatform.APU"><code class="docutils literal notranslate"><span class="pre">ParsivelSourcePlatform.APU</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.ParsivelSourcePlatform.PIERS"><code class="docutils literal notranslate"><span class="pre">ParsivelSourcePlatform.PIERS</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RMYoungAIOAdapter"><code class="docutils literal notranslate"><span class="pre">RMYoungAIOAdapter</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RMYoungAIOAdapter.name"><code class="docutils literal notranslate"><span class="pre">RMYoungAIOAdapter.name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RMYoungAIOAdapter.discover"><code class="docutils literal notranslate"><span class="pre">RMYoungAIOAdapter.discover()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RMYoungAIOAdapter.read_raw"><code class="docutils literal notranslate"><span class="pre">RMYoungAIOAdapter.read_raw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RMYoungAIOAdapter.read"><code class="docutils literal notranslate"><span class="pre">RMYoungAIOAdapter.read()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RMYoungAIOAdapter.normalize"><code class="docutils literal notranslate"><span class="pre">RMYoungAIOAdapter.normalize()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RadarIngestRoute"><code class="docutils literal notranslate"><span class="pre">RadarIngestRoute</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RadarIngestRoute.family"><code class="docutils literal notranslate"><span class="pre">RadarIngestRoute.family</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RadarIngestRoute.file_format"><code class="docutils literal notranslate"><span class="pre">RadarIngestRoute.file_format</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RadarIngestRoute.reader"><code class="docutils literal notranslate"><span class="pre">RadarIngestRoute.reader</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawMetOneAIOProduct"><code class="docutils literal notranslate"><span class="pre">RawMetOneAIOProduct</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawMetOneAIOProduct.observations"><code class="docutils literal notranslate"><span class="pre">RawMetOneAIOProduct.observations</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawMetOneAIOProduct.source_files"><code class="docutils literal notranslate"><span class="pre">RawMetOneAIOProduct.source_files</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawMetOneAIOProduct.rejected_rows"><code class="docutils literal notranslate"><span class="pre">RawMetOneAIOProduct.rejected_rows</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawMetOneAIOProduct.duplicate_rows"><code class="docutils literal notranslate"><span class="pre">RawMetOneAIOProduct.duplicate_rows</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawLufftWS800Product"><code class="docutils literal notranslate"><span class="pre">RawLufftWS800Product</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawLufftWS800Product.observations"><code class="docutils literal notranslate"><span class="pre">RawLufftWS800Product.observations</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawLufftWS800Product.source_files"><code class="docutils literal notranslate"><span class="pre">RawLufftWS800Product.source_files</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawLufftWS800Product.rejected_rows"><code class="docutils literal notranslate"><span class="pre">RawLufftWS800Product.rejected_rows</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawLufftWS800Product.duplicate_rows"><code class="docutils literal notranslate"><span class="pre">RawLufftWS800Product.duplicate_rows</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawParsivelProduct"><code class="docutils literal notranslate"><span class="pre">RawParsivelProduct</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawParsivelProduct.parameters"><code class="docutils literal notranslate"><span class="pre">RawParsivelProduct.parameters</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawParsivelProduct.psd"><code class="docutils literal notranslate"><span class="pre">RawParsivelProduct.psd</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawParsivelProduct.moments"><code class="docutils literal notranslate"><span class="pre">RawParsivelProduct.moments</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawRMYoungAIOProduct"><code class="docutils literal notranslate"><span class="pre">RawRMYoungAIOProduct</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawRMYoungAIOProduct.observations"><code class="docutils literal notranslate"><span class="pre">RawRMYoungAIOProduct.observations</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawRMYoungAIOProduct.source_files"><code class="docutils literal notranslate"><span class="pre">RawRMYoungAIOProduct.source_files</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawRMYoungAIOProduct.rejected_rows"><code class="docutils literal notranslate"><span class="pre">RawRMYoungAIOProduct.rejected_rows</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawRMYoungAIOProduct.duplicate_rows"><code class="docutils literal notranslate"><span class="pre">RawRMYoungAIOProduct.duplicate_rows</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.available_adapters"><code class="docutils literal notranslate"><span class="pre">available_adapters()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.create_adapter"><code class="docutils literal notranslate"><span class="pre">create_adapter()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.discover_aio"><code class="docutils literal notranslate"><span class="pre">discover_aio()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.discover_metone"><code class="docutils literal notranslate"><span class="pre">discover_metone()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.discover_parsivel"><code class="docutils literal notranslate"><span class="pre">discover_parsivel()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.ingest_radar"><code class="docutils literal notranslate"><span class="pre">ingest_radar()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.inspect_radar_file"><code class="docutils literal notranslate"><span class="pre">inspect_radar_file()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.inspect_radar"><code class="docutils literal notranslate"><span class="pre">inspect_radar()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.register_adapter"><code class="docutils literal notranslate"><span class="pre">register_adapter()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_aio"><code class="docutils literal notranslate"><span class="pre">read_aio()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_aio_raw"><code class="docutils literal notranslate"><span class="pre">read_aio_raw()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_metone"><code class="docutils literal notranslate"><span class="pre">read_metone()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_metone_raw"><code class="docutils literal notranslate"><span class="pre">read_metone_raw()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_mrr"><code class="docutils literal notranslate"><span class="pre">read_mrr()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_parsivel"><code class="docutils literal notranslate"><span class="pre">read_parsivel()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_parsivel_raw"><code class="docutils literal notranslate"><span class="pre">read_parsivel_raw()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_radar"><code class="docutils literal notranslate"><span class="pre">read_radar()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_gauge"><code class="docutils literal notranslate"><span class="pre">read_gauge()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_ws800_full"><code class="docutils literal notranslate"><span class="pre">read_ws800_full()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_2dvd"><code class="docutils literal notranslate"><span class="pre">read_2dvd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.ingest_raw"><code class="docutils literal notranslate"><span class="pre">ingest_raw()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dvd">2DVD</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.py_2dvd.date_from_filename"><code class="docutils literal notranslate"><span class="pre">date_from_filename()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.py_2dvd.ingest_raw"><code class="docutils literal notranslate"><span class="pre">ingest_raw()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/api/io.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
