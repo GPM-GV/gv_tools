@@ -16,8 +16,6 @@ dependencies = [
   "matplotlib>=3.7",
   "openpyxl>=3.1",
   "Pillow>=9",
-  "miepython>=3.2,<4",
-  "disdrodb>=1.0",
 ]
 
 [project.optional-dependencies]
@@ -30,6 +28,7 @@ plot = ["matplotlib>=3.7"]
 notebook = ["jupyterlab>=4", "ipykernel>=6", "matplotlib>=3.7"]
 sounding = ["matplotlib>=3.7", "metpy>=1.6", "cfgrib>=0.9.10", "eccodes>=2.32"]
 docs = ["sphinx>=7", "pydata-sphinx-theme>=0.15", "myst-parser>=2"]
+scattering = ["miepython>=3.2,<4", "disdrodb>=0.3"]
 all = [
   "arm-pyart>=2.1",
   "xradar>=0.10",
@@ -41,6 +40,8 @@ all = [
   "metpy>=1.6",
   "cfgrib>=0.9.10",
   "eccodes>=2.32",
+  "miepython>=3.2,<4",
+  "disdrodb>=0.3",
 ]
 
 [project.scripts]
