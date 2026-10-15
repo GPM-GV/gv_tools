@@ -1,0 +1,24 @@
+name: test
+on: [push, pull_request]
+jobs:
+  python:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+        python: ["3.10", "3.11", "3.12", "3.13"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "${{ matrix.python }}"}
+      - run: python -m pip install build ".[all]"
+      - run: python -m pytest -q
+      - run: python -m build
+  rocky:
+    runs-on: ubuntu-latest
+    container: rockylinux:9
+    steps:
+      - run: dnf install -y python3.11 python3.11-pip git
+      - uses: actions/checkout@v4
+      - run: python3.11 -m pip install ".[all]"
+      - run: python3.11 -m pytest -q

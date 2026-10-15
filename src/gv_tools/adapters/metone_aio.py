@@ -12,8 +12,8 @@ import pandas as pd
 import xarray as xr
 
 from .base import InstrumentAdapter
-from ..metadata import InstrumentMetadata
 from ..products import validate_product
+from .. import __version__
 
 _FILE_NAME = re.compile(r"^AIO_(?P<site>[^_]+)_(?P<year>\d{4})(?P<month>\d{2})\.dat$", re.I)
 _FIELD = re.compile(r"(?P<number>\d{2})\+(?P<value>\S+)")
@@ -159,6 +159,7 @@ class MetOneAIOAdapter(InstrumentAdapter):
         return frame.drop_duplicates("time", keep="first").reset_index(drop=True), rejected, duplicates
 
     def read_raw(self, input_path, **options):
+        """Decode Met One source files into day-keyed raw products."""
         if options:
             raise TypeError(f"unsupported Met One AIO options: {sorted(options)}")
         frame, rejected, duplicates = self._decode(self._paths(input_path))
@@ -175,6 +176,7 @@ class MetOneAIOAdapter(InstrumentAdapter):
         return products
 
     def read(self, input_path, **options):
+        """Decode and normalize Met One files into day-keyed datasets."""
         raw = self.read_raw(input_path, **options)
         return {
             day: self.normalize(
@@ -187,6 +189,7 @@ class MetOneAIOAdapter(InstrumentAdapter):
         }
 
     def normalize(self, observations, *, source_path=None, rejected_rows=0, duplicate_rows=0):
+        """Convert decoded Met One observations to the common xarray schema."""
         if not isinstance(observations, pd.DataFrame):
             raise TypeError("Met One AIO observations must be a pandas DataFrame")
         missing = {"time", *_DATA_VARIABLES}.difference(observations.columns)
@@ -205,7 +208,7 @@ class MetOneAIOAdapter(InstrumentAdapter):
             Conventions="CF-1.10, NASA-GPM-GV-TOOLS-0.2",
             processing_level="1",
             processing_software="gv_tools",
-            processing_software_version="0.29.6",
+            processing_software_version=__version__,
             processing_time=datetime.now(timezone.utc).isoformat(),
             time_reference="UTC",
             source=str(Path(source_path).expanduser()) if source_path is not None else "in_memory",

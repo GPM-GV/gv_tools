@@ -1,4 +1,4 @@
-"""Adapter for the existing ``process-parsivel`` processor."""
+"""Adapter for the private bundled Parsivel decoder."""
 
 from __future__ import annotations
 
@@ -15,6 +15,7 @@ import xarray as xr
 from .base import InstrumentAdapter
 from ..metadata import InstrumentMetadata
 from ..products import validate_product
+from .. import __version__
 
 PARAMETER_NAMES = {
     "Total Drops": ("drop_count", "1", "Number of drops in the sampling interval"),
@@ -48,11 +49,11 @@ class RawParsivelProduct:
 
 def _backend() -> Any:
     try:
-        return import_module("process_parsivel")
+        return import_module("gv_tools._parsivel")
     except ImportError as exc:
         raise ImportError(
-            "Parsivel support requires process-parsivel>=1.0.0; "
-            "install GV Tools with the 'parsivel' extra"
+            "The bundled Parsivel decoder could not be imported; "
+            "reinstall the complete GV Tools wheel"
         ) from exc
 
 
@@ -96,6 +97,7 @@ class ParsivelAdapter(InstrumentAdapter):
         )
 
     def discover(self, input_path: str | Path) -> list[str]:
+        """Return ISO dates represented by compatible source files."""
         source = Path(input_path).expanduser()
         if source.is_dir():
             identifier = self.metadata.instrument_id.lower()
@@ -126,6 +128,7 @@ class ParsivelAdapter(InstrumentAdapter):
         return {day: RawParsivelProduct(*frames) for day, frames in results.items()}
 
     def read(self, input_path, **options):
+        """Decode and normalize source data into day-keyed xarray datasets."""
         raw = self.read_raw(input_path, **options)
         return {day: self.normalize(
             product.parameters, product.psd, product.moments, source_path=input_path
@@ -172,13 +175,12 @@ class ParsivelAdapter(InstrumentAdapter):
             units="varies_with_order", long_name="Raw moment of the drop size distribution"
         )
 
-        backend = _backend()
         dataset.attrs.update(self.metadata.to_attrs())
         dataset.attrs.update(
             Conventions="CF-1.10, NASA-GPM-GV-TOOLS-0.2",
             processing_level="2",
-            processing_software="gv_tools; process_parsivel",
-            processing_software_version=f"0.29.6; {getattr(backend, '__version__', 'unknown')}",
+            processing_software="gv_tools",
+            processing_software_version=__version__,
             processing_time=datetime.now(timezone.utc).isoformat(),
             time_reference="UTC",
             source=str(Path(source_path).expanduser()) if source_path is not None else "in_memory",

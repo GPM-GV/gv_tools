@@ -14,8 +14,9 @@ import xarray as xr
 from .base import InstrumentAdapter
 from ..metadata import InstrumentMetadata
 from ..products import validate_product
+from .. import __version__
 
-_PACKET_LINE = re.compile(r"^(\d{14})\s+(.*)$")
+_PACKET_LINE = re.compile(r"^(\d{14})(?:,|\s)+(.*)$")
 _VARIABLES = (
     "status_code",
     "wind_speed",
@@ -56,7 +57,11 @@ class RMYoungAIOAdapter(InstrumentAdapter):
 
     def _matches(self, path: Path) -> bool:
         prefix = re.escape(self.metadata.instrument_id)
-        return bool(re.match(rf"^{prefix}_WX_\d{{14}}\.csv$", path.name, re.IGNORECASE))
+        return bool(re.match(
+            rf"^{prefix}_WX_(?:\d{{14}}|\d{{8}}_daily)\.csv$",
+            path.name,
+            re.IGNORECASE,
+        ))
 
     def _paths(self, input_path: str | Path) -> list[Path]:
         source = Path(input_path).expanduser()
@@ -70,13 +75,15 @@ class RMYoungAIOAdapter(InstrumentAdapter):
 
     @staticmethod
     def _filename_day(path: Path) -> str | None:
-        match = re.search(r"_WX_(\d{8})\d{6}\.csv$", path.name, re.IGNORECASE)
+        match = re.search(
+            r"_WX_(\d{8})(?:\d{6}|_daily)\.csv$", path.name, re.IGNORECASE
+        )
         if not match:
             return None
         return pd.to_datetime(match.group(1), format="%Y%m%d").strftime("%Y-%m-%d")
 
     def discover(self, input_path: str | Path) -> list[str]:
-        """Return dates represented by matching PIERS WX packet filenames."""
+        """Return dates represented by matching PIERS WX daily or packet files."""
         return sorted({day for path in self._paths(input_path) if (day := self._filename_day(path))})
 
     def _source_timezone(self) -> ZoneInfo:
@@ -120,7 +127,7 @@ class RMYoungAIOAdapter(InstrumentAdapter):
         return frame, rejected, duplicate
 
     def read_raw(self, input_path, **options):
-        """Decode source packets into typed, day-keyed pandas products."""
+        """Decode daily or packet input into typed, day-keyed pandas products."""
         if options:
             raise TypeError(f"unsupported RM Young AIO options: {sorted(options)}")
         paths = self._paths(input_path)
@@ -136,6 +143,7 @@ class RMYoungAIOAdapter(InstrumentAdapter):
         return products
 
     def read(self, input_path, **options):
+        """Decode and normalize R.M. Young files into day-keyed datasets."""
         raw = self.read_raw(input_path, **options)
         return {
             day: self.normalize(product.observations, source_path=input_path,
@@ -165,7 +173,7 @@ class RMYoungAIOAdapter(InstrumentAdapter):
             Conventions="CF-1.10, NASA-GPM-GV-TOOLS-0.2",
             processing_level="1",
             processing_software="gv_tools",
-            processing_software_version="0.29.6",
+            processing_software_version=__version__,
             processing_time=datetime.now(timezone.utc).isoformat(),
             time_reference="UTC",
             source=str(Path(source_path).expanduser()) if source_path is not None else "in_memory",

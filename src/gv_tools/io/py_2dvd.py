@@ -1,18 +1,15 @@
-"""Read individual 2DVD drops and export scientific products.
+"""Read individual 2DVD drop records into a pandas DataFrame.
 
 This module performs I/O only: it never filters drops, integrates a spectrum,
-plots data, or silently writes extracted archive members. See ``core.py`` for
-those physical calculations and ``docs/py_2dvd/methods.md`` for the derivation.
+plots data, or silently writes extracted archive members.
 
 Format authority is the user-supplied ``load_drop_file.pro`` (record indices)
 and ``dropbydrop.f`` (split numeric clock). These are file-format references,
 not journal specifications. Kruger & Krajewski (2002), DOI
 10.1175/1520-0426(2002)019<0602:TDVDAD>2.0.CO;2, describes the instrument.
 
-AI assistance: OpenAI Codex. Package provenance and references are in the guide.
 """
 
-import json
 import re
 import stat
 import tarfile
@@ -23,7 +20,6 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import xarray as xr
 
 # Order is the normalized numeric layout: three clock fields, five physical
 # measurements, then eight camera measurements. Units live in the names so an
@@ -241,62 +237,3 @@ def ingest_raw(datafile, *, site="WFF", instrument="sn37", date=None):
     return raw_drops
 
 
-def save_products(parameters, dsd, output_dir="Output"):
-    """Save separate measured/terminal products to NetCDF/YYYY/MM and CSV/YYYY/MM.
-
-    Returns eight paths keyed by measured_netcdf, terminal_netcdf, and the
-    corresponding ``measured_``/``terminal_`` integral_csv, dsd_csv and provenance keys.
-
-    No scientific recalculation occurs here. NetCDF preserves dimensions, units
-    and provenance; CSV tables expose explicit time/velocity/diameter columns.
-    Products must describe the same source and common coordinates/masks. The
-    default output root is Output relative to the current working directory.
-    """
-    from ..core.py_2dvd import INTEGRAL_UNITS
-
-    for key in ("site", "instrument_id", "date", "source_data_sha256", "source_sha256"):
-        if parameters.attrs.get(key) != dsd.attrs.get(key):
-            raise ValueError(
-                f"Products differ in {key}; calculate from the same raw data"
-            )
-    products = xr.merge(
-        [parameters, dsd], join="exact", compat="equals", combine_attrs="override"
-    )
-    site = products.attrs["site"]
-    if not re.fullmatch(r"[A-Za-z0-9_-]+", site):
-        raise ValueError("Invalid site metadata")
-    date = pd.Timestamp(products.attrs["date"])
-    basename = f"{site}_{date:%Y_%m%d}_2DVD"
-    root = Path(output_dir).expanduser()
-    netcdf_directory = root / "NetCDF" / f"{date:%Y/%m}"
-    csv_directory = root / "CSV" / f"{date:%Y/%m}"
-    netcdf_directory.mkdir(parents=True, exist_ok=True)
-    csv_directory.mkdir(parents=True, exist_ok=True)
-    # Keep a length-one velocity dimension so exported datasets use the same
-    # selection/plotting API as in-memory products, without mixing branches.
-    from ..core.py_2dvd import VELOCITIES
-
-    for product in (parameters, dsd):
-        if "velocity" not in product.dims or set(product.velocity.values) != set(VELOCITIES):
-            raise ValueError("save_products requires both measured and terminal velocity products")
-    paths = {}
-    for velocity in ("measured", "terminal"):
-        stem = f"{basename}_{velocity}_velocity"
-        branch_paths = {
-            "netcdf": netcdf_directory / f"{stem}.nc",
-            "integral_csv": csv_directory / f"{stem}_integral.csv",
-            "dsd_csv": csv_directory / f"{stem}_DSD.csv",
-            "provenance": netcdf_directory / f"{stem}_provenance.json",
-        }
-        branch = products.sel(velocity=[velocity]).copy()
-        branch.attrs["velocity_basis"] = velocity
-        branch.to_netcdf(branch_paths["netcdf"], engine="scipy")
-        parameters.sel(velocity=[velocity])[
-            list(INTEGRAL_UNITS) + ["output_valid"]
-        ].to_dataframe().reset_index().to_csv(branch_paths["integral_csv"], index=False)
-        dsd.sel(velocity=[velocity])[
-            ["dsd", "bin_drop_count", "output_valid"]
-        ].to_dataframe().reset_index().to_csv(branch_paths["dsd_csv"], index=False)
-        branch_paths["provenance"].write_text(json.dumps(dict(branch.attrs), indent=2) + "\n")
-        paths.update({f"{velocity}_{kind}": path for kind, path in branch_paths.items()})
-    return paths

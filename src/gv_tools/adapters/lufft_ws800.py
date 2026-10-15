@@ -12,8 +12,8 @@ import pandas as pd
 import xarray as xr
 
 from .base import InstrumentAdapter
-from ..metadata import InstrumentMetadata
 from ..products import validate_product
+from .. import __version__
 
 _PRIMARY = {
     "AirTemp_Act": "air_temperature", "DewPoint_Act": "dew_point_temperature",
@@ -48,20 +48,31 @@ def _name(source: str) -> str:
 
 
 def _units(source: str) -> str:
-    if source.startswith(("AirTemp", "DewPoint", "WetBulb")): return "degree_Celsius"
-    if source.startswith("RelHum"): return "percent"
-    if source.startswith("AbsHum"): return "g m-3"
-    if source.startswith("MixingRatio"): return "g kg-1"
-    if source.startswith(("AbsPress", "RelPress")): return "hPa"
-    if source.startswith("WindSpd"): return "m s-1"
-    if source.startswith("WindDir"): return "degree"
-    if source.startswith("Precip") and source != "Precip_Type": return "mm h-1" if source == "Precip_Intens" else "mm"
-    if source.startswith("GlobRad"): return "W m-2"
+    """Map native WS800 field names to compact physical units."""
+    if source.startswith(("AirTemp", "DewPoint", "WetBulb")):
+        return "degree_Celsius"
+    if source.startswith("RelHum"):
+        return "percent"
+    if source.startswith("AbsHum"):
+        return "g m-3"
+    if source.startswith("MixingRatio"):
+        return "g kg-1"
+    if source.startswith(("AbsPress", "RelPress")):
+        return "hPa"
+    if source.startswith("WindSpd"):
+        return "m s-1"
+    if source.startswith("WindDir"):
+        return "degree"
+    if source.startswith("Precip") and source != "Precip_Type":
+        return "mm h-1" if source == "Precip_Intens" else "mm"
+    if source.startswith("GlobRad"):
+        return "W m-2"
     return "1"
 
 
 @dataclass(frozen=True)
 class RawLufftWS800Product:
+    """Decoded WS800 observations and source-accounting metadata."""
     observations: pd.DataFrame
     source_files: tuple[str, ...]
     rejected_rows: int = 0
@@ -89,11 +100,14 @@ class LufftWS800Adapter(InstrumentAdapter):
         return frame.drop_duplicates("time").sort_values("time"), rejected, duplicate
 
     def discover(self, input_path):
+        """Return ISO dates represented by a WS800 daily file."""
         frame, _, _ = self._decode(Path(input_path).expanduser())
         return sorted(frame.time.dt.strftime("%Y-%m-%d").unique())
 
     def read_raw(self, input_path, **options):
-        if options: raise TypeError(f"unsupported Lufft WS800 options: {sorted(options)}")
+        """Decode a WS800 file into day-keyed raw products."""
+        if options:
+            raise TypeError(f"unsupported Lufft WS800 options: {sorted(options)}")
         path = Path(input_path).expanduser()
         frame, rejected, duplicate = self._decode(path)
         result = {}
@@ -102,20 +116,23 @@ class LufftWS800Adapter(InstrumentAdapter):
         return result
 
     def read(self, input_path, **options):
+        """Decode and normalize a WS800 file into day-keyed datasets."""
         return {day: self.normalize(item.observations, source_path=input_path,
                                     rejected_rows=item.rejected_rows, duplicate_rows=item.duplicate_rows)
                 for day, item in self.read_raw(input_path, **options).items()}
 
     def normalize(self, observations, *, source_path=None, rejected_rows=0, duplicate_rows=0):
+        """Convert decoded WS800 observations to the common xarray schema."""
         dataset = xr.Dataset(coords={"time": pd.DatetimeIndex(observations.time)})
         for source in observations.columns:
-            if source in {"time", "source_file"}: continue
+            if source in {"time", "source_file"}:
+                continue
             target = _name(source)
             dataset[target] = ("time", observations[source].to_numpy())
             dataset[target].attrs.update(units=_units(source), long_name=source.replace("_", " "))
         dataset.attrs.update(self.metadata.to_attrs())
         dataset.attrs.update(Conventions="CF-1.10, NASA-GPM-GV-TOOLS-0.2", processing_level="1",
-            processing_software="gv_tools", processing_software_version="0.29.6",
+            processing_software="gv_tools", processing_software_version=__version__,
             processing_time=datetime.now(timezone.utc).isoformat(), time_reference="UTC",
             source=str(Path(source_path).expanduser()), product_type="surface_meteorology",
             source_platform="piers", rejected_rows=int(rejected_rows), duplicate_rows=int(duplicate_rows))

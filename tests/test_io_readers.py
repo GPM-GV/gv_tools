@@ -36,11 +36,26 @@ def test_aio_requires_file_list_and_merges_files(tmp_path):
     assert frame.attrs["instrument_id"] == "PIERS0042"
 
 
-def test_reader_rejects_directory_or_empty_list(tmp_path):
-    with pytest.raises(TypeError, match="list of filenames"):
+def test_reader_accepts_directory_and_rejects_empty_sources(tmp_path):
+    with pytest.raises(FileNotFoundError, match="contain no files"):
         gv_tools.io.read_aio(tmp_path)
     with pytest.raises(ValueError, match="at least one"):
         gv_tools.io.read_aio([])
+
+
+def test_piers_day_directory_selects_daily_wx_and_ignores_other_instruments(tmp_path):
+    daily = tmp_path / "PIERS0042_WX_20260810_daily.csv"
+    daily.write_text(
+        "20260810060013,0 004.27 103.1 27.1 66.0 1013.7\n", encoding="ascii"
+    )
+    (tmp_path / "PIERS0042_WX_20260810060105.csv").write_text(PACKET_2, encoding="ascii")
+    (tmp_path / "PIERS0042_TB_20260810_daily.csv").write_text("not WX", encoding="ascii")
+    (tmp_path / "PIERS0042_Parsivel_20260810_daily.zip").touch()
+
+    dataset = gv_tools.io.read_aio(tmp_path, XARRAY=True)
+
+    assert dataset.sizes["time"] == 1
+    assert dataset.attrs["source_files"] == daily.name
 
 
 def test_metone_merges_monthly_files(tmp_path):
@@ -216,9 +231,12 @@ def test_read_radar_accepts_one_file(monkeypatch, tmp_path):
     assert gv_tools.io.read_radar(volume) is marker
 
 
-def test_read_radar_rejects_file_list():
-    with pytest.raises(TypeError, match="one filename"):
-        gv_tools.io.read_radar(["first", "second"])
+def test_read_radar_accepts_file_list(monkeypatch, tmp_path):
+    files = [tmp_path / "first", tmp_path / "second"]
+    for path in files:
+        path.touch()
+    monkeypatch.setattr("gv_tools.io.readers.ingest_radar", lambda path, **options: path.name)
+    assert gv_tools.io.read_radar(files) == ["first", "second"]
 
 
 def test_read_radar_forwards_xradar_choice(monkeypatch, tmp_path):
