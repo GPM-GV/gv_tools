@@ -27,4 +27,4 @@ user-directed plotting.
 - Corrected optional dependency groups and expanded dependency checks.
 - Refreshed examples, clean notebooks, API documentation, and HTML output.
 
-This release candidate remains local until final approval for GitHub publication.
+Release artifacts are available from the GitHub `v0.50.0` release.
