@@ -1,6 +1,6 @@
 include INSTALL.tcsh
 include RELEASE_NOTES.md
-include RELEASE_VALIDATION_0.50.0.txt
+include RELEASE_VALIDATION_0.50.1.txt
 recursive-include docs *.md *.rst *.py *.css Makefile
 recursive-include HTML *
 prune HTML/.doctrees

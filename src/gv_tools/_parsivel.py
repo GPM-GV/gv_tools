@@ -85,7 +85,10 @@ def get_dataset_from_parsivel(path, year, month, day, dv_parms, order="F"):
 
 
 SUPPORTED_INPUT_SUFFIXES = {".zip", ".csv", ".dat"}
-DATE_PATTERN = re.compile(r"(?<!\d)(20\d{2})(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])(?!\d)")
+DATE_PATTERN = re.compile(
+    r"(?<!\d)(20\d{2})(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])"
+    r"(?:_?(?:[01]\d|2[0-3]))?(?!\d)"
+)
 
 
 def _safe_extract(zip_path: Path, target: Path) -> list[Path]:

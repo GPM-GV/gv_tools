@@ -196,6 +196,32 @@ def test_parsivel_infers_apu_from_archive_name(monkeypatch, tmp_path):
     assert received == {"start_date": "2026-01-01", "end_date": "2026-01-01"}
 
 
+@pytest.mark.parametrize(
+    "name",
+    ["apu09_20240306_15.zip", "apu09_2024030615.zip"],
+)
+def test_parsivel_accepts_hour_with_or_without_separator(monkeypatch, tmp_path, name):
+    source = tmp_path / name
+    source.touch()
+    times = pd.date_range("2024-03-06 15:00", periods=1, freq="min")
+    frames = (
+        pd.DataFrame({"Rain": [1.0]}, index=times),
+        pd.DataFrame([[1.0]], index=times, columns=[0.1]),
+        pd.DataFrame([[1.0]], index=times, columns=["M0"]),
+    )
+    fake = SimpleNamespace(
+        __version__="1.0.0",
+        run=lambda *args, **kwargs: {"2024-03-06": frames},
+        discover_input_dates=lambda path: [pd.Timestamp("2024-03-06")],
+    )
+    monkeypatch.setattr(parsivel_module, "_backend", lambda: fake)
+
+    dataset = gv_tools.io.read_parsivel([source])
+
+    assert dataset.sizes["time"] == 1
+    assert dataset.attrs["instrument_id"] == "apu09"
+
+
 def test_parsivel_requires_chronological_file_endpoints(tmp_path):
     files = [
         tmp_path / "apu04_2026072300.zip",

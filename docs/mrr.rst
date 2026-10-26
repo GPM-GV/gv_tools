@@ -86,7 +86,7 @@ Install NetCDF4/HDF5 support from ``tcsh`` with:
 
    set WORKSPACE = "$HOME/Desktop/Work/GV_Tools"
    set PYTHON = "$HOME/anaconda3/bin/python"
-   $PYTHON -m pip install "$WORKSPACE/gv_tools/dist/gv_tools-0.50.0-py3-none-any.whl[netcdf]"
+   $PYTHON -m pip install "$WORKSPACE/gv_tools/dist/gv_tools-0.50.1-py3-none-any.whl[netcdf]"
 
 Examples
 --------

@@ -1,4 +1,4 @@
-# GV Tools 0.50.0
+# GV Tools 0.50.1
 
 GV Tools is a compact collection of instrument readers and plotting helpers.
 It converts user-selected input files to pandas DataFrames or xarray Datasets.
@@ -11,14 +11,14 @@ and xarray.
 ```tcsh
 set PYTHON = "$HOME/anaconda3/bin/python"
 set RELEASE_DIR = "$HOME/Downloads"
-set WHEEL = "$RELEASE_DIR/gv_tools-0.50.0-py3-none-any.whl"
+set WHEEL = "$RELEASE_DIR/gv_tools-0.50.1-py3-none-any.whl"
 
-curl -L "https://github.com/GPM-GV/gv_tools/releases/download/v0.50.0/gv_tools-0.50.0-py3-none-any.whl" -o "$WHEEL"
+curl -L "https://github.com/GPM-GV/gv_tools/releases/download/v0.50.1/gv_tools-0.50.1-py3-none-any.whl" -o "$WHEEL"
 $PYTHON -m pip install --upgrade "${WHEEL}[all]"
 $PYTHON -c 'import gv_tools; print(gv_tools.__version__)'
 ```
 
-The final command should print `0.50.0`.
+The final command should print `0.50.1`.
 
 ## Read data
 

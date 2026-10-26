@@ -84,6 +84,13 @@ def test_discover_filters_other_instruments(tmp_path, monkeypatch):
     assert ParsivelAdapter(metadata()).discover(tmp_path) == ["2026-07-21"]
 
 
+def test_bundled_backend_discovers_apu_hour_without_separator(tmp_path):
+    source = tmp_path / "apu01_2024030615.zip"
+    source.touch()
+
+    assert module._backend().discover_input_dates(source) == [pd.Timestamp("2024-03-06")]
+
+
 def test_piers_platform_is_inferred_and_recorded(monkeypatch):
     monkeypatch.setattr(module, "_backend", lambda: SimpleNamespace(__version__="1.0.0"))
     piers_metadata = InstrumentMetadata(

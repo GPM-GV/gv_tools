@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Supported instruments and methods &#8212; GV Tools 0.50.0 documentation</title>
+    <title>Supported instruments and methods &#8212; GV Tools 0.50.1 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="_static/documentation_options.js?v=6270e14a"></script>
+    <script src="_static/documentation_options.js?v=cb30952c"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'supported-instruments';</script>
@@ -118,7 +118,7 @@
   
   
   
-    <p class="title logo__title">GV Tools 0.50.0 documentation</p>
+    <p class="title logo__title">GV Tools 0.50.1 documentation</p>
   
 </a></div>
     
@@ -512,6 +512,10 @@ each reader selects only its own WX, WS800, Parsivel, or tipping-bucket files.</
 </tbody>
 </table>
 </div>
+<p>Hourly APU Parsivel archive names may spell the date and hour either as
+<code class="docutils literal notranslate"><span class="pre">apu09_20240306_15.zip</span></code> or <code class="docutils literal notranslate"><span class="pre">apu09_2024030615.zip</span></code>. In either case, the
+archive is accepted only when its contents decode to valid Parsivel
+observations.</p>
 <section id="raw-reader-variants">
 <h2>Raw-reader variants<a class="headerlink" href="#raw-reader-variants" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">read_aio_raw</span></code> and <code class="docutils literal notranslate"><span class="pre">read_parsivel_raw</span></code> retain the decoder’s raw product

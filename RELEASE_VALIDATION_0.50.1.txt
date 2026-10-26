@@ -1,0 +1,20 @@
+GV Tools 0.50.1 release validation
+Date: 2026-10-26
+
+Change validated
+- Conventional apu09_20240306_15.zip names remain accepted.
+- Non-conformant apu09_2024030615.zip names are accepted.
+- Parsivel input must still decode to at least one valid observation.
+
+Test and documentation validation
+- Full test suite: 102 passed.
+- Sphinx HTML build: succeeded.
+- HTML title: GV Tools 0.50.1 documentation.
+
+Artifact validation
+- Built wheel and sdist with ~/anaconda3/bin/python -m build --no-isolation.
+- Verified clean import reports version 0.50.1.
+- Verified gv-tools --help succeeds.
+- Verified wheel and source archives contain the Parsivel fix, tests, documentation,
+  notebooks, release notes, and release validation record.
+- SHA256SUMS records the final wheel, sdist, and source ZIP.

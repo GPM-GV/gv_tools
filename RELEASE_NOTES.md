@@ -1,3 +1,10 @@
+# GV Tools 0.50.1
+
+- Accepts valid hourly APU Parsivel archives when the hour is joined directly
+  to the date, such as ``apu09_2024030615.zip``, as well as the conventional
+  ``apu09_20240306_15.zip`` spelling.
+- Continues to reject archives that decode to no valid Parsivel observations.
+
 # GV Tools 0.50.0
 
 Version 0.50.0 is a clean release focused on instrument ingestion and

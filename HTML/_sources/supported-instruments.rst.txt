@@ -46,6 +46,11 @@ each reader selects only its own WX, WS800, Parsivel, or tipping-bucket files.
      - ``gv_tools.util.download_model_soundings`` and ``load_model_profile``
      - downloaded file metadata and a ``SoundingProfile``
 
+Hourly APU Parsivel archive names may spell the date and hour either as
+``apu09_20240306_15.zip`` or ``apu09_2024030615.zip``. In either case, the
+archive is accepted only when its contents decode to valid Parsivel
+observations.
+
 Raw-reader variants
 -------------------
 
