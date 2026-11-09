@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Dependencies &#8212; GV Tools 0.50.1 documentation</title>
+    <title>Dependencies &#8212; GV Tools 0.65.0 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="_static/documentation_options.js?v=cb30952c"></script>
+    <script src="_static/documentation_options.js?v=dc8ea8b4"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'dependencies';</script>
@@ -47,7 +47,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="MRR2 and MRRPro ingest" href="mrr.html" />
-    <link rel="prev" title="User guide" href="userguide.html" />
+    <link rel="prev" title="Parsivel processing" href="parsivel.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -118,7 +118,7 @@
   
   
   
-    <p class="title logo__title">GV Tools 0.50.1 documentation</p>
+    <p class="title logo__title">GV Tools 0.65.0 documentation</p>
   
 </a></div>
     
@@ -135,6 +135,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -159,13 +166,6 @@
   </a>
 </li>
 
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="notebooks.html">
-    Notebooks
-  </a>
-</li>
-
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -174,6 +174,13 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="examples.html">
     Examples
@@ -287,6 +294,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -469,7 +483,7 @@ formats and plotting features in use.</p>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netcdf</span></code></p></td>
 <td><p>NetCDF-backed MRR and xarray input</p></td>
-<td><p>h5netcdf, h5py, scipy</p></td>
+<td><p>h5netcdf (1.8 or newer; xarray 2026.9 needs <code class="docutils literal notranslate"><span class="pre">Variable.filters()</span></code>), h5py, scipy</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plot</span></code></p></td>
 <td><p>All Matplotlib figures</p></td>
@@ -504,7 +518,7 @@ formats and plotting features in use.</p>
 <span class="nb">set </span><span class="nv">PACKAGE_DIRECTORY</span> <span class="o">=</span> <span class="s2">"$WORKSPACE/gv_tools"</span>
 <span class="nb">set </span><span class="nv">PYTHON</span> <span class="o">=</span> <span class="s2">"$HOME/anaconda3/bin/python"</span>
 
-<span class="nv">$PYTHON</span> -m pip install <span class="s2">"$PACKAGE_DIRECTORY/dist/gv_tools-0.50.1-py3-none-any.whl[all]"</span>
+<span class="nv">$PYTHON</span> -m pip install <span class="s2">"$PACKAGE_DIRECTORY/dist/gv_tools-0.65.0-py3-none-any.whl[all]"</span>
 <span class="nv">$PYTHON</span> -m gv_tools.cli check --include radar --include plot --include notebook --include sounding
 </pre></div>
 </div>
@@ -523,12 +537,12 @@ modify the environment.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="userguide.html"
+       href="parsivel.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">User guide</p>
+        <p class="prev-next-title">Parsivel processing</p>
       </div>
     </a>
     <a class="right-next"

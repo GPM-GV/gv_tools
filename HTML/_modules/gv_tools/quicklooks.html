@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>gv_tools.quicklooks &#8212; GV Tools 0.50.1 documentation</title>
+    <title>gv_tools.quicklooks &#8212; GV Tools 0.65.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="../../_static/documentation_options.js?v=cb30952c"></script>
+    <script src="../../_static/documentation_options.js?v=dc8ea8b4"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/gv_tools/quicklooks';</script>
@@ -115,7 +115,7 @@
   
   
   
-    <p class="title logo__title">GV Tools 0.50.1 documentation</p>
+    <p class="title logo__title">GV Tools 0.65.0 documentation</p>
   
 </a></div>
     
@@ -132,6 +132,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -156,13 +163,6 @@
   </a>
 </li>
 
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../notebooks.html">
-    Notebooks
-  </a>
-</li>
-
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -171,6 +171,13 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="../../examples.html">
     Examples
@@ -282,6 +289,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -540,6 +554,30 @@
     <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">heading</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">timestamp</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S UTC'</span><span class="p">)</span><span class="si">}{</span><span class="n">details</span><span class="si">}</span><span class="s2">"</span>
 
 
+<span class="k">def</span><span class="w"> </span><span class="nf">_wind_rose_frequencies</span><span class="p">(</span><span class="n">speeds</span><span class="p">,</span> <span class="n">directions</span><span class="p">,</span> <span class="n">direction_bins</span><span class="p">,</span> <span class="n">speed_bins</span><span class="p">,</span> <span class="n">calm_threshold</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Percent occurrence by direction sector and speed class, plus calm percent.</span>
+
+<span class="sd">    Calms (speed below ``calm_threshold``) have no meaningful direction --</span>
+<span class="sd">    many sensors report 0 deg, i.e. north -- so they count toward the total</span>
+<span class="sd">    but are not placed in a sector. Percentages are of all valid</span>
+<span class="sd">    observations, so sectors plus calm add up to 100 %.</span>
+<span class="sd">    """</span>
+    <span class="n">speeds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">speeds</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">directions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">directions</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">speeds</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">directions</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">speeds</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">valid</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">total</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="n">calm</span> <span class="o">=</span> <span class="n">valid</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">speeds</span> <span class="o">&lt;</span> <span class="nb">float</span><span class="p">(</span><span class="n">calm_threshold</span><span class="p">))</span> <span class="k">if</span> <span class="n">calm_threshold</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">valid</span><span class="p">)</span>
+    <span class="n">windy</span> <span class="o">=</span> <span class="n">valid</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">calm</span>
+    <span class="n">half</span> <span class="o">=</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">direction_bins</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">half</span><span class="p">,</span> <span class="mi">360</span> <span class="o">-</span> <span class="n">half</span><span class="p">,</span> <span class="n">direction_bins</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">shifted</span> <span class="o">=</span> <span class="p">(</span><span class="n">directions</span><span class="p">[</span><span class="n">windy</span><span class="p">]</span> <span class="o">+</span> <span class="n">half</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span> <span class="o">-</span> <span class="n">half</span>
+    <span class="n">speed_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">speed_bins</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">counts</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram2d</span><span class="p">(</span><span class="n">shifted</span><span class="p">,</span> <span class="n">speeds</span><span class="p">[</span><span class="n">windy</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">speed_edges</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">counts</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">calm</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">,</span> <span class="n">total</span>
+
+
 <div class="viewcode-block" id="plot_aio_quicklook">
 <a class="viewcode-back" href="../../api/graph.html#gv_tools.graph.plot_aio_quicklook">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_aio_quicklook</span><span class="p">(</span>
@@ -550,8 +588,15 @@
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">direction_bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
     <span class="n">speed_bins</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
+    <span class="n">calm_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Plot a three-row, two-column AIO dashboard and return the Figure."""</span>
+<span class="w">    </span><span class="sd">"""Plot a three-row, two-column AIO dashboard and return the Figure.</span>
+
+<span class="sd">    Wind direction is drawn as points (a line would draw false vertical</span>
+<span class="sd">    strokes at every 0/360 deg wrap). In the wind rose, speeds below</span>
+<span class="sd">    ``calm_threshold`` (m s-1; 0.5 by default) are reported as calm instead</span>
+<span class="sd">    of being assigned the sensor's arbitrary calm direction.</span>
+<span class="sd">    """</span>
     <span class="n">dataset</span> <span class="o">=</span> <span class="n">_time_series_dataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
     <span class="n">required</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">"air_temperature"</span><span class="p">,</span>
@@ -593,7 +638,7 @@
         <span class="n">axis</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
 
     <span class="n">wind_axis</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">wind_speed</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:blue"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
-    <span class="n">direction_axis</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">wind_from_direction</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:orange"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">direction_axis</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">wind_from_direction</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="s2">"."</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:orange"</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
     <span class="n">wind_axis</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Wind speed (m/s)"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:blue"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
     <span class="n">direction_axis</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Wind direction (°)"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:orange"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
     <span class="n">direction_axis</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span>
@@ -603,15 +648,12 @@
     <span class="n">wind_axis</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
     <span class="n">wind_axis</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.35</span><span class="p">)</span>
 
-    <span class="n">speeds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">wind_speed</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-    <span class="n">directions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">wind_from_direction</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span>
-    <span class="n">valid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">speeds</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">directions</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">speeds</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">valid</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
-        <span class="n">direction_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span> <span class="o">/</span> <span class="n">direction_bins</span><span class="p">,</span> <span class="mi">360</span> <span class="o">-</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">direction_bins</span><span class="p">,</span> <span class="n">direction_bins</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">shifted</span> <span class="o">=</span> <span class="p">(</span><span class="n">directions</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span> <span class="o">+</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">direction_bins</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span> <span class="o">-</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">direction_bins</span>
+    <span class="n">frequencies</span><span class="p">,</span> <span class="n">calm_percent</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_wind_rose_frequencies</span><span class="p">(</span>
+        <span class="n">dataset</span><span class="o">.</span><span class="n">wind_speed</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">wind_from_direction</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+        <span class="n">direction_bins</span><span class="p">,</span> <span class="n">speed_bins</span><span class="p">,</span> <span class="n">calm_threshold</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">frequencies</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">speed_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">speed_bins</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-        <span class="n">counts</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram2d</span><span class="p">(</span><span class="n">shifted</span><span class="p">,</span> <span class="n">speeds</span><span class="p">[</span><span class="n">valid</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="p">(</span><span class="n">direction_edges</span><span class="p">,</span> <span class="n">speed_edges</span><span class="p">))</span>
-        <span class="n">frequencies</span> <span class="o">=</span> <span class="n">counts</span> <span class="o">/</span> <span class="n">valid</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mf">100.0</span>
         <span class="n">width</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">direction_bins</span>
         <span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">direction_bins</span><span class="p">)</span> <span class="o">*</span> <span class="n">width</span>
         <span class="n">bottom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">direction_bins</span><span class="p">)</span>
@@ -630,6 +672,9 @@
             <span class="p">)</span>
             <span class="n">bottom</span> <span class="o">+=</span> <span class="n">frequencies</span><span class="p">[:,</span> <span class="n">index</span><span class="p">]</span>
         <span class="n">rose_axis</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Wind speed (m/s)"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">title_fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.02</span><span class="p">,</span> <span class="mf">1.08</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">calm_threshold</span><span class="p">:</span>
+            <span class="n">rose_axis</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.12</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Calm (&lt; </span><span class="si">{</span><span class="n">calm_threshold</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> m/s): </span><span class="si">{</span><span class="n">calm_percent</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> %"</span><span class="p">,</span>
+                           <span class="n">transform</span><span class="o">=</span><span class="n">rose_axis</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">rose_axis</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">"No valid wind observations"</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">rose_axis</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"center"</span><span class="p">)</span>
     <span class="n">rose_axis</span><span class="o">.</span><span class="n">set_theta_zero_location</span><span class="p">(</span><span class="s2">"N"</span><span class="p">)</span>
@@ -688,8 +733,14 @@
     <span class="n">direction_bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
     <span class="n">speed_bins</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">calm_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Plot direction/speed occurrence percentages and return Figure, Axes, and frequencies."""</span>
+<span class="w">    </span><span class="sd">"""Plot direction/speed occurrence percentages and return Figure, Axes, and frequencies.</span>
+
+<span class="sd">    Percentages are of all valid observations; speeds below</span>
+<span class="sd">    ``calm_threshold`` (m s-1) are counted as calm, not given a direction,</span>
+<span class="sd">    and the calm percentage is stored as ``axis.gv_tools_calm_percent``.</span>
+<span class="sd">    """</span>
     <span class="n">dataset</span> <span class="o">=</span> <span class="n">_time_series_dataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
     <span class="n">destination</span> <span class="o">=</span> <span class="n">_required_output</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">direction_bins</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
@@ -697,15 +748,12 @@
     <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"wind_speed"</span><span class="p">,</span> <span class="s2">"wind_from_direction"</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"dataset is missing </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2">"</span><span class="p">)</span>
-    <span class="n">speeds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">wind_speed</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-    <span class="n">directions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">wind_from_direction</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span>
-    <span class="n">valid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">speeds</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">directions</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">speeds</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">valid</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+    <span class="n">frequencies</span><span class="p">,</span> <span class="n">calm_percent</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_wind_rose_frequencies</span><span class="p">(</span>
+        <span class="n">dataset</span><span class="o">.</span><span class="n">wind_speed</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">wind_from_direction</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+        <span class="n">direction_bins</span><span class="p">,</span> <span class="n">speed_bins</span><span class="p">,</span> <span class="n">calm_threshold</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">frequencies</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"dataset has no valid wind observations"</span><span class="p">)</span>
-    <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span> <span class="o">/</span> <span class="n">direction_bins</span><span class="p">,</span> <span class="mi">360</span> <span class="o">-</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">direction_bins</span><span class="p">,</span> <span class="n">direction_bins</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">shifted</span> <span class="o">=</span> <span class="p">(</span><span class="n">directions</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span> <span class="o">+</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">direction_bins</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span> <span class="o">-</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">direction_bins</span>
-    <span class="n">counts</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram2d</span><span class="p">(</span><span class="n">shifted</span><span class="p">,</span> <span class="n">speeds</span><span class="p">[</span><span class="n">valid</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">speed_bins</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)))</span>
-    <span class="n">frequencies</span> <span class="o">=</span> <span class="n">counts</span> <span class="o">/</span> <span class="n">valid</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mf">100.0</span>
     <span class="n">width</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">direction_bins</span>
     <span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">direction_bins</span><span class="p">)</span> <span class="o">*</span> <span class="n">width</span>
     <span class="n">plt</span> <span class="o">=</span> <span class="n">_pyplot</span><span class="p">()</span>
@@ -722,6 +770,10 @@
     <span class="n">axis</span><span class="o">.</span><span class="n">set_theta_direction</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">_dataset_plot_title</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s2">"AIO wind rose"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">),</span> <span class="n">pad</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
     <span class="n">axis</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Wind speed (m/s)"</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">calm_threshold</span><span class="p">:</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.08</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Calm (&lt; </span><span class="si">{</span><span class="n">calm_threshold</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> m/s): </span><span class="si">{</span><span class="n">calm_percent</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> %"</span><span class="p">,</span>
+                  <span class="n">transform</span><span class="o">=</span><span class="n">axis</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">gv_tools_calm_percent</span> <span class="o">=</span> <span class="n">calm_percent</span>
     <span class="n">destination</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">figure</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">destination</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">"tight"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">figure</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">frequencies</span></div>
@@ -746,8 +798,8 @@
 <span class="sd">    ``data`` may be the pandas DataFrame or xarray Dataset returned by</span>
 <span class="sd">    ``read_ws800_full``. Each panel contains every available field in its</span>
 <span class="sd">    family: air temperature, dew point, relative humidity, absolute humidity,</span>
-<span class="sd">    mixing ratio, and lightning. ``colors`` optionally maps field names to</span>
-<span class="sd">    Matplotlib colors.</span>
+<span class="sd">    specific enthalpy (or a true mixing ratio when the file has one), and</span>
+<span class="sd">    lightning. ``colors`` optionally maps field names to Matplotlib colors.</span>
 <span class="sd">    """</span>
     <span class="n">dataset</span> <span class="o">=</span> <span class="n">_time_series_dataset</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">if</span> <span class="s2">"time"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">coords</span> <span class="ow">or</span> <span class="n">dataset</span><span class="o">.</span><span class="n">sizes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"time"</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -761,7 +813,11 @@
         <span class="p">(</span><span class="s2">"Dew point"</span><span class="p">,</span> <span class="s2">"Temperature (°C)"</span><span class="p">,</span> <span class="p">(</span><span class="s2">"dew_point_temperature"</span><span class="p">,),</span> <span class="p">(</span><span class="s2">"dew_point_"</span><span class="p">,)),</span>
         <span class="p">(</span><span class="s2">"Relative humidity"</span><span class="p">,</span> <span class="s2">"Relative humidity (%)"</span><span class="p">,</span> <span class="p">(</span><span class="s2">"relative_humidity"</span><span class="p">,),</span> <span class="p">(</span><span class="s2">"rel_hum_"</span><span class="p">,)),</span>
         <span class="p">(</span><span class="s2">"Absolute humidity"</span><span class="p">,</span> <span class="s2">"Absolute humidity (g m⁻³)"</span><span class="p">,</span> <span class="p">(),</span> <span class="p">(</span><span class="s2">"abs_hum_"</span><span class="p">,)),</span>
-        <span class="p">(</span><span class="s2">"Mixing ratio"</span><span class="p">,</span> <span class="s2">"Mixing ratio (g kg⁻¹)"</span><span class="p">,</span> <span class="p">(</span><span class="s2">"mixing_ratio"</span><span class="p">,),</span> <span class="p">(</span><span class="s2">"mixing_ratio_"</span><span class="p">,)),</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="s2">"Specific enthalpy"</span><span class="p">,</span> <span class="s2">"Specific enthalpy (kJ kg⁻¹)"</span><span class="p">,</span> <span class="p">(</span><span class="s2">"specific_enthalpy"</span><span class="p">,),</span> <span class="p">(</span><span class="s2">"specific_enthalpy_"</span><span class="p">,))</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"specific_enthalpy"</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">data_vars</span><span class="p">)</span>
+            <span class="k">else</span> <span class="p">(</span><span class="s2">"Mixing ratio"</span><span class="p">,</span> <span class="s2">"Mixing ratio (g kg⁻¹)"</span><span class="p">,</span> <span class="p">(</span><span class="s2">"mixing_ratio"</span><span class="p">,),</span> <span class="p">(</span><span class="s2">"mixing_ratio_"</span><span class="p">,))</span>
+        <span class="p">),</span>
         <span class="p">(</span><span class="s2">"Lightning"</span><span class="p">,</span> <span class="s2">"Lightning"</span><span class="p">,</span> <span class="p">(),</span> <span class="p">(</span><span class="s2">"lightning_"</span><span class="p">,)),</span>
     <span class="p">)</span>
 
@@ -1240,8 +1296,7 @@
     <span class="n">horizontal_colorbar</span> <span class="o">=</span> <span class="n">colorbar_location</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">"top"</span><span class="p">,</span> <span class="s2">"bottom"</span><span class="p">}</span>
     <span class="k">for</span> <span class="n">axis</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">height_km</span><span class="p">,</span> <span class="n">bounds</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">prepared</span><span class="p">):</span>
         <span class="n">cmap_name</span> <span class="o">=</span> <span class="n">setting</span><span class="p">(</span><span class="n">cmaps</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="s2">"viridis"</span><span class="p">)</span>
-        <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cmap_name</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">cmap</span><span class="o">.</span><span class="n">set_bad</span><span class="p">(</span><span class="s2">"white"</span><span class="p">)</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cmap_name</span><span class="p">)</span><span class="o">.</span><span class="n">with_extremes</span><span class="p">(</span><span class="n">bad</span><span class="o">=</span><span class="s2">"white"</span><span class="p">)</span>
         <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_invalid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))</span>
         <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="k">if</span> <span class="n">bounds</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">bounds</span>
         <span class="n">mesh</span> <span class="o">=</span> <span class="n">axis</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">height_km</span><span class="p">,</span> <span class="n">values</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">rasterized</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1311,11 +1366,18 @@
     <span class="n">colorbar_bounds</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">colorbar_location</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"top"</span><span class="p">,</span>
     <span class="n">dsd_yrange</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_scale</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">shade_missing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Plot one UTC day of Parsivel DSD and precipitation parameters.</span>
 
 <span class="sd">    The six rows contain DSD, dBZ, rain rate, liquid-water content,</span>
-<span class="sd">    concentration, and number of drops.</span>
+<span class="sd">    concentration, and number of drops. N(D) spans several orders of</span>
+<span class="sd">    magnitude, so it is coloured on a logarithmic scale by default</span>
+<span class="sd">    (``log_scale=False`` restores a linear scale) and drawn on the true</span>
+<span class="sd">    class edges when ``drop_diameter_width`` is available. Minutes without</span>
+<span class="sd">    telegrams (``telegram_count == 0``) are shaded grey when</span>
+<span class="sd">    ``shade_missing`` is true, so outages are not mistaken for dry weather.</span>
 
 <span class="sd">    ``savefig`` must include an image filename and may be relative. The legacy</span>
 <span class="sd">    positional ``output`` argument remains supported, but cannot be combined</span>
@@ -1366,25 +1428,41 @@
     <span class="n">plt</span> <span class="o">=</span> <span class="n">_pyplot</span><span class="p">()</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.dates</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mdates</span>
 
-    <span class="n">plot_cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cmap</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">plot_cmap</span><span class="o">.</span><span class="n">set_bad</span><span class="p">(</span><span class="s2">"white"</span><span class="p">)</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogNorm</span><span class="p">,</span> <span class="n">Normalize</span>
+
+    <span class="c1"># Masked cells (no drops, or no telegrams) are left transparent: dry</span>
+    <span class="c1"># minutes show the white axes and outages the grey shading drawn below.</span>
+    <span class="n">plot_cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cmap</span><span class="p">)</span><span class="o">.</span><span class="n">with_extremes</span><span class="p">(</span><span class="n">bad</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
     <span class="n">dsd_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
         <span class="n">daily</span><span class="o">.</span><span class="n">drop_size_distribution</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="s2">"drop_diameter"</span><span class="p">,</span> <span class="s2">"time"</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
         <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">dsd_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_where</span><span class="p">(</span><span class="n">dsd_values</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dsd_values</span><span class="p">)</span>
+    <span class="n">dsd_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_where</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">dsd_values</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">dsd_values</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="n">dsd_values</span><span class="p">)</span>
 
     <span class="n">figure</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">axes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span>
-    <span class="n">color_limits</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">colorbar_bounds</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{</span><span class="s2">"vmin"</span><span class="p">:</span> <span class="n">colorbar_bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">"vmax"</span><span class="p">:</span> <span class="n">colorbar_bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]}</span>
-    <span class="n">dsd</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span>
-        <span class="n">daily</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-        <span class="n">daily</span><span class="o">.</span><span class="n">drop_diameter</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-        <span class="n">dsd_values</span><span class="p">,</span>
-        <span class="n">shading</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">,</span>
-        <span class="n">cmap</span><span class="o">=</span><span class="n">plot_cmap</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">color_limits</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">colorbar_bounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span> <span class="o">=</span> <span class="n">colorbar_bounds</span>
+    <span class="k">elif</span> <span class="n">dsd_values</span><span class="o">.</span><span class="n">count</span><span class="p">():</span>
+        <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dsd_values</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="nb">float</span><span class="p">(</span><span class="n">dsd_values</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">10.0</span>
+    <span class="k">if</span> <span class="n">log_scale</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">lower</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"colorbar_bounds must be positive with log_scale=True"</span><span class="p">)</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="n">LogNorm</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="n">lower</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">upper</span><span class="p">,</span> <span class="n">lower</span> <span class="o">*</span> <span class="mf">10.0</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="n">lower</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">upper</span><span class="p">)</span>
+    <span class="n">time_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">daily</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">diameters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">daily</span><span class="o">.</span><span class="n">drop_diameter</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">"drop_diameter_width"</span> <span class="ow">in</span> <span class="n">daily</span><span class="o">.</span><span class="n">coords</span> <span class="ow">and</span> <span class="n">time_values</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">widths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">daily</span><span class="o">.</span><span class="n">drop_diameter_width</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">y_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="n">diameters</span> <span class="o">-</span> <span class="n">widths</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">diameters</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">widths</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">]</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">time_values</span><span class="p">))</span>
+        <span class="n">x_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="n">time_values</span><span class="p">,</span> <span class="n">time_values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">step</span><span class="p">]</span>
+        <span class="n">dsd</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x_edges</span><span class="p">,</span> <span class="n">y_edges</span><span class="p">,</span> <span class="n">dsd_values</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="s2">"flat"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plot_cmap</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dsd</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">time_values</span><span class="p">,</span> <span class="n">diameters</span><span class="p">,</span> <span class="n">dsd_values</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plot_cmap</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">)</span>
     <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Diameter (mm)"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">dsd_yrange</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">*</span><span class="n">dsd_yrange</span><span class="p">)</span>
@@ -1398,7 +1476,7 @@
     <span class="n">bounds</span><span class="p">,</span> <span class="n">orientation</span> <span class="o">=</span> <span class="n">colorbar_geometry</span><span class="p">[</span><span class="n">colorbar_location</span><span class="p">]</span>
     <span class="n">colorbar_axis</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">inset_axes</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span>
     <span class="n">colorbar</span> <span class="o">=</span> <span class="n">figure</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">dsd</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">colorbar_axis</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="n">orientation</span><span class="p">)</span>
-    <span class="n">colorbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="sa">f</span><span class="s2">"DSD (</span><span class="si">{</span><span class="n">units</span><span class="si">}</span><span class="s2">)"</span> <span class="k">if</span> <span class="n">units</span> <span class="k">else</span> <span class="s2">"DSD"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">colorbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="sa">f</span><span class="s2">"N(D) (</span><span class="si">{</span><span class="n">units</span><span class="si">}</span><span class="s2">)"</span> <span class="k">if</span> <span class="n">units</span> <span class="k">else</span> <span class="s2">"N(D)"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
     <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 
     <span class="n">panels</span> <span class="o">=</span> <span class="p">(</span>
@@ -1414,6 +1492,17 @@
 
     <span class="n">axes</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"UTC time"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 
+    <span class="k">if</span> <span class="n">shade_missing</span> <span class="ow">and</span> <span class="s2">"telegram_count"</span> <span class="ow">in</span> <span class="n">daily</span><span class="p">:</span>
+        <span class="n">missing</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">daily</span><span class="o">.</span><span class="n">telegram_count</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">missing</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="n">starts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">missing</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="n">missing</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+            <span class="n">ends</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">missing</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="n">missing</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="kc">False</span><span class="p">])</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"m"</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">starts</span><span class="p">,</span> <span class="n">ends</span><span class="p">):</span>
+                    <span class="n">axis</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="n">time_values</span><span class="p">[</span><span class="n">begin</span><span class="p">],</span> <span class="n">time_values</span><span class="p">[</span><span class="n">end</span><span class="p">]</span> <span class="o">+</span> <span class="n">step</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.85"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.995</span><span class="p">,</span> <span class="mf">1.02</span><span class="p">,</span> <span class="s2">"grey: no telegrams"</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
+                         <span class="n">ha</span><span class="o">=</span><span class="s2">"right"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"bottom"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.35"</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
         <span class="n">axis</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">"major"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.35</span><span class="p">)</span>
         <span class="n">axis</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">selected_day</span><span class="p">,</span> <span class="n">day_end</span><span class="p">)</span>

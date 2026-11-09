@@ -53,3 +53,31 @@ def test_read_ws800_full_merges_file_list(tmp_path):
     dataset = gv_tools.io.read_ws800_full([first, second], XARRAY=True)
     assert frame.time.dt.strftime("%Y-%m-%d").tolist() == ["2026-08-30", "2026-08-31"]
     assert dataset.sizes["time"] == 2
+
+
+def test_ws800_enthalpy_and_density_columns_are_relabelled(tmp_path):
+    # The PIERS logger writes specific enthalpy under MixingRatio_* and air
+    # density under RelPress_*: 25 C, 50 % RH, 1013 hPa -> ~50 kJ/kg, ~1.18 kg/m3.
+    header = "Timestamp,AirTemp_Act,RelHum_Act,AbsPress_Act,MixingRatio_Act,MixingRatio_Max,RelPress_Act\n"
+    rows = "".join(
+        f"2026083100{minute:02d}04,25.0,50.0,1013.0,50.3,50.9,1.18\n" for minute in range(5)
+    )
+    source = tmp_path / "PIERS0042_WS800_20260831_daily.csv"
+    source.write_text(header + rows)
+    frame = gv_tools.io.read_ws800_full([source])
+    dataset = gv_tools.io.read_ws800_full([source], XARRAY=True)
+    assert "specific_enthalpy" in frame and "air_density" in frame
+    assert "mixing_ratio_act" not in frame and "rel_press_act" not in frame
+    assert dataset.specific_enthalpy.attrs["units"] == "kJ kg-1"
+    assert dataset.specific_enthalpy_max.attrs["units"] == "kJ kg-1"
+    assert dataset.air_density.attrs["units"] == "kg m-3"
+    assert dataset.attrs["ws800_mixing_ratio_columns"] == "specific_enthalpy"
+
+
+def test_ws800_true_mixing_ratio_and_pressure_keep_their_meaning(tmp_path):
+    header = "Timestamp,AirTemp_Act,RelHum_Act,AbsPress_Act,MixingRatio_Act,RelPress_Act\n"
+    source = tmp_path / "PIERS0042_WS800_20260831_daily.csv"
+    source.write_text(header + "20260831000004,25.0,50.0,1013.0,9.9,1016.0\n")
+    dataset = gv_tools.io.read_ws800_full([source], XARRAY=True)
+    assert dataset.mixing_ratio_act.attrs["units"] == "g kg-1"
+    assert dataset.rel_press_act.attrs["units"] == "hPa"

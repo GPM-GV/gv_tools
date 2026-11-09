@@ -1,4 +1,4 @@
-"""Create a high-quality Skew-T from a GV Tools model sounding download."""
+"""Create a high-quality Skew-T with GV Tools 0.65.0."""
 
 from __future__ import annotations
 
@@ -27,6 +27,7 @@ def main(argv=None) -> int:
     args = parser().parse_args(argv)
     if (args.latitude is None) != (args.longitude is None):
         parser().error("--latitude and --longitude must be supplied together")
+    args.output.expanduser().parent.mkdir(parents=True, exist_ok=True)
     profile = load_model_profile(
         args.input, latitude=args.latitude, longitude=args.longitude
     )

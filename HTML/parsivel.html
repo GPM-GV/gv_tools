@@ -1,0 +1,811 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Parsivel processing &#8212; GV Tools 0.65.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/gv_tools.css?v=f6e64a54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="_static/documentation_options.js?v=dc8ea8b4"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'parsivel';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Dependencies" href="dependencies.html" />
+    <link rel="prev" title="User guide" href="userguide.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">GV Tools 0.65.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Parsivel processing
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dependencies.html">
+    Dependencies
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="supported-instruments.html">
+    Supported instruments and methods
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Parsivel processing
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dependencies.html">
+    Dependencies
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="mrr.html">
+    MRR2 and MRRPro ingest
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/index.html">
+    API Reference Manual
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="supported-instruments.html">
+    Supported instruments and methods
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="architecture.html">
+    Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="metadata.html">
+    Metadata contract
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Parsivel processing</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="parsivel-processing">
+<h1>Parsivel processing<a class="headerlink" href="#parsivel-processing" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">gv_tools.io.read_parsivel</span></code> decodes OTT Parsivel / Parsivel2 telegrams from
+APU and PIERS loggers and integrates the 32 x 32 raw spectrum (OTT field 93)
+into one-minute drop-size-distribution products. This page documents what the
+decoder accepts and the formulas it uses (changed in 0.65.0).</p>
+<section id="inputs">
+<h2>Inputs<a class="headerlink" href="#inputs" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Plain <code class="docutils literal notranslate"><span class="pre">.csv</span></code>/<code class="docutils literal notranslate"><span class="pre">.dat</span></code> files and the <code class="docutils literal notranslate"><span class="pre">.csv</span></code>/<code class="docutils literal notranslate"><span class="pre">.dat</span></code>/<code class="docutils literal notranslate"><span class="pre">.txt</span></code> members of
+<code class="docutils literal notranslate"><span class="pre">.zip</span></code> archives, read in memory. No scratch files are written.</p></li>
+<li><p>File names may be anything. Each source is first scanned for its earliest
+and latest telegram stamp (a fast look at the 14 characters before every
+<code class="docutils literal notranslate"><span class="pre">;</span></code>); sources are decoded in that order and a day is produced once no
+unread source can hold a telegram for it. A file holding parts of several
+days, or named for a day other than its content, is handled correctly.
+Inside a file whose stamps never go backwards a day is produced as soon as
+the file is 30 minutes past the day’s end, so about one day of telegrams
+(about 2 kB each) is held in memory however long the file is; a file out of
+time order is held whole until it has been read.</p></li>
+<li><p>When a <em>directory</em> is read with <code class="docutils literal notranslate"><span class="pre">start_date</span></code>/<code class="docutils literal notranslate"><span class="pre">end_date</span></code>, packet files
+(10-, 12- or 14-digit stamps) and <code class="docutils literal notranslate"><span class="pre">*_daily</span></code> files named more than a day
+outside the window are skipped without being opened; files you name
+explicitly are always scanned. Inside a file, lines stamped more than 30
+minutes outside the window are skipped before their spectrum is decoded
+(they are not counted in <code class="docutils literal notranslate"><span class="pre">rejected_lines</span></code>), and a time-ordered file is
+closed at its first stamp after the window.</p></li>
+<li><p>Daily files and their packets may be mixed: every telegram is counted once
+(<code class="docutils literal notranslate"><span class="pre">duplicate_telegrams</span></code> reports repeats, <code class="docutils literal notranslate"><span class="pre">conflicting_telegrams</span></code> reports
+equal time stamps with different spectra – the first read is kept and a
+warning is logged). The Parsivel cannot send telegrams less than 10 s
+apart, so an equal spectrum stamped within 2 s of another is the same
+telegram logged twice and is counted once as well – unless the pair
+fills a gap of about two intervals, as when a telegram stamped late lands
+just before the next one.</p></li>
+<li><p>A telegram stamped before 2005 or more than 30 days ahead of the
+computer’s clock comes from a logger whose clock was not set; it is
+rejected (<code class="docutils literal notranslate"><span class="pre">rejected_lines</span></code>) rather than turned into a day of its own.</p></li>
+</ul>
+<p>A telegram is accepted only when it is complete: a valid 14-digit
+<code class="docutils literal notranslate"><span class="pre">YYYYMMDDhhmmss</span></code> stamp, <code class="docutils literal notranslate"><span class="pre">;</span></code>, exactly <code class="docutils literal notranslate"><span class="pre">spectrum_offset</span></code> header fields (9
+by default) followed by 1024 non-negative integer counts, with an optional
+trailing comma. A telegram with one header field more or less would otherwise
+be read with every count shifted into the neighbouring diameter class, so it
+is rejected and a warning reports the field counts seen; set
+<code class="docutils literal notranslate"><span class="pre">spectrum_offset</span></code> (or <code class="docutils literal notranslate"><span class="pre">strict_fields=False</span></code>) for a different logger
+layout. A missing final newline, a stray <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> or a non-UTF-8 byte costs at
+most the telegram that contains it (<code class="docutils literal notranslate"><span class="pre">rejected_lines</span></code>, counted once per
+file and reported for every day the file’s stamps cover, even when none of
+its telegrams could be used). Two telegrams run together on one line are split at their time stamps,
+and text before a time stamp is ignored.</p>
+</section>
+<section id="time-base-and-sample-duration">
+<h2>Time base and sample duration<a class="headerlink" href="#time-base-and-sample-duration" title="Link to this heading">#</a></h2>
+<p>A telegram holds the drops counted during the measuring interval that ends at
+its stamp. The interval is inferred for every telegram from its neighbours:
+the largest spacing of at least 10 s (the shortest Parsivel interval) that at
+least 80 % of the surrounding spacings are whole multiples of (within 1 s) and
+that itself occurs at least three times (15 spacings before, after and around
+the telegram are tried, and the answer may not exceed the telegram’s own
+spacing). Lost telegrams only lengthen spacings, so this holds for any loss
+rate, and a lasting change of the logger interval is followed within a
+telegram or two. A telegram whose own neighbourhood is inconclusive – a stamp
+a few seconds late, a short irregular burst – takes the interval of the
+nearest telegram (within 30) that has one, so stamps up to 5 s late do not
+change the result (tested at 10, 30 and 60 s with 30 % of the telegrams
+lost). When nothing nearby can tell, the most common interval of the
+surrounding telegrams, then the previous day’s, then that of later telegrams
+is used; failing that 60 s is assumed with a warning.</p>
+<p>A run of fewer than about 20 telegrams at a longer interval inside a stream at
+a shorter one (ten 60 s telegrams in a 10 s day, say) looks exactly like lost
+telegrams and gets the shorter interval. <code class="docutils literal notranslate"><span class="pre">telegram_interval_s</span></code> fixes the
+interval when you know it.</p>
+<p>Each telegram is counted in the UTC minute holding the centre of its
+interval (<code class="docutils literal notranslate"><span class="pre">stamp</span> <span class="pre">-</span> <span class="pre">interval</span> <span class="pre">/</span> <span class="pre">2</span></code>); minutes are labelled by their start. A
+60 s telegram stamped 12:01:00 therefore belongs to 12:00, and one stamped
+00:00:13 to 23:59 of the previous day. <code class="docutils literal notranslate"><span class="pre">time_binning=&quot;stamp&quot;</span></code> bins by the
+stamp instead, as 0.50.0 did.</p>
+<p>A day product (<code class="docutils literal notranslate"><span class="pre">gv_tools.io.ParsivelAdapter.read</span></code>) has all 1440 minutes;
+<code class="docutils literal notranslate"><span class="pre">read_parsivel</span></code> returns the span from the first to the last minute with a
+telegram. Minutes without telegrams are <strong>missing</strong> (NaN) with
+<code class="docutils literal notranslate"><span class="pre">telegram_count</span> <span class="pre">==</span> <span class="pre">0</span></code> – not dry. <code class="docutils literal notranslate"><span class="pre">sample_duration</span></code> is the sum of the
+intervals of the minute’s telegrams and is the time used in every rate, so a
+minute holding 3 of its 6 telegrams is not reported at half its rain rate.</p>
+</section>
+<section id="class-definitions">
+<h2>Class definitions<a class="headerlink" href="#class-definitions" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">classes=&quot;ott&quot;</span></code> (default) uses the OTT Parsivel2 class centres and widths
+from the instrument manual (<code class="docutils literal notranslate"><span class="pre">data/parsivel/diameter.dat</span></code> and
+<code class="docutils literal notranslate"><span class="pre">velocity.dat</span></code>). <code class="docutils literal notranslate"><span class="pre">classes=&quot;legacy&quot;</span></code> reproduces the 0.50.0 tables
+(<code class="docutils literal notranslate"><span class="pre">parsivel_diameter_py.txt</span></code>), whose diameters and widths are the OTT values
+multiplied by 1.03 and whose velocity centres between 0.85 and 3.8 m s-1 differ
+from the OTT classes; it also removes one isolated cell (9.5 mm at 4.4 m s-1)
+from the bundled conditional matrix. It reproduces the 0.50.0 <em>tables</em>, with
+the velocity-axis error fixed, not 0.50.0’s <em>output</em>. A 3 % size scaling
+raises rain rate by about 9 % (D<sup>3</sup>) and Z by about 0.8 dB
+(D<sup>6</sup>).</p>
+</section>
+<section id="velocity-diameter-filter">
+<h2>Velocity-diameter filter<a class="headerlink" href="#velocity-diameter-filter" title="Link to this heading">#</a></h2>
+<p>Counts are kept where the velocity-class centre lies within
+<code class="docutils literal notranslate"><span class="pre">(1</span> <span class="pre">+/-</span> <span class="pre">velocity_filter)</span> <span class="pre">x</span> <span class="pre">Vt(D)</span></code> (default +/-50 %) and the diameter-class
+centre is below <code class="docutils literal notranslate"><span class="pre">max_diameter_mm</span></code> (default 10 mm). <code class="docutils literal notranslate"><span class="pre">Vt(D)</span></code> is the
+Gunn and Kinzer (1949) terminal speed near sea level, interpolated from
+<code class="docutils literal notranslate"><span class="pre">data/parsivel/terminal_velocity_gunn_kinzer.txt</span></code> with a <code class="docutils literal notranslate"><span class="pre">D**2</span></code> (Stokes)
+tail below 0.1 mm and the 9.175 m s-1 plateau above the table. The filter
+removes splashing, margin fallers and most non-rain particles; use
+<code class="docutils literal notranslate"><span class="pre">velocity_filter=None</span></code> to keep every velocity.</p>
+</section>
+<section id="formulas">
+<h2>Formulas<a class="headerlink" href="#formulas" title="Link to this heading">#</a></h2>
+<p>With <code class="docutils literal notranslate"><span class="pre">n_ij</span></code> the filtered counts in diameter class <em>i</em> and velocity class
+<em>j</em> during <code class="docutils literal notranslate"><span class="pre">dt</span></code> seconds:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}A_i &amp;= 180\,\mathrm{mm} \times (30\,\mathrm{mm} - D_i/2)
+    \quad\text{(effective sampling area)}\\
+N(D_i) &amp;= \frac{1}{\Delta D_i}\sum_j \frac{n_{ij}}{A_i\,\Delta t\,V_{ij}}
+    \quad [\mathrm{m^{-3}\,mm^{-1}}]\\
+M_k &amp;= \sum_i N(D_i)\,D_i^k\,\Delta D_i \quad [\mathrm{m^{-3}\,mm^k}]\\
+\mathrm{LWC} &amp;= \frac{\pi}{6}\,\rho_w\,M_3 \quad [\mathrm{g\,m^{-3}}],\qquad
+Z = M_6 \quad [\mathrm{mm^6\,m^{-3}}]\\
+R &amp;= \frac{3600}{\Delta t}\sum_{i,j} \frac{\pi D_i^3/6}{A_i}\,n_{ij}
+    \quad [\mathrm{mm\,h^{-1}}]\\
+D_m &amp;= M_4/M_3,\qquad
+\sigma_m = \sqrt{\frac{\sum_i N(D_i)\,D_i^3\,(D_i - D_m)^2\,\Delta D_i}{M_3}},\qquad
+N_w = \frac{4^4}{6}\,\frac{M_3^5}{M_4^4}\end{split}\]</div>
+<p><code class="docutils literal notranslate"><span class="pre">V_ij</span></code> is the measured velocity-class centre <code class="docutils literal notranslate"><span class="pre">V_j</span></code> (<code class="docutils literal notranslate"><span class="pre">fall_speed=&quot;measured&quot;</span></code>,
+default) or the terminal speed <code class="docutils literal notranslate"><span class="pre">Vt(D_i)</span></code> (<code class="docutils literal notranslate"><span class="pre">fall_speed=&quot;theoretical&quot;</span></code>). The
+rain rate is the volume flux through the beam and does not depend on that
+choice. <code class="docutils literal notranslate"><span class="pre">dBZ</span></code> is <code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">log10(Z)</span></code> and is NaN when <code class="docutils literal notranslate"><span class="pre">Z</span> <span class="pre">=</span> <span class="pre">0</span></code>; <code class="docutils literal notranslate"><span class="pre">Dm</span></code>,
+<code class="docutils literal notranslate"><span class="pre">sigma_m</span></code>, <code class="docutils literal notranslate"><span class="pre">Nw</span></code>, <code class="docutils literal notranslate"><span class="pre">Dmax</span></code> and <code class="docutils literal notranslate"><span class="pre">mean_fall_speed</span></code> are NaN for observed
+minutes without drops, while counts, concentration, LWC, Z and rain rate are 0.</p>
+</section>
+<section id="outputs">
+<h2>Outputs<a class="headerlink" href="#outputs" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">drop_size_distribution</span></code></p></td>
+<td><p>m-3 mm-1</p></td>
+<td><p>N(D) on <code class="docutils literal notranslate"><span class="pre">drop_diameter</span></code> (with <code class="docutils literal notranslate"><span class="pre">drop_diameter_width</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">drop_size_moment</span></code></p></td>
+<td><p>m-3 mm^n</p></td>
+<td><p>M0 … M7</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">precipitation_rate</span></code></p></td>
+<td><p>mm h-1</p></td>
+<td><p>flux rain rate R</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">liquid_water_content</span></code></p></td>
+<td><p>g m-3</p></td>
+<td><p>LWC</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">reflectivity_factor</span></code></p></td>
+<td><p>mm6 m-3</p></td>
+<td><p>Z</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">radar_reflectivity</span></code></p></td>
+<td><p>dBZ</p></td>
+<td><p>10 log10 Z</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">number_concentration</span></code></p></td>
+<td><p>m-3</p></td>
+<td><p>M0</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mass_weighted_mean_diameter</span></code></p></td>
+<td><p>mm</p></td>
+<td><p>Dm</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mass_spectrum_width</span></code></p></td>
+<td><p>mm</p></td>
+<td><p>sigma_m (a standard deviation; 0.50.0 stored the variance)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">normalized_intercept_parameter</span></code></p></td>
+<td><p>m-3 mm-1</p></td>
+<td><p>Nw</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">maximum_drop_diameter</span></code></p></td>
+<td><p>mm</p></td>
+<td><p>centre of the largest class with drops</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mean_fall_speed</span></code></p></td>
+<td><p>m s-1</p></td>
+<td><p>count-weighted mean velocity-class centre</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">drop_count</span></code></p></td>
+<td><p>1</p></td>
+<td><p>filtered drops</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">raw_drop_count</span></code></p></td>
+<td><p>1</p></td>
+<td><p>particles before the filter</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">telegram_count</span></code></p></td>
+<td><p>1</p></td>
+<td><p>telegrams in the minute</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sample_duration</span></code></p></td>
+<td><p>s</p></td>
+<td><p>telegram_count x telegram interval</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">raw_spectrum</span></code> (optional)</p></td>
+<td><p>1</p></td>
+<td><p>per-minute raw counts, <code class="docutils literal notranslate"><span class="pre">include_spectrum=True</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">gv_tools</span>
+
+<span class="n">day</span> <span class="o">=</span> <span class="s2">"/gv_raid/PIERS_Rawdata/PIERS0042/2026/08/10"</span>
+<span class="n">nxt</span> <span class="o">=</span> <span class="s2">"/gv_raid/PIERS_Rawdata/PIERS0042/2026/08/11"</span>   <span class="c1"># its first packet holds 23:50-23:59</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">gv_tools</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_parsivel</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">day</span><span class="p">,</span> <span class="n">nxt</span><span class="p">],</span> <span class="n">start_date</span><span class="o">=</span><span class="s2">"2026-08-10"</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="s2">"2026-08-10"</span><span class="p">,</span>
+    <span class="n">classes</span><span class="o">=</span><span class="s2">"ott"</span><span class="p">,</span> <span class="n">fall_speed</span><span class="o">=</span><span class="s2">"measured"</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">wet</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">telegram_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="userguide.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">User guide</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="dependencies.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Dependencies</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs">Inputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-base-and-sample-duration">Time base and sample duration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#class-definitions">Class definitions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#velocity-diameter-filter">Velocity-diameter filter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formulas">Formulas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outputs">Outputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/parsivel.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

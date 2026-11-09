@@ -93,6 +93,30 @@ def _radar_plot_title(metadata, timestamp, plot_name, *, details="", title=None)
     return f"{heading}\n{timestamp.strftime('%Y-%m-%d %H:%M:%S UTC')}{details}"
 
 
+def _wind_rose_frequencies(speeds, directions, direction_bins, speed_bins, calm_threshold):
+    """Percent occurrence by direction sector and speed class, plus calm percent.
+
+    Calms (speed below ``calm_threshold``) have no meaningful direction --
+    many sensors report 0 deg, i.e. north -- so they count toward the total
+    but are not placed in a sector. Percentages are of all valid
+    observations, so sectors plus calm add up to 100 %.
+    """
+    speeds = np.asarray(speeds, dtype=float)
+    directions = np.asarray(directions, dtype=float) % 360
+    valid = np.isfinite(speeds) & np.isfinite(directions) & (speeds >= 0)
+    total = int(valid.sum())
+    if total == 0:
+        return None, 0.0, 0
+    calm = valid & (speeds < float(calm_threshold)) if calm_threshold else np.zeros_like(valid)
+    windy = valid & ~calm
+    half = 180 / direction_bins
+    edges = np.linspace(-half, 360 - half, direction_bins + 1)
+    shifted = (directions[windy] + half) % 360 - half
+    speed_edges = np.asarray(speed_bins, dtype=float)
+    counts, _, _ = np.histogram2d(shifted, speeds[windy], bins=(edges, speed_edges))
+    return counts / total * 100.0, float(calm.sum()) / total * 100.0, total
+
+
 def plot_aio_quicklook(
     dataset: xr.Dataset,
     output: str | Path | None = None,
@@ -101,8 +125,15 @@ def plot_aio_quicklook(
     title: str | None = None,
     direction_bins: int = 16,
     speed_bins=(0, 1, 2, 4, 6, 8, np.inf),
+    calm_threshold: float = 0.5,
 ):
-    """Plot a three-row, two-column AIO dashboard and return the Figure."""
+    """Plot a three-row, two-column AIO dashboard and return the Figure.
+
+    Wind direction is drawn as points (a line would draw false vertical
+    strokes at every 0/360 deg wrap). In the wind rose, speeds below
+    ``calm_threshold`` (m s-1; 0.5 by default) are reported as calm instead
+    of being assigned the sensor's arbitrary calm direction.
+    """
     dataset = _time_series_dataset(dataset)
     required = {
         "air_temperature",
@@ -144,7 +175,7 @@ def plot_aio_quicklook(
         axis.tick_params(labelsize=11)
 
     wind_axis.plot(times, dataset.wind_speed.values, color="tab:blue", linewidth=1.1)
-    direction_axis.plot(times, dataset.wind_from_direction.values, color="tab:orange", linewidth=1.0)
+    direction_axis.plot(times, dataset.wind_from_direction.values, ".", color="tab:orange", markersize=2.5)
     wind_axis.set_ylabel("Wind speed (m/s)", color="tab:blue", fontsize=13)
     direction_axis.set_ylabel("Wind direction (°)", color="tab:orange", fontsize=13)
     direction_axis.set_ylim(0, 360)
@@ -154,15 +185,12 @@ def plot_aio_quicklook(
     wind_axis.tick_params(axis="x", labelsize=11)
     wind_axis.grid(True, alpha=0.35)
 
-    speeds = np.asarray(dataset.wind_speed.values, dtype=float)
-    directions = np.asarray(dataset.wind_from_direction.values, dtype=float) % 360
-    valid = np.isfinite(speeds) & np.isfinite(directions) & (speeds >= 0)
-    if valid.any():
-        direction_edges = np.linspace(-180 / direction_bins, 360 - 180 / direction_bins, direction_bins + 1)
-        shifted = (directions[valid] + 180 / direction_bins) % 360 - 180 / direction_bins
+    frequencies, calm_percent, _ = _wind_rose_frequencies(
+        dataset.wind_speed.values, dataset.wind_from_direction.values,
+        direction_bins, speed_bins, calm_threshold,
+    )
+    if frequencies is not None:
         speed_edges = np.asarray(speed_bins, dtype=float)
-        counts, _, _ = np.histogram2d(shifted, speeds[valid], bins=(direction_edges, speed_edges))
-        frequencies = counts / valid.sum() * 100.0
         width = 2 * np.pi / direction_bins
         angles = np.arange(direction_bins) * width
         bottom = np.zeros(direction_bins)
@@ -181,6 +209,9 @@ def plot_aio_quicklook(
             )
             bottom += frequencies[:, index]
         rose_axis.legend(labels, title="Wind speed (m/s)", fontsize=8, title_fontsize=9, loc="upper left", bbox_to_anchor=(1.02, 1.08))
+        if calm_threshold:
+            rose_axis.text(0.5, -0.12, f"Calm (< {calm_threshold:g} m/s): {calm_percent:.1f} %",
+                           transform=rose_axis.transAxes, ha="center", fontsize=10)
     else:
         rose_axis.text(0.5, 0.5, "No valid wind observations", transform=rose_axis.transAxes, ha="center", va="center")
     rose_axis.set_theta_zero_location("N")
@@ -236,8 +267,14 @@ def plot_aio_wind_rose(
     direction_bins: int = 16,
     speed_bins=(0, 1, 2, 4, 6, 8, np.inf),
     title: str | None = None,
+    calm_threshold: float = 0.5,
 ):
-    """Plot direction/speed occurrence percentages and return Figure, Axes, and frequencies."""
+    """Plot direction/speed occurrence percentages and return Figure, Axes, and frequencies.
+
+    Percentages are of all valid observations; speeds below
+    ``calm_threshold`` (m s-1) are counted as calm, not given a direction,
+    and the calm percentage is stored as ``axis.gv_tools_calm_percent``.
+    """
     dataset = _time_series_dataset(dataset)
     destination = _required_output(output)
     if direction_bins < 4:
@@ -245,15 +282,12 @@ def plot_aio_wind_rose(
     for name in ("wind_speed", "wind_from_direction"):
         if name not in dataset:
             raise ValueError(f"dataset is missing {name!r}")
-    speeds = np.asarray(dataset.wind_speed.values, dtype=float)
-    directions = np.asarray(dataset.wind_from_direction.values, dtype=float) % 360
-    valid = np.isfinite(speeds) & np.isfinite(directions) & (speeds >= 0)
-    if not valid.any():
+    frequencies, calm_percent, _ = _wind_rose_frequencies(
+        dataset.wind_speed.values, dataset.wind_from_direction.values,
+        direction_bins, speed_bins, calm_threshold,
+    )
+    if frequencies is None:
         raise ValueError("dataset has no valid wind observations")
-    edges = np.linspace(-180 / direction_bins, 360 - 180 / direction_bins, direction_bins + 1)
-    shifted = (directions[valid] + 180 / direction_bins) % 360 - 180 / direction_bins
-    counts, _, _ = np.histogram2d(shifted, speeds[valid], bins=(edges, np.asarray(speed_bins, dtype=float)))
-    frequencies = counts / valid.sum() * 100.0
     width = 2 * np.pi / direction_bins
     angles = np.arange(direction_bins) * width
     plt = _pyplot()
@@ -270,6 +304,10 @@ def plot_aio_wind_rose(
     axis.set_theta_direction(-1)
     axis.set_title(_dataset_plot_title(dataset, "AIO wind rose", title=title), pad=20)
     axis.legend(labels, title="Wind speed (m/s)", loc="upper left", bbox_to_anchor=(1.05, 1.0))
+    if calm_threshold:
+        axis.text(0.5, -0.08, f"Calm (< {calm_threshold:g} m/s): {calm_percent:.1f} %",
+                  transform=axis.transAxes, ha="center", fontsize=10)
+    axis.gv_tools_calm_percent = calm_percent
     destination.parent.mkdir(parents=True, exist_ok=True)
     figure.savefig(destination, dpi=150, bbox_inches="tight")
     return figure, axis, frequencies
@@ -291,8 +329,8 @@ def plot_ws800_full_quicklook(
     ``data`` may be the pandas DataFrame or xarray Dataset returned by
     ``read_ws800_full``. Each panel contains every available field in its
     family: air temperature, dew point, relative humidity, absolute humidity,
-    mixing ratio, and lightning. ``colors`` optionally maps field names to
-    Matplotlib colors.
+    specific enthalpy (or a true mixing ratio when the file has one), and
+    lightning. ``colors`` optionally maps field names to Matplotlib colors.
     """
     dataset = _time_series_dataset(data)
     if "time" not in dataset.coords or dataset.sizes.get("time", 0) == 0:
@@ -306,7 +344,11 @@ def plot_ws800_full_quicklook(
         ("Dew point", "Temperature (°C)", ("dew_point_temperature",), ("dew_point_",)),
         ("Relative humidity", "Relative humidity (%)", ("relative_humidity",), ("rel_hum_",)),
         ("Absolute humidity", "Absolute humidity (g m⁻³)", (), ("abs_hum_",)),
-        ("Mixing ratio", "Mixing ratio (g kg⁻¹)", ("mixing_ratio",), ("mixing_ratio_",)),
+        (
+            ("Specific enthalpy", "Specific enthalpy (kJ kg⁻¹)", ("specific_enthalpy",), ("specific_enthalpy_",))
+            if any(str(name).startswith("specific_enthalpy") for name in dataset.data_vars)
+            else ("Mixing ratio", "Mixing ratio (g kg⁻¹)", ("mixing_ratio",), ("mixing_ratio_",))
+        ),
         ("Lightning", "Lightning", (), ("lightning_",)),
     )
 
@@ -776,8 +818,7 @@ def plot_mrr_time_height_quicklook(
     horizontal_colorbar = colorbar_location in {"top", "bottom"}
     for axis, (name, data, height_km, bounds) in zip(axes, prepared):
         cmap_name = setting(cmaps, name, "viridis")
-        cmap = plt.get_cmap(cmap_name).copy()
-        cmap.set_bad("white")
+        cmap = plt.get_cmap(cmap_name).with_extremes(bad="white")
         values = np.ma.masked_invalid(np.asarray(data, dtype=float))
         vmin, vmax = (None, None) if bounds is None else bounds
         mesh = axis.pcolormesh(times, height_km, values.T, shading="auto", cmap=cmap, vmin=vmin, vmax=vmax, rasterized=True)
@@ -844,11 +885,18 @@ def plot_parsivel_quicklook(
     colorbar_bounds: tuple[float, float] | None = None,
     colorbar_location: str = "top",
     dsd_yrange: tuple[float, float] | None = None,
+    log_scale: bool = True,
+    shade_missing: bool = True,
 ):
     """Plot one UTC day of Parsivel DSD and precipitation parameters.
 
     The six rows contain DSD, dBZ, rain rate, liquid-water content,
-    concentration, and number of drops.
+    concentration, and number of drops. N(D) spans several orders of
+    magnitude, so it is coloured on a logarithmic scale by default
+    (``log_scale=False`` restores a linear scale) and drawn on the true
+    class edges when ``drop_diameter_width`` is available. Minutes without
+    telegrams (``telegram_count == 0``) are shaded grey when
+    ``shade_missing`` is true, so outages are not mistaken for dry weather.
 
     ``savefig`` must include an image filename and may be relative. The legacy
     positional ``output`` argument remains supported, but cannot be combined
@@ -899,25 +947,41 @@ def plot_parsivel_quicklook(
     plt = _pyplot()
     import matplotlib.dates as mdates
 
-    plot_cmap = plt.get_cmap(cmap).copy()
-    plot_cmap.set_bad("white")
+    from matplotlib.colors import LogNorm, Normalize
+
+    # Masked cells (no drops, or no telegrams) are left transparent: dry
+    # minutes show the white axes and outages the grey shading drawn below.
+    plot_cmap = plt.get_cmap(cmap).with_extremes(bad=(0.0, 0.0, 0.0, 0.0))
     dsd_values = np.asarray(
         daily.drop_size_distribution.transpose("drop_diameter", "time").values,
         dtype=float,
     )
-    dsd_values = np.ma.masked_where(dsd_values == 0, dsd_values)
+    dsd_values = np.ma.masked_where(~np.isfinite(dsd_values) | (dsd_values <= 0), dsd_values)
 
     figure, axes = plt.subplots(6, 1, figsize=(16, 17), sharex=True)
     axes = np.asarray(axes)
-    color_limits = {} if colorbar_bounds is None else {"vmin": colorbar_bounds[0], "vmax": colorbar_bounds[1]}
-    dsd = axes[0].pcolormesh(
-        daily.time.values,
-        daily.drop_diameter.values,
-        dsd_values,
-        shading="auto",
-        cmap=plot_cmap,
-        **color_limits,
-    )
+    if colorbar_bounds is not None:
+        lower, upper = colorbar_bounds
+    elif dsd_values.count():
+        lower, upper = float(dsd_values.min()), float(dsd_values.max())
+    else:
+        lower, upper = 1.0, 10.0
+    if log_scale:
+        if lower <= 0:
+            raise ValueError("colorbar_bounds must be positive with log_scale=True")
+        norm = LogNorm(vmin=lower, vmax=max(upper, lower * 10.0))
+    else:
+        norm = Normalize(vmin=lower, vmax=upper)
+    time_values = np.asarray(daily.time.values)
+    diameters = np.asarray(daily.drop_diameter.values, dtype=float)
+    if "drop_diameter_width" in daily.coords and time_values.size > 1:
+        widths = np.asarray(daily.drop_diameter_width.values, dtype=float)
+        y_edges = np.r_[diameters - widths / 2.0, diameters[-1] + widths[-1] / 2.0]
+        step = np.median(np.diff(time_values))
+        x_edges = np.r_[time_values, time_values[-1] + step]
+        dsd = axes[0].pcolormesh(x_edges, y_edges, dsd_values, shading="flat", cmap=plot_cmap, norm=norm)
+    else:
+        dsd = axes[0].pcolormesh(time_values, diameters, dsd_values, shading="auto", cmap=plot_cmap, norm=norm)
     axes[0].set_ylabel("Diameter (mm)", fontsize=14)
     if dsd_yrange is not None:
         axes[0].set_ylim(*dsd_yrange)
@@ -931,7 +995,7 @@ def plot_parsivel_quicklook(
     bounds, orientation = colorbar_geometry[colorbar_location]
     colorbar_axis = axes[0].inset_axes(bounds)
     colorbar = figure.colorbar(dsd, cax=colorbar_axis, orientation=orientation)
-    colorbar.set_label(f"DSD ({units})" if units else "DSD", fontsize=14)
+    colorbar.set_label(f"N(D) ({units})" if units else "N(D)", fontsize=14)
     colorbar.ax.tick_params(labelsize=12)
 
     panels = (
@@ -947,6 +1011,17 @@ def plot_parsivel_quicklook(
 
     axes[5].set_xlabel("UTC time", fontsize=14)
 
+    if shade_missing and "telegram_count" in daily:
+        missing = np.asarray(daily.telegram_count.values) == 0
+        if missing.any():
+            starts = np.flatnonzero(missing & ~np.r_[False, missing[:-1]])
+            ends = np.flatnonzero(missing & ~np.r_[missing[1:], False])
+            step = np.timedelta64(1, "m")
+            for axis in axes:
+                for begin, end in zip(starts, ends):
+                    axis.axvspan(time_values[begin], time_values[end] + step, color="0.85", zorder=0.5, lw=0)
+            axes[0].text(0.995, 1.02, "grey: no telegrams", transform=axes[0].transAxes,
+                         ha="right", va="bottom", fontsize=10, color="0.35")
     for axis in axes:
         axis.grid(True, which="major", alpha=0.35)
         axis.set_xlim(selected_day, day_end)

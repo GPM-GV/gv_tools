@@ -1,4 +1,4 @@
-"""Minimal reader and user-directed plotting example."""
+"""Minimal GV Tools 0.65.0 reader and user-directed plotting example."""
 
 from pathlib import Path
 
@@ -9,6 +9,7 @@ INPUT = Path("/absolute/path/to/aio/files")
 FIGURE = WORKSPACE / "Output" / "PIERS0045-RMYoung_2026-10-11_temperature.png"
 
 data = gv_tools.io.read_aio(INPUT)
+FIGURE.parent.mkdir(parents=True, exist_ok=True)
 gv_tools.graph.plot_instrument_timeseries(data, "air_temperature", FIGURE)
 
 # Users select their own data format and destination when desired:

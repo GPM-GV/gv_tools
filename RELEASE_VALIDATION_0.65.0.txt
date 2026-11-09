@@ -1,0 +1,67 @@
+GV Tools 0.65.0 release validation
+==================================
+
+Date: 2026-11-09
+Platform: macOS Darwin 25.6.0 arm64
+Python: /Users/dwolff/anaconda3/bin/python 3.13.9
+
+Review outcome
+--------------
+- Accepted the reviewed 0.60.0 changed-file set and promoted the integrated
+  release to 0.65.0.
+- Applied the archive as a changed-file overlay, not as a complete source
+  replacement. Existing radar, graph, registry, metadata, CLI, examples, and
+  compatibility modules absent from the archive were retained.
+- Corrected release integration issues found during review: the installer now
+  uses the required Anaconda Python; notebook package/output paths were fixed;
+  the WSR-88D notebook no longer has an unimported sys reference or forced
+  early exits; all notebook cell IDs and outputs were normalized.
+
+Code and API
+------------
+- pytest: 181 passed, including the rebased 0.50.1 joined date-hour Parsivel
+  filename regression tests.
+- Ruff (E4, E7, E9, F): all checks passed for src, tests, and examples.
+- Python byte-compilation: passed for src, tests, and examples.
+- All 23 public names in gv_tools.__all__ resolved from the 0.65.0 source.
+- Notebook JSON schemas and every Python code cell parsed successfully.
+- check_gv_tools.ipynb executed successfully with RUN_EXAMPLES=False.
+- Data-dependent notebook cells requiring mounted instrument data or NOAA
+  network downloads were syntax/schema checked but were not executed.
+
+Dependencies used for local validation
+--------------------------------------
+- numpy 2.4.6, pandas 3.0.6, xarray 2026.9.0, h5netcdf 1.8.1,
+  h5py 3.16.0, scipy 1.18.1, matplotlib 3.11.2, MetPy 1.7.1,
+  cfgrib 0.9.15.1, ecCodes 2.50.0, arm-pyart 2.3.0, xradar 0.12.0,
+  cartopy 0.26.0, Sphinx 9.1.0, and nbformat 5.10.4.
+- The netcdf extra requires h5netcdf>=1.8.
+
+Candidate evidence reviewed but not rerun locally
+-------------------------------------------------
+- The attached 0.60.0 validation reported independent formula checks,
+  randomized Parsivel streaming checks, tipping-bucket fault simulations,
+  and performance measurements. Those claims are retained in
+  CHANGES_0.65.0.html as supplied evidence and are not represented as new
+  0.65.0 measurements.
+
+Documentation
+-------------
+- Sphinx HTML built with warnings treated as errors.
+- Verified HTML title: GV Tools 0.65.0 documentation.
+- Rebuilt HTML copied to the package-level HTML directory.
+- README, release notes, installation directions, API/manual pages, four
+  notebooks, and three runnable examples were updated for 0.65.0.
+- All installation and execution directions use tcsh and
+  /Users/dwolff/anaconda3/bin/python (expressed as $HOME/anaconda3/bin/python
+  where portable).
+
+Distribution
+------------
+- Built gv_tools-0.65.0-py3-none-any.whl and gv_tools-0.65.0.tar.gz.
+- Wheel and source-archive metadata versions are 0.65.0.
+- Isolated --no-deps wheel installation and version import passed.
+- The source archive contains the source, tests, documentation, rebuilt HTML,
+  notebooks, examples, installation guide, release notes, and validation.
+- The release dist directory contains only the 0.65.0 wheel, source archive,
+  and SHA256SUMS.txt.

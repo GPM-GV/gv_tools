@@ -5,15 +5,16 @@ from __future__ import annotations
 from dataclasses import replace
 from pathlib import Path
 import re
-from tempfile import TemporaryDirectory
 from collections.abc import Sequence
 from typing import Any
 
+import numpy as np
 import pandas as pd
 import xarray as xr
 
 from ..adapters import RawLufftWS800Product, RawMetOneAIOProduct, RawParsivelProduct, RawRMYoungAIOProduct
-from ..adapters.lufft_ws800 import ws800_dataframe
+from ..adapters.lufft_ws800 import ws800_dataframe, ws800_units
+from ..adapters.parsivel import merge_provenance
 from ..ingest_radar import ingest_radar, inspect_radar_file
 from ..metadata import InstrumentMetadata
 from ..registry import create_adapter
@@ -25,10 +26,10 @@ _METONE_FILE = re.compile(
     re.IGNORECASE,
 )
 _PIERS_PARSIVEL_FILE = re.compile(
-    r"^(?P<id>PIERS\d+)_Parsivel_.+\.zip$", re.IGNORECASE
+    r"^(?P<id>PIERS\d+)_Parsivel_.+\.(?:zip|csv|dat)$", re.IGNORECASE
 )
 _APU_PARSIVEL_FILE = re.compile(
-    r"^(?:APU_)?(?P<id>apu\d+)_.*\.zip$", re.IGNORECASE
+    r"^(?:APU_)?(?P<id>apu\d+)_.*\.(?:zip|csv|dat)$", re.IGNORECASE
 )
 _METADATA_KEYS = {
     "metadata", "instrument_id", "site_id", "timezone", "manufacturer",
@@ -64,10 +65,16 @@ def _resolve_files(files: str | Path | Sequence[str | Path]) -> list[Path]:
     return unique
 
 
-def _daily_files(paths: list[Path]) -> list[Path]:
-    """Prefer consolidated daily products when packets are also present."""
+def _daily_first(paths: list[Path]) -> list[Path]:
+    """Order consolidated ``*_daily`` products before individual packets.
+
+    0.50.0 dropped every packet whenever any daily file was present, losing
+    packets for days without a daily file and packets the daily file lacked.
+    Now every file is read; observations are de-duplicated on their time
+    stamps and, on a tie, the daily file's value is kept.
+    """
     daily = [path for path in paths if "_daily." in path.name.casefold()]
-    return daily or paths
+    return daily + [path for path in paths if path not in set(daily)]
 
 
 def _aio_files(files) -> list[Path]:
@@ -78,7 +85,7 @@ def _aio_files(files) -> list[Path]:
     ]
     if not selected:
         raise FileNotFoundError("input contains no recognized AIO weather-station files")
-    return _daily_files(selected)
+    return _daily_first(selected)
 
 
 def _parsivel_files(files) -> list[Path]:
@@ -89,7 +96,7 @@ def _parsivel_files(files) -> list[Path]:
     ]
     if not selected:
         raise ValueError("not a recognized Parsivel archive in the supplied input")
-    return _daily_files(selected)
+    return _daily_first(selected)
 
 
 def _take_adapter_options(options: dict[str, Any], *, parsivel=False) -> dict[str, Any]:
@@ -145,7 +152,7 @@ def _infer_parsivel_id(files: list[Path]) -> str:
         if match is None:
             raise ValueError(
                 "not a recognized Parsivel archive: "
-                f"{path.name}; expected PIERS####_Parsivel_*.zip or apu##_*.zip"
+                f"{path.name}; expected PIERS####_Parsivel_*.zip/.csv or apu##_*.zip/.csv"
             )
         identifier = match.group("id")
         identifiers.add(
@@ -155,14 +162,13 @@ def _infer_parsivel_id(files: list[Path]) -> str:
 
 
 def _parsivel_file_day(path: Path) -> str:
-    """Return the YYYY-MM-DD encoded in a supported Parsivel archive name."""
-    match = re.search(r"(?<!\d)(\d{8})(?:\d{2})?(?!\d)", path.name)
-    if match is None:
+    """Return the YYYY-MM-DD in a Parsivel file name (8-, 10-, 12- or 14-digit stamp)."""
+    from .. import _parsivel
+
+    stamp = _parsivel.filename_stamp(path.name)
+    if stamp is None:
         raise ValueError(f"could not infer a date from Parsivel archive: {path.name}")
-    try:
-        return pd.to_datetime(match.group(1), format="%Y%m%d").strftime("%Y-%m-%d")
-    except ValueError as exc:
-        raise ValueError(f"invalid date in Parsivel archive: {path.name}") from exc
+    return stamp.strftime("%Y-%m-%d")
 
 
 def _metadata(metadata, *, instrument_id, instrument_type, site_id, manufacturer, model, timezone, metadata_options):
@@ -224,11 +230,10 @@ def _parsivel_adapter(files, *, metadata=None, instrument_id=None, site_id="WFF"
     return create_adapter("parsivel", info, source_platform=source_platform)
 
 
-def _daily_results(adapter, files, method, **options):
-    products = []
-    for path in files:
-        daily = getattr(adapter, method)(path, **options)
-        products.extend(daily[day] for day in sorted(daily))
+def _read_all(adapter, files, method, **options):
+    """Decode every file in ONE adapter call so duplicates across files are seen."""
+    daily = getattr(adapter, method)(files, **options)
+    products = [daily[day] for day in sorted(daily)]
     if not products:
         raise ValueError("the supplied files contain no valid observations")
     return products
@@ -245,18 +250,30 @@ def _merge_frame(frames):
 def _merge_raw(products):
     first = products[0]
     if isinstance(first, (RawLufftWS800Product, RawRMYoungAIOProduct, RawMetOneAIOProduct)):
+        # Every day of one adapter call carries the call's totals; do not
+        # multiply them by the number of days.
         return replace(
             first,
             observations=_merge_frame([item.observations for item in products]),
-            source_files=tuple(sorted({name for item in products for name in item.source_files})),
-            rejected_rows=sum(item.rejected_rows for item in products),
-            duplicate_rows=sum(item.duplicate_rows for item in products),
+            source_files=tuple(dict.fromkeys(name for item in products for name in item.source_files)),
+            rejected_rows=max(item.rejected_rows for item in products),
+            duplicate_rows=max(item.duplicate_rows for item in products),
         )
     if isinstance(first, RawParsivelProduct):
+        parameters = _merge_frame([item.parameters for item in products])
+        parameters.attrs = {**first.parameters.attrs, **merge_provenance([item.parameters for item in products])}
+        psd = _merge_frame([item.psd for item in products])
+        psd.attrs.update(first.psd.attrs)
+        spectra = [item.spectrum for item in products if item.spectrum is not None]
+        spectrum = None
+        if spectra:
+            spectrum = xr.concat(spectra, dim="time").sortby("time")
+            spectrum = spectrum.isel(time=~spectrum.indexes["time"].duplicated(keep="first"))
         return RawParsivelProduct(
-            _merge_frame([item.parameters for item in products]),
-            _merge_frame([item.psd for item in products]),
+            parameters,
+            psd,
             _merge_frame([item.moments for item in products]),
+            spectrum,
         )
     raise TypeError(f"unsupported raw product type: {type(first).__name__}")
 
@@ -268,61 +285,48 @@ def _merge_datasets(datasets, files):
     ).sortby("time")
     if merged.indexes["time"].has_duplicates:
         merged = merged.isel(time=~merged.indexes["time"].duplicated(keep="first"))
-    merged.attrs["source_files"] = ", ".join(path.name for path in files)
-    merged.attrs["source"] = str(files[0].parent)
+    if "source_files" not in merged.attrs:
+        merged.attrs["source_files"] = ", ".join(path.name for path in files)
     return merged
 
 
 def _discover(adapter, files):
-    return sorted({day for path in files for day in adapter.discover(path)})
+    return adapter.discover(files)
 
 
 def _discover_parsivel(adapter, files):
-    dates = set()
-    for path in files:
-        discovered = adapter.discover(path)
-        dates.update(discovered or [_parsivel_file_day(path)])
+    dates = set(adapter.discover(files))
+    if not dates:
+        dates.update(_parsivel_file_day(path) for path in files)
     return sorted(dates)
 
 
-def _parsivel_results(adapter, files, method, **options):
-    start_date = _parsivel_file_day(files[0])
-    end_date = _parsivel_file_day(files[-1])
-    if pd.Timestamp(end_date) < pd.Timestamp(start_date):
-        raise ValueError(
-            "the date in the last Parsivel filename precedes the date in the "
-            "first filename; order files from earliest to latest"
-        )
-
-    # process_parsivel accepts one file or directory, not an explicit file list.
-    # A temporary directory of links preserves the user's exact selection while
-    # allowing the complete interval to be decoded in one backend invocation.
-    with TemporaryDirectory(prefix="gv_tools_parsivel_") as staging_name:
-        staging = Path(staging_name)
-        for index, path in enumerate(files):
-            (staging / f"{index:06d}_{path.name}").symlink_to(path)
-        daily = getattr(adapter, method)(
-            staging,
-            _date_interval=(start_date, end_date),
-            **options,
-        )
-    products = [daily[day] for day in sorted(daily)]
-    if not products:
-        raise ValueError("the supplied Parsivel files contain no valid observations")
-    return products
+def _continuous_parsivel(dataset: xr.Dataset) -> xr.Dataset:
+    """Trim to the first/last minute with telegrams and fill skipped days as missing."""
+    if "telegram_count" not in dataset:
+        return dataset
+    observed = np.flatnonzero(dataset.telegram_count.values > 0)
+    if observed.size == 0:
+        raise ValueError("the supplied Parsivel files contain no valid telegrams")
+    times = dataset.indexes["time"]
+    grid = pd.date_range(times[observed[0]], times[observed[-1]], freq="1min")
+    fill = {"telegram_count": 0, "sample_duration": 0.0}
+    trimmed = dataset.reindex(time=grid, fill_value={**{name: np.nan for name in dataset.data_vars}, **fill})
+    trimmed["telegram_count"] = trimmed.telegram_count.astype("int32")
+    return trimmed
 
 
 def discover_aio(files, **metadata_options):
-    """Return dates in explicitly supplied RM Young or Met One AIO files."""
+    """Return dates in explicitly supplied RM Young, WS800 or Met One AIO files."""
     paths = _aio_files(files)
     return _discover(_aio_adapter(paths, **metadata_options), paths)
 
 
 def read_aio_raw(files, **options):
-    """Read and merge RM Young or Met One AIO files into one raw product."""
+    """Read and merge RM Young, WS800 or Met One AIO files into one raw product."""
     paths = _aio_files(files)
     adapter_options = _take_adapter_options(options)
-    return _merge_raw(_daily_results(_aio_adapter(paths, **adapter_options), paths, "read_raw", **options))
+    return _merge_raw(_read_all(_aio_adapter(paths, **adapter_options), paths, "read_raw", **options))
 
 
 def _aio_dataframe(dataset):
@@ -334,11 +338,8 @@ def _aio_dataframe(dataset):
 def _ws800_common_xarray(frame):
     dataset = frame.set_index("time").to_xarray()
     dataset.attrs.update(frame.attrs)
-    units = {"air_temperature": "degree_Celsius", "relative_humidity": "percent",
-             "air_pressure": "hPa", "wind_speed": "m s-1",
-             "wind_from_direction": "degree"}
-    for name, unit in units.items():
-        dataset[name].attrs["units"] = unit
+    for name in dataset.data_vars:
+        dataset[name].attrs["units"] = ws800_units(name)
     return dataset
 
 
@@ -348,11 +349,14 @@ def read_aio(files, *, XARRAY=False, **options):
     adapter_options = _take_adapter_options(options)
     adapter = _aio_adapter(paths, **adapter_options)
     if _aio_family(paths) == "lufft_ws800":
-        products = _daily_results(adapter, paths, "read_raw", **options)
+        products = _read_all(adapter, paths, "read_raw", **options)
         frame = ws800_dataframe(_merge_frame([item.observations for item in products]), common_only=True)
         frame.attrs.update(adapter.metadata.to_attrs())
+        frame.attrs["source_files"] = ", ".join(
+            dict.fromkeys(name for item in products for name in item.source_files)
+        )
         return _ws800_common_xarray(frame) if XARRAY else frame
-    datasets = _daily_results(adapter, paths, "read", **options)
+    datasets = _read_all(adapter, paths, "read", **options)
     dataset = _merge_datasets(datasets, paths)
     return dataset if XARRAY else _aio_dataframe(dataset)
 
@@ -369,11 +373,14 @@ def read_ws800_full(files, *, XARRAY=False, **options):
     adapter_options = _take_adapter_options(options)
     adapter = _lufft_adapter(paths, **adapter_options)
     if XARRAY:
-        datasets = _daily_results(adapter, paths, "read", **options)
+        datasets = _read_all(adapter, paths, "read", **options)
         return _merge_datasets(datasets, paths)
-    products = _daily_results(adapter, paths, "read_raw", **options)
+    products = _read_all(adapter, paths, "read_raw", **options)
     frame = ws800_dataframe(_merge_frame([item.observations for item in products]))
     frame.attrs.update(adapter.metadata.to_attrs())
+    frame.attrs["source_files"] = ", ".join(
+        dict.fromkeys(name for item in products for name in item.source_files)
+    )
     return frame
 
 
@@ -402,22 +409,43 @@ def discover_parsivel(files, **metadata_options):
 
 
 def read_parsivel_raw(files, **options):
-    """Read and merge explicitly supplied Parsivel files into one raw product."""
+    """Read and merge explicitly supplied Parsivel files into one raw product.
+
+    Decoder options (``start_date``, ``end_date``, ``classes``,
+    ``fall_speed``, ``velocity_filter``, ``max_diameter_mm``,
+    ``telegram_interval_s``) are forwarded to the decoder.
+    """
     paths = _parsivel_files(files)
     adapter_options = _take_adapter_options(options, parsivel=True)
-    return _merge_raw(_parsivel_results(
+    return _merge_raw(_read_all(
         _parsivel_adapter(paths, **adapter_options), paths, "read_raw", **options
     ))
 
 
 def read_parsivel(files, **options):
-    """Read and merge every explicitly supplied Parsivel file."""
+    """Read every supplied Parsivel file into one 1-minute xarray Dataset.
+
+    Telegrams from all files are pooled, counted once and put in the minute
+    holding the centre of their measuring interval. The result runs from the
+    first to the last minute with a telegram; minutes without telegrams inside
+    that span are missing (NaN) with ``telegram_count == 0``. Decoder options
+    such as ``start_date``/``end_date`` (UTC days), ``classes`` (``"ott"`` or
+    ``"legacy"``), ``fall_speed`` (``"measured"`` or ``"theoretical"``),
+    ``velocity_filter``, ``max_diameter_mm``, ``telegram_interval_s``,
+    ``time_binning`` (``"centre"`` or ``"stamp"``), ``strict_fields``,
+    ``spectrum_offset`` and ``include_spectrum`` are forwarded to
+    :func:`gv_tools._parsivel.iter_days`. To get one complete day, pass that
+    day's files and the next day's first files (they hold its last minutes)
+    with ``start_date`` and ``end_date`` set to the day.
+    """
     paths = _parsivel_files(files)
     adapter_options = _take_adapter_options(options, parsivel=True)
-    datasets = _parsivel_results(
+    datasets = _read_all(
         _parsivel_adapter(paths, **adapter_options), paths, "read", **options
     )
-    return _merge_datasets(datasets, paths)
+    merged = _merge_datasets(datasets, paths)
+    merged.attrs.update(merge_provenance(datasets))
+    return _continuous_parsivel(merged)
 
 
 def read_radar(radar_file, *, XRADAR=False, **reader_options):

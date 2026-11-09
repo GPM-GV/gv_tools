@@ -13,7 +13,7 @@ functions always require a user-selected output filename.
 
 from importlib import import_module
 
-__version__ = "0.50.1"
+__version__ = "0.65.0"
 
 __all__ = [
     "read_2dvd",
@@ -29,6 +29,7 @@ __all__ = [
     "inspect_radar_file",
     "read_mrr",
     "read_gauge",
+    "read_tipping_bucket",
     "plot_instrument_timeseries",
     "plot_aio_quicklook",
     "plot_aio_wind_rose",
@@ -54,6 +55,7 @@ _PUBLIC_OBJECTS = {
     "inspect_radar_file": (".ingest_radar", "inspect_radar_file"),
     "read_mrr": (".mrr", "read_mrr"),
     "read_gauge": (".io", "read_gauge"),
+    "read_tipping_bucket": (".io", "read_tipping_bucket"),
     "plot_instrument_timeseries": (".plotting", "plot_instrument_timeseries"),
     "plot_aio_quicklook": (".quicklooks", "plot_aio_quicklook"),
     "plot_aio_wind_rose": (".quicklooks", "plot_aio_wind_rose"),

@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import datetime, timezone
+import os
 from pathlib import Path
 import re
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
@@ -11,7 +13,7 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 import pandas as pd
 import xarray as xr
 
-from .base import InstrumentAdapter
+from .base import InstrumentAdapter, localize_to_utc
 from ..metadata import InstrumentMetadata
 from ..products import validate_product
 from .. import __version__
@@ -63,15 +65,26 @@ class RMYoungAIOAdapter(InstrumentAdapter):
             re.IGNORECASE,
         ))
 
-    def _paths(self, input_path: str | Path) -> list[Path]:
-        source = Path(input_path).expanduser()
-        if source.is_file():
-            return [source]
-        if not source.exists():
-            raise FileNotFoundError(f"RM Young AIO input does not exist: {source}")
-        if not source.is_dir():
-            raise ValueError(f"RM Young AIO input must be a file or directory: {source}")
-        return sorted(path for path in source.rglob("*") if path.is_file() and self._matches(path))
+    def _paths(self, input_path) -> list[Path]:
+        """Return input files: explicit files as given, matching files in directories.
+
+        Daily ``*_daily.csv`` files come first so that, when a packet repeats
+        a daily observation, the daily value is the one kept.
+        """
+        items = [input_path] if isinstance(input_path, (str, os.PathLike)) else list(input_path)
+        paths: list[Path] = []
+        for item in items:
+            source = Path(item).expanduser()
+            if source.is_file():
+                paths.append(source)
+            elif source.is_dir():
+                paths.extend(path for path in sorted(source.rglob("*")) if path.is_file() and self._matches(path))
+            elif not source.exists():
+                raise FileNotFoundError(f"RM Young AIO input does not exist: {source}")
+            else:
+                raise ValueError(f"RM Young AIO input must be a file or directory: {source}")
+        paths = list(dict.fromkeys(paths))
+        return sorted(paths, key=lambda path: 0 if "_daily." in path.name.casefold() else 1)
 
     @staticmethod
     def _filename_day(path: Path) -> str | None:
@@ -83,8 +96,11 @@ class RMYoungAIOAdapter(InstrumentAdapter):
         return pd.to_datetime(match.group(1), format="%Y%m%d").strftime("%Y-%m-%d")
 
     def discover(self, input_path: str | Path) -> list[str]:
-        """Return dates represented by matching PIERS WX daily or packet files."""
-        return sorted({day for path in self._paths(input_path) if (day := self._filename_day(path))})
+        """Return the UTC dates of the observations in matching WX daily or packet files."""
+        frame, _, _ = self._decode(self._paths(input_path))
+        if frame.empty:
+            return []
+        return sorted(frame.time.dt.strftime("%Y-%m-%d").unique())
 
     def _source_timezone(self) -> ZoneInfo:
         try:
@@ -93,10 +109,13 @@ class RMYoungAIOAdapter(InstrumentAdapter):
             raise ValueError(f"unknown source timezone: {self.metadata.timezone!r}") from exc
 
     def _decode(self, paths: list[Path]) -> tuple[pd.DataFrame, int, int]:
-        records: list[dict] = []
+        frames: list[pd.DataFrame] = []
         rejected = 0
-        source_timezone = self._source_timezone()
+        self._source_timezone()  # validate early
+        columns = ["time", *_VARIABLES, "source_file", "source_line", "_priority"]
         for path in paths:
+            priority = 0 if "_daily." in path.name.casefold() else 1
+            records: list[dict] = []
             with path.open("r", encoding="ascii", errors="replace") as handle:
                 for line_number, line in enumerate(handle.read().splitlines(), 1):
                     match = _PACKET_LINE.match(line.strip())
@@ -112,18 +131,23 @@ class RMYoungAIOAdapter(InstrumentAdapter):
                     if pd.isna(timestamp) or len(values) != len(_VARIABLES):
                         rejected += 1
                         continue
-                    timestamp = timestamp.tz_localize(source_timezone).tz_convert("UTC").tz_localize(None)
-                    record = {"time": timestamp, "source_file": path.name, "source_line": line_number}
+                    record = {"time": timestamp, "source_file": path.name, "source_line": line_number,
+                              "_priority": priority}
                     record.update(zip(_VARIABLES, values))
                     records.append(record)
+            if not records:
+                continue
+            frame = pd.DataFrame.from_records(records, columns=columns)
+            frame["time"], unresolved = localize_to_utc(frame["time"], self.metadata.timezone)
+            rejected += unresolved
+            frames.append(frame.loc[frame["time"].notna()])
 
-        columns = ["time", *_VARIABLES, "source_file", "source_line"]
-        frame = pd.DataFrame.from_records(records, columns=columns)
+        frame = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame(columns=columns)
         if frame.empty:
-            return frame, rejected, 0
-        frame = frame.sort_values(["time", "source_file", "source_line"], kind="stable")
+            return frame.drop(columns="_priority"), rejected, 0
+        frame = frame.sort_values(["time", "_priority", "source_file", "source_line"], kind="stable")
         duplicate = int(frame.duplicated(subset=["time"]).sum())
-        frame = frame.drop_duplicates(subset=["time"], keep="first").reset_index(drop=True)
+        frame = frame.drop_duplicates(subset=["time"], keep="first").drop(columns="_priority").reset_index(drop=True)
         return frame, rejected, duplicate
 
     def read_raw(self, input_path, **options):
@@ -136,7 +160,7 @@ class RMYoungAIOAdapter(InstrumentAdapter):
             return {}
         products = {}
         for day, observations in frame.groupby(frame.time.dt.strftime("%Y-%m-%d"), sort=True):
-            names = tuple(sorted(observations.source_file.unique()))
+            names = tuple(dict.fromkeys(observations.source_file))
             products[day] = RawRMYoungAIOProduct(
                 observations.reset_index(drop=True), names, rejected, duplicate
             )
@@ -146,13 +170,14 @@ class RMYoungAIOAdapter(InstrumentAdapter):
         """Decode and normalize R.M. Young files into day-keyed datasets."""
         raw = self.read_raw(input_path, **options)
         return {
-            day: self.normalize(product.observations, source_path=input_path,
+            day: self.normalize(product.observations, source_files=product.source_files,
                                 rejected_rows=product.rejected_rows,
                                 duplicate_rows=product.duplicate_rows)
             for day, product in raw.items()
         }
 
-    def normalize(self, observations, *, source_path=None, rejected_rows=0, duplicate_rows=0):
+    def normalize(self, observations, *, source_path=None, source_files: Sequence[str] = (),
+                  rejected_rows=0, duplicate_rows=0):
         """Convert decoded observations to the common GV xarray schema."""
         if not isinstance(observations, pd.DataFrame):
             raise TypeError("RM Young AIO observations must be a pandas DataFrame")
@@ -176,7 +201,11 @@ class RMYoungAIOAdapter(InstrumentAdapter):
             processing_software_version=__version__,
             processing_time=datetime.now(timezone.utc).isoformat(),
             time_reference="UTC",
-            source=str(Path(source_path).expanduser()) if source_path is not None else "in_memory",
+            source="R.M. Young All-in-One packets (PIERS logger)",
+            source_files=", ".join(
+                list(source_files)
+                or ([Path(str(source_path)).name] if source_path is not None else ["in_memory"])
+            ),
             product_type="surface_meteorology",
             source_platform="piers",
             rejected_rows=int(rejected_rows),

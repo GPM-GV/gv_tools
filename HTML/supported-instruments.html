@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Supported instruments and methods &#8212; GV Tools 0.50.1 documentation</title>
+    <title>Supported instruments and methods &#8212; GV Tools 0.65.0 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="_static/documentation_options.js?v=cb30952c"></script>
+    <script src="_static/documentation_options.js?v=dc8ea8b4"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'supported-instruments';</script>
@@ -118,7 +118,7 @@
   
   
   
-    <p class="title logo__title">GV Tools 0.50.1 documentation</p>
+    <p class="title logo__title">GV Tools 0.65.0 documentation</p>
   
 </a></div>
     
@@ -135,6 +135,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -159,13 +166,6 @@
   </a>
 </li>
 
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="notebooks.html">
-    Notebooks
-  </a>
-</li>
-
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -174,6 +174,13 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="examples.html">
     Examples
@@ -287,6 +294,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -460,9 +474,11 @@ write data products. A source may be one absolute filename, one absolute
 directory (searched recursively), or an explicit sequence of absolute files or
 directories. Files supplied together must be compatible with the selected
 reader.</p>
-<p>For PIERS platforms, consolidated <code class="docutils literal notranslate"><span class="pre">*_daily</span></code> files are the default. When a
-directory contains both daily files and individual packets, GV Tools selects
-the daily files. A PIERS day directory may contain multiple instrument types;
+<p>For PIERS platforms, consolidated <code class="docutils literal notranslate"><span class="pre">*_daily</span></code> files and individual packets may
+be supplied together. Every file is read and each observation (or Parsivel
+telegram) is kept once, by its own time stamp; when a packet repeats a daily
+record the daily value is kept. (0.50.0 dropped all packets whenever one daily
+file was present.) A PIERS day directory may contain multiple instrument types;
 each reader selects only its own WX, WS800, Parsivel, or tipping-bucket files.</p>
 <div class="pst-scrollable-table-container"><table class="table" id="id1">
 <caption><span class="caption-text">Instrument support</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
@@ -490,7 +506,8 @@ each reader selects only its own WX, WS800, Parsivel, or tipping-bucket files.</
 <td><p>xarray Dataset</p></td>
 </tr>
 <tr class="row-even"><td><p>PIERS tipping-bucket rain gauge packets</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">gv_tools.io.read_gauge</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gv_tools.io.read_gauge</span></code> (records as logged) and
+<code class="docutils literal notranslate"><span class="pre">gv_tools.io.read_tipping_bucket</span></code> (tips, depth, rate)</p></td>
 <td><p>pandas DataFrame</p></td>
 </tr>
 <tr class="row-odd"><td><p>Micro Rain Radar MRR2 and MRRPro</p></td>
@@ -505,17 +522,62 @@ each reader selects only its own WX, WS800, Parsivel, or tipping-bucket files.</
 <td><p><code class="docutils literal notranslate"><span class="pre">gv_tools.io.read_2dvd</span></code></p></td>
 <td><p>pandas DataFrame</p></td>
 </tr>
-<tr class="row-even"><td><p>RAP, RUC, NAM, and GFS model soundings</p></td>
+<tr class="row-even"><td><p>RAP, HRRR, NAM, and GFS model soundings</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">gv_tools.util.download_model_soundings</span></code> and <code class="docutils literal notranslate"><span class="pre">load_model_profile</span></code></p></td>
 <td><p>downloaded file metadata and a <code class="docutils literal notranslate"><span class="pre">SoundingProfile</span></code></p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Hourly APU Parsivel archive names may spell the date and hour either as
-<code class="docutils literal notranslate"><span class="pre">apu09_20240306_15.zip</span></code> or <code class="docutils literal notranslate"><span class="pre">apu09_2024030615.zip</span></code>. In either case, the
-archive is accepted only when its contents decode to valid Parsivel
-observations.</p>
+<section id="parsivel-processing-choices">
+<h2>Parsivel processing choices<a class="headerlink" href="#parsivel-processing-choices" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">read_parsivel</span></code> and <code class="docutils literal notranslate"><span class="pre">read_parsivel_raw</span></code> accept <code class="docutils literal notranslate"><span class="pre">start_date</span></code>/<code class="docutils literal notranslate"><span class="pre">end_date</span></code>
+(UTC days), <code class="docutils literal notranslate"><span class="pre">classes</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;ott&quot;</span></code> default, or <code class="docutils literal notranslate"><span class="pre">&quot;legacy&quot;</span></code>), <code class="docutils literal notranslate"><span class="pre">fall_speed</span></code>
+(<code class="docutils literal notranslate"><span class="pre">&quot;measured&quot;</span></code> default, or <code class="docutils literal notranslate"><span class="pre">&quot;theoretical&quot;</span></code>), <code class="docutils literal notranslate"><span class="pre">velocity_filter</span></code> (0.5),
+<code class="docutils literal notranslate"><span class="pre">max_diameter_mm</span></code> (10), <code class="docutils literal notranslate"><span class="pre">telegram_interval_s</span></code> (inferred per telegram),
+<code class="docutils literal notranslate"><span class="pre">time_binning</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;centre&quot;</span></code> default, or <code class="docutils literal notranslate"><span class="pre">&quot;stamp&quot;</span></code>), <code class="docutils literal notranslate"><span class="pre">strict_fields</span></code>,
+<code class="docutils literal notranslate"><span class="pre">spectrum_offset</span></code> (9) and <code class="docutils literal notranslate"><span class="pre">include_spectrum</span></code>. See <a class="reference internal" href="parsivel.html"><span class="doc">Parsivel processing</span></a>.</p>
+</section>
+<section id="tipping-buckets">
+<h2>Tipping buckets<a class="headerlink" href="#tipping-buckets" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">read_tipping_bucket(source,</span> <span class="pre">tip_depth_mm=...)</span></code> differences the cumulative
+<code class="docutils literal notranslate"><span class="pre">TB_*_tips</span></code> counters and returns <code class="docutils literal notranslate"><span class="pre">*_tips</span></code>, <code class="docutils literal notranslate"><span class="pre">*_depth_mm</span></code>,
+<code class="docutils literal notranslate"><span class="pre">*_rate_mm_h</span></code> and <code class="docutils literal notranslate"><span class="pre">*_flag</span></code> per minute. The tip depth is required.</p>
+<ul class="simple">
+<li><p>A decrease can be a counter reset (the new value counts the tips since
+it, flag 1), a dip (bad records until the counter is back at its old level
+within three records: a dropout to 0, a stale value) or a spike (the record
+before was bad). Each reading implies a rain rate; a reading that needs
+more than <code class="docutils literal notranslate"><span class="pre">max_rate_mm_h</span></code> (with an allowance for bursts) is impossible.
+A small drop (to more than half the old level) takes the calmest reading;
+a drop to less than half the old level stays a reset unless the reset
+would need a rate more than three times the dip’s plus two tips per
+report. Removed records get flag 16.</p></li>
+<li><p>A dropout longer than three records is recognised when the counter jumps
+back to its old level: the records since the drop are removed and the
+tips count from the old level.</p></li>
+<li><p>A drop on the last record cannot be confirmed by a later one, and a jump
+no rain can make is a re-based counter: their tips are NaN (flag 1).</p></li>
+<li><p>With <code class="docutils literal notranslate"><span class="pre">counter_max</span></code> a decrease is a wrap-around only when the implied
+tips are plausible.</p></li>
+<li><p>If the logger clears the counter on a schedule (every packet, say), pass
+<code class="docutils literal notranslate"><span class="pre">glitch_window=0</span></code>: every drop is then a reset. With small counts, resets
+and dropouts look alike, and in a test with the counter cleared every
+10 minutes the default rules counted 6 % fewer tips (2 % with
+<code class="docutils literal notranslate"><span class="pre">glitch_window=0</span></code>, the tips hidden by resets that show no drop).</p></li>
+<li><p>A report covers the time since the previous report and is put in the
+minute whose centre it covers, so a report stamped 06:01:00 fills 06:00.</p></li>
+<li><p>Minutes no report covers – before the first report, inside gaps longer
+than 2.5 x the usual spacing (flag 2), and inside a report spanning several
+minutes in which tips fell (flag 8, tips in its last minute, rate NaN) –
+are missing, not dry. Tips already counted in a minute such a report makes
+unknown move to its last minute, so no tip is lost. A multi-minute report
+without tips makes all its minutes 0.</p></li>
+<li><p>Rates above <code class="docutils literal notranslate"><span class="pre">max_rate_mm_h</span></code> (300) are flagged (4) and their depth and
+rate set to NaN.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">counter=&quot;incremental&quot;</span></code> handles loggers that report tips per record.</p>
+</section>
 <section id="raw-reader-variants">
 <h2>Raw-reader variants<a class="headerlink" href="#raw-reader-variants" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">read_aio_raw</span></code> and <code class="docutils literal notranslate"><span class="pre">read_parsivel_raw</span></code> retain the decoder’s raw product
@@ -597,6 +659,8 @@ or <code class="docutils literal notranslate"><span class="pre">dataset.to_zarr(
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parsivel-processing-choices">Parsivel processing choices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tipping-buckets">Tipping buckets</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#raw-reader-variants">Raw-reader variants</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-methods">Plotting methods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output-ownership">Output ownership</a></li>

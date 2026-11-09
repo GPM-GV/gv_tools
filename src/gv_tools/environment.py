@@ -10,7 +10,7 @@ import re
 DEPENDENCY_GROUPS = {
     "required": {"numpy": "1.24", "pandas": "2.0", "xarray": "2023.1"},
     "radar": {"arm-pyart": "2.1", "xradar": "0.10", "cartopy": "0.22"},
-    "netcdf": {"h5netcdf": "1.3", "h5py": "3.10", "scipy": "1.10"},
+    "netcdf": {"h5netcdf": "1.8", "h5py": "3.10", "scipy": "1.10"},
     "plot": {"matplotlib": "3.7"},
     "notebook": {"jupyterlab": "4", "ipykernel": "6"},
     "sounding": {"metpy": "1.6", "cfgrib": "0.9.10", "eccodes": "2.32"},

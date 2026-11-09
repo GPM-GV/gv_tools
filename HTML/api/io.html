@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>gv_tools.io &#8212; GV Tools 0.50.1 documentation</title>
+    <title>gv_tools.io &#8212; GV Tools 0.65.0 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="../_static/documentation_options.js?v=cb30952c"></script>
+    <script src="../_static/documentation_options.js?v=dc8ea8b4"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/io';</script>
@@ -118,7 +118,7 @@
   
   
   
-    <p class="title logo__title">GV Tools 0.50.1 documentation</p>
+    <p class="title logo__title">GV Tools 0.65.0 documentation</p>
   
 </a></div>
     
@@ -135,6 +135,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -159,13 +166,6 @@
   </a>
 </li>
 
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../notebooks.html">
-    Notebooks
-  </a>
-</li>
-
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -174,6 +174,13 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="../examples.html">
     Examples
@@ -287,6 +294,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -514,7 +528,7 @@
 <dt class="sig sig-object py" id="gv_tools.io.LufftWS800Adapter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">LufftWS800Adapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/lufft_ws800.html#LufftWS800Adapter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.LufftWS800Adapter" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#gv_tools.io.InstrumentAdapter" title="gv_tools.adapters.base.InstrumentAdapter"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstrumentAdapter</span></code></a></p>
-<p>Read <code class="docutils literal notranslate"><span class="pre">PIERS####_WS800_*_daily.csv</span></code> files.</p>
+<p>Read <code class="docutils literal notranslate"><span class="pre">PIERS####_WS800_*.csv</span></code> files (daily files and/or packets).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>metadata</strong> (<em>InstrumentMetadata</em>)</p>
@@ -528,25 +542,30 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="gv_tools.io.LufftWS800Adapter.discover">
 <span class="sig-name descname"><span class="pre">discover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/lufft_ws800.html#LufftWS800Adapter.discover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.LufftWS800Adapter.discover" title="Link to this definition">#</a></dt>
-<dd><p>Return ISO dates represented by a WS800 daily file.</p>
+<dd><p>Return ISO dates represented by WS800 observations.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="gv_tools.io.LufftWS800Adapter.read_raw">
 <span class="sig-name descname"><span class="pre">read_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/lufft_ws800.html#LufftWS800Adapter.read_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.LufftWS800Adapter.read_raw" title="Link to this definition">#</a></dt>
-<dd><p>Decode a WS800 file into day-keyed raw products.</p>
+<dd><p>Decode WS800 files into day-keyed raw products (one call = shared totals).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="gv_tools.io.LufftWS800Adapter.read">
 <span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/lufft_ws800.html#LufftWS800Adapter.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.LufftWS800Adapter.read" title="Link to this definition">#</a></dt>
-<dd><p>Decode and normalize a WS800 file into day-keyed datasets.</p>
+<dd><p>Decode and normalize WS800 files into day-keyed datasets.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="gv_tools.io.LufftWS800Adapter.normalize">
-<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejected_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duplicate_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/lufft_ws800.html#LufftWS800Adapter.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.LufftWS800Adapter.normalize" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejected_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duplicate_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/lufft_ws800.html#LufftWS800Adapter.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.LufftWS800Adapter.normalize" title="Link to this definition">#</a></dt>
 <dd><p>Convert decoded WS800 observations to the common xarray schema.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>source_files</strong> (<em>Sequence</em><em>[</em><em>str</em><em>]</em>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -594,8 +613,13 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="gv_tools.io.MetOneAIOAdapter.normalize">
-<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejected_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duplicate_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/metone_aio.html#MetOneAIOAdapter.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.MetOneAIOAdapter.normalize" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejected_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duplicate_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/metone_aio.html#MetOneAIOAdapter.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.MetOneAIOAdapter.normalize" title="Link to this definition">#</a></dt>
 <dd><p>Convert decoded Met One observations to the common xarray schema.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>source_files</strong> (<em>Sequence</em><em>[</em><em>str</em><em>]</em>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -636,6 +660,11 @@
 <dt class="sig sig-object py" id="gv_tools.io.ParsivelAdapter.read_raw">
 <span class="sig-name descname"><span class="pre">read_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/parsivel.html#ParsivelAdapter.read_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.ParsivelAdapter.read_raw" title="Link to this definition">#</a></dt>
 <dd><p>Decode source files without applying the GV normalized schema.</p>
+<p>Options are those of <a class="reference internal" href="#gv_tools._parsivel.iter_days" title="gv_tools._parsivel.iter_days"><code class="xref py py-func docutils literal notranslate"><span class="pre">gv_tools._parsivel.iter_days()</span></code></a>:
+<code class="docutils literal notranslate"><span class="pre">start_date</span></code>, <code class="docutils literal notranslate"><span class="pre">end_date</span></code>, <code class="docutils literal notranslate"><span class="pre">classes</span></code>, <code class="docutils literal notranslate"><span class="pre">fall_speed</span></code>,
+<code class="docutils literal notranslate"><span class="pre">velocity_filter</span></code>, <code class="docutils literal notranslate"><span class="pre">max_diameter_mm</span></code>, <code class="docutils literal notranslate"><span class="pre">telegram_interval_s</span></code>,
+<code class="docutils literal notranslate"><span class="pre">time_binning</span></code>, <code class="docutils literal notranslate"><span class="pre">strict_fields</span></code>, <code class="docutils literal notranslate"><span class="pre">spectrum_offset</span></code>,
+<code class="docutils literal notranslate"><span class="pre">full_day</span></code> and <code class="docutils literal notranslate"><span class="pre">include_spectrum</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -646,8 +675,10 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="gv_tools.io.ParsivelAdapter.normalize">
-<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">psd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moments</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/parsivel.html#ParsivelAdapter.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.ParsivelAdapter.normalize" title="Link to this definition">#</a></dt>
-<dd><p>Combine the processor’s three DataFrames into one GV Dataset.</p>
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">psd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moments</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spectrum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/parsivel.html#ParsivelAdapter.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.ParsivelAdapter.normalize" title="Link to this definition">#</a></dt>
+<dd><p>Combine the processor’s DataFrames into one GV Dataset.</p>
+<p><code class="docutils literal notranslate"><span class="pre">source_path</span></code> is accepted for compatibility; only its base name is
+recorded (in <code class="docutils literal notranslate"><span class="pre">source_files</span></code>) when the frames carry no provenance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><em>Dataset</em></p>
@@ -697,7 +728,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="gv_tools.io.RMYoungAIOAdapter.discover">
 <span class="sig-name descname"><span class="pre">discover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/rm_young_aio.html#RMYoungAIOAdapter.discover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.RMYoungAIOAdapter.discover" title="Link to this definition">#</a></dt>
-<dd><p>Return dates represented by matching PIERS WX daily or packet files.</p>
+<dd><p>Return the UTC dates of the observations in matching WX daily or packet files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>input_path</strong> (<em>str</em><em> | </em><em>Path</em>)</p>
@@ -722,8 +753,13 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="gv_tools.io.RMYoungAIOAdapter.normalize">
-<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejected_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duplicate_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/rm_young_aio.html#RMYoungAIOAdapter.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.RMYoungAIOAdapter.normalize" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejected_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duplicate_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/rm_young_aio.html#RMYoungAIOAdapter.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.RMYoungAIOAdapter.normalize" title="Link to this definition">#</a></dt>
 <dd><p>Convert decoded observations to the common GV xarray schema.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>source_files</strong> (<em>Sequence</em><em>[</em><em>str</em><em>]</em>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -835,15 +871,18 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="gv_tools.io.RawParsivelProduct">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">RawParsivelProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">psd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moments</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/parsivel.html#RawParsivelProduct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.RawParsivelProduct" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">RawParsivelProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">psd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spectrum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/adapters/parsivel.html#RawParsivelProduct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.RawParsivelProduct" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>The three tables returned by process-parsivel for one day.</p>
+<p>The tables returned by the decoder for one day.</p>
+<p><code class="docutils literal notranslate"><span class="pre">spectrum</span></code> is the per-minute raw count array (time, drop_diameter,
+fall_velocity) when it was requested with <code class="docutils literal notranslate"><span class="pre">include_spectrum=True</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>parameters</strong> (<em>DataFrame</em>)</p></li>
 <li><p><strong>psd</strong> (<em>DataFrame</em>)</p></li>
 <li><p><strong>moments</strong> (<em>DataFrame</em>)</p></li>
+<li><p><strong>spectrum</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -860,6 +899,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="gv_tools.io.RawParsivelProduct.moments">
 <span class="sig-name descname"><span class="pre">moments</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></span><a class="headerlink" href="#gv_tools.io.RawParsivelProduct.moments" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gv_tools.io.RawParsivelProduct.spectrum">
+<span class="sig-name descname"><span class="pre">spectrum</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#gv_tools.io.RawParsivelProduct.spectrum" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -926,7 +970,7 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="gv_tools.io.discover_aio">
 <span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">discover_aio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata_options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#discover_aio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.discover_aio" title="Link to this definition">#</a></dt>
-<dd><p>Return dates in explicitly supplied RM Young or Met One AIO files.</p>
+<dd><p>Return dates in explicitly supplied RM Young, WS800 or Met One AIO files.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -1013,7 +1057,7 @@ not always preserve names.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="gv_tools.io.read_aio_raw">
 <span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_aio_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#read_aio_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.read_aio_raw" title="Link to this definition">#</a></dt>
-<dd><p>Read and merge RM Young or Met One AIO files into one raw product.</p>
+<dd><p>Read and merge RM Young, WS800 or Met One AIO files into one raw product.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -1055,13 +1099,28 @@ model is recorded in the dataset attribute <code class="docutils literal notrans
 <dl class="py function">
 <dt class="sig sig-object py" id="gv_tools.io.read_parsivel">
 <span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_parsivel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#read_parsivel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.read_parsivel" title="Link to this definition">#</a></dt>
-<dd><p>Read and merge every explicitly supplied Parsivel file.</p>
+<dd><p>Read every supplied Parsivel file into one 1-minute xarray Dataset.</p>
+<p>Telegrams from all files are pooled, counted once and put in the minute
+holding the centre of their measuring interval. The result runs from the
+first to the last minute with a telegram; minutes without telegrams inside
+that span are missing (NaN) with <code class="docutils literal notranslate"><span class="pre">telegram_count</span> <span class="pre">==</span> <span class="pre">0</span></code>. Decoder options
+such as <code class="docutils literal notranslate"><span class="pre">start_date</span></code>/<code class="docutils literal notranslate"><span class="pre">end_date</span></code> (UTC days), <code class="docutils literal notranslate"><span class="pre">classes</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;ott&quot;</span></code> or
+<code class="docutils literal notranslate"><span class="pre">&quot;legacy&quot;</span></code>), <code class="docutils literal notranslate"><span class="pre">fall_speed</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;measured&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;theoretical&quot;</span></code>),
+<code class="docutils literal notranslate"><span class="pre">velocity_filter</span></code>, <code class="docutils literal notranslate"><span class="pre">max_diameter_mm</span></code>, <code class="docutils literal notranslate"><span class="pre">telegram_interval_s</span></code>,
+<code class="docutils literal notranslate"><span class="pre">time_binning</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;centre&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;stamp&quot;</span></code>), <code class="docutils literal notranslate"><span class="pre">strict_fields</span></code>,
+<code class="docutils literal notranslate"><span class="pre">spectrum_offset</span></code> and <code class="docutils literal notranslate"><span class="pre">include_spectrum</span></code> are forwarded to
+<a class="reference internal" href="#gv_tools._parsivel.iter_days" title="gv_tools._parsivel.iter_days"><code class="xref py py-func docutils literal notranslate"><span class="pre">gv_tools._parsivel.iter_days()</span></code></a>. To get one complete day, pass that
+day’s files and the next day’s first files (they hold its last minutes)
+with <code class="docutils literal notranslate"><span class="pre">start_date</span></code> and <code class="docutils literal notranslate"><span class="pre">end_date</span></code> set to the day.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gv_tools.io.read_parsivel_raw">
 <span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_parsivel_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#read_parsivel_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.read_parsivel_raw" title="Link to this definition">#</a></dt>
 <dd><p>Read and merge explicitly supplied Parsivel files into one raw product.</p>
+<p>Decoder options (<code class="docutils literal notranslate"><span class="pre">start_date</span></code>, <code class="docutils literal notranslate"><span class="pre">end_date</span></code>, <code class="docutils literal notranslate"><span class="pre">classes</span></code>,
+<code class="docutils literal notranslate"><span class="pre">fall_speed</span></code>, <code class="docutils literal notranslate"><span class="pre">velocity_filter</span></code>, <code class="docutils literal notranslate"><span class="pre">max_diameter_mm</span></code>,
+<code class="docutils literal notranslate"><span class="pre">telegram_interval_s</span></code>) are forwarded to the decoder.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -1095,6 +1154,88 @@ Set <code class="docutils literal notranslate"><span class="pre">return_metadata
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.read_tipping_bucket">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_tipping_bucket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_depth_mm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gauge_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measurements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/gauge.html#read_tipping_bucket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.read_tipping_bucket" title="Link to this definition">#</a></dt>
+<dd><p>Read PIERS gauge packets and return tips, depth and rate per interval.</p>
+<p>Combines <a class="reference internal" href="#gv_tools.io.read_gauge" title="gv_tools.io.read_gauge"><code class="xref py py-func docutils literal notranslate"><span class="pre">read_gauge()</span></code></a> and <a class="reference internal" href="#gv_tools.io.tipping_bucket_rain" title="gv_tools.io.tipping_bucket_rain"><code class="xref py py-func docutils literal notranslate"><span class="pre">tipping_bucket_rain()</span></code></a>; <code class="docutils literal notranslate"><span class="pre">options</span></code>
+(<code class="docutils literal notranslate"><span class="pre">counter</span></code>, <code class="docutils literal notranslate"><span class="pre">freq</span></code>, <code class="docutils literal notranslate"><span class="pre">max_gap</span></code>, <code class="docutils literal notranslate"><span class="pre">counter_max</span></code>, <code class="docutils literal notranslate"><span class="pre">max_rate_mm_h</span></code>)
+go to <a class="reference internal" href="#gv_tools.io.tipping_bucket_rain" title="gv_tools.io.tipping_bucket_rain"><code class="xref py py-func docutils literal notranslate"><span class="pre">tipping_bucket_rain()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>Sequence</em><em>[</em><em>str</em><em> | </em><em>Path</em><em>]</em>)</p></li>
+<li><p><strong>tip_depth_mm</strong> (<em>float</em>)</p></li>
+<li><p><strong>gauge_id</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>measurements</strong> (<em>str</em><em> | </em><em>Sequence</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>DataFrame</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.tipping_bucket_rain">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">tipping_bucket_rain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_depth_mm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measurements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cumulative'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1min'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_gap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counter_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_rate_mm_h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">glitch_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/gauge.html#tipping_bucket_rain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.tipping_bucket_rain" title="Link to this definition">#</a></dt>
+<dd><p>Convert tipping-bucket tip records into tips, depth and rate per <code class="docutils literal notranslate"><span class="pre">freq</span></code> interval.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>observations</strong> (<em>DataFrame</em>) – The DataFrame returned by <a class="reference internal" href="#gv_tools.io.read_gauge" title="gv_tools.io.read_gauge"><code class="xref py py-func docutils literal notranslate"><span class="pre">read_gauge()</span></code></a> (index <code class="docutils literal notranslate"><span class="pre">timestamp</span></code>,
+columns <code class="docutils literal notranslate"><span class="pre">measurement</span></code> and <code class="docutils literal notranslate"><span class="pre">value</span></code>).</p></li>
+<li><p><strong>tip_depth_mm</strong> (<em>float</em>) – Rain depth of one tip in mm (the gauge’s calibration, e.g. 0.254 for
+a 0.01 in bucket). Required: GV Tools never assumes a bucket size.</p></li>
+<li><p><strong>measurements</strong> (<em>str</em><em> | </em><em>Sequence</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – Tip-counter measurement names; default: every measurement whose name
+contains <code class="docutils literal notranslate"><span class="pre">&quot;tip&quot;</span></code> (<code class="docutils literal notranslate"><span class="pre">TB_A_tips</span></code>, <code class="docutils literal notranslate"><span class="pre">TB_B_tips</span></code>).</p></li>
+<li><p><strong>counter</strong> (<em>str</em>) – <code class="docutils literal notranslate"><span class="pre">&quot;cumulative&quot;</span></code> (default): <code class="docutils literal notranslate"><span class="pre">value</span></code> is a running tip counter and a
+record’s tips are its increase since the previous record. A decrease
+is read as a counter reset (the new value counts the tips since it;
+with <code class="docutils literal notranslate"><span class="pre">counter_max</span></code>, a wrap-around when that increase is plausible),
+as a dip (bad records until the counter is back at its old level –
+a dropout to 0, a stale value) or as a spike (the record before was
+bad), whichever implies the calmest rain, a reset when they are close
+(flag 16 for removed records). A dropout longer than
+<code class="docutils literal notranslate"><span class="pre">glitch_window</span></code> records is recognised when the counter jumps back
+to its old level. A reset on the last record cannot be confirmed by a
+later one, and a jump no rain can make is a re-based counter: their
+tips are NaN (flag 1). <code class="docutils literal notranslate"><span class="pre">glitch_window=0</span></code> turns the bad-value
+rules off, so every drop is a reset – use it for a logger that clears
+its counter on a schedule (every packet, say), whose small counts make
+resets and dropouts hard to tell apart.
+<code class="docutils literal notranslate"><span class="pre">&quot;incremental&quot;</span></code>: <code class="docutils literal notranslate"><span class="pre">value</span></code> already holds the tips since the previous
+record.</p></li>
+<li><p><strong>freq</strong> (<em>str</em>) – Output interval (pandas frequency, default one minute); intervals are
+labelled by their start. A report covers the time since the previous
+report and is put in the interval whose centre it covers.</p></li>
+<li><p><strong>max_gap</strong> – Longest spacing between reports still treated as continuous; default
+2.5 x the median spacing (at least 1.5 x <code class="docutils literal notranslate"><span class="pre">freq</span></code>).</p></li>
+<li><p><strong>max_rate_mm_h</strong> (<em>float</em><em> | </em><em>None</em>) – Intervals above this rate are flagged suspect and their depth and rate
+set to NaN (the tips are kept). The same rate (300 mm/h when None),
+with a Poisson allowance for bursts, decides whether a counter change
+is possible at all.</p></li>
+<li><p><strong>counter_max</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>glitch_window</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One row per interval from the first to the last report. For each
+measurement <code class="docutils literal notranslate"><span class="pre">m</span></code>: <code class="docutils literal notranslate"><span class="pre">m_tips</span></code>, <code class="docutils literal notranslate"><span class="pre">m_depth_mm</span></code>, <code class="docutils literal notranslate"><span class="pre">m_rate_mm_h</span></code> and
+<code class="docutils literal notranslate"><span class="pre">m_flag</span></code> (see <code class="docutils literal notranslate"><span class="pre">attrs[&quot;flag_meanings&quot;]</span></code>). Intervals no report
+covers – before the first report, inside reporting gaps, and inside
+a report spanning several intervals in which tips fell – are NaN, not
+dry. A report spanning several intervals puts its tips in the last of
+them (flag 8, rate NaN), together with any tips already counted in the
+intervals it makes unknown, so no tip is lost; one that saw no tips
+makes all of them 0. Accounting is in <code class="docutils literal notranslate"><span class="pre">attrs</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="gv_tools.io.read_ws800_full">
 <span class="sig-prename descclassname"><span class="pre">gv_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_ws800_full</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">XARRAY</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/readers.html#read_ws800_full"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.read_ws800_full" title="Link to this definition">#</a></dt>
 <dd><p>Read and merge every field from Lufft WS800 files as pandas or xarray.</p>
@@ -1112,9 +1253,10 @@ original line number. Records remain in input order: sorting here would
 conceal backward clock jumps from quality control. Subsecond times are
 retained. The source contains no timezone, so timestamps remain naive.</p>
 <p>Each returned row is one detected object, not a concentration or a spectrum.
-Source filenames, the date/site/instrument, layouts, row count, and hashes
-are stored in DataFrame.attrs. The content hash includes headers and blank
-lines and is computed on uncompressed bytes during the same read pass.</p>
+Source file names (no directories), the date/site/instrument, layouts, row
+count, and hashes are stored in DataFrame.attrs. The content hash includes
+headers and blank lines and is computed on uncompressed bytes during the
+same read pass. Split-time records are parsed in vectorized chunks.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -1127,9 +1269,10 @@ original line number. Records remain in input order: sorting here would
 conceal backward clock jumps from quality control. Subsecond times are
 retained. The source contains no timezone, so timestamps remain naive.</p>
 <p>Each returned row is one detected object, not a concentration or a spectrum.
-Source filenames, the date/site/instrument, layouts, row count, and hashes
-are stored in DataFrame.attrs. The content hash includes headers and blank
-lines and is computed on uncompressed bytes during the same read pass.</p>
+Source file names (no directories), the date/site/instrument, layouts, row
+count, and hashes are stored in DataFrame.attrs. The content hash includes
+headers and blank lines and is computed on uncompressed bytes during the
+same read pass. Split-time records are parsed in vectorized chunks.</p>
 </dd></dl>
 
 <section id="dvd">
@@ -1162,9 +1305,403 @@ original line number. Records remain in input order: sorting here would
 conceal backward clock jumps from quality control. Subsecond times are
 retained. The source contains no timezone, so timestamps remain naive.</p>
 <p>Each returned row is one detected object, not a concentration or a spectrum.
-Source filenames, the date/site/instrument, layouts, row count, and hashes
-are stored in DataFrame.attrs. The content hash includes headers and blank
-lines and is computed on uncompressed bytes during the same read pass.</p>
+Source file names (no directories), the date/site/instrument, layouts, row
+count, and hashes are stored in DataFrame.attrs. The content hash includes
+headers and blank lines and is computed on uncompressed bytes during the
+same read pass. Split-time records are parsed in vectorized chunks.</p>
+</dd></dl>
+
+</section>
+<section id="module-gv_tools.io.gauge">
+<span id="tipping-bucket-gauges"></span><h2>Tipping-bucket gauges<a class="headerlink" href="#module-gv_tools.io.gauge" title="Link to this heading">#</a></h2>
+<p>Read PIERS tipping-bucket gauge packets and turn tip counters into rain.</p>
+<p><a class="reference internal" href="#gv_tools.io.gauge.read_gauge" title="gv_tools.io.gauge.read_gauge"><code class="xref py py-func docutils literal notranslate"><span class="pre">read_gauge()</span></code></a> decodes the packets exactly as recorded. <a class="reference internal" href="#gv_tools.io.gauge.tipping_bucket_rain" title="gv_tools.io.gauge.tipping_bucket_rain"><code class="xref py py-func docutils literal notranslate"><span class="pre">tipping_bucket_rain()</span></code></a>
+(and <a class="reference internal" href="#gv_tools.io.gauge.read_tipping_bucket" title="gv_tools.io.gauge.read_tipping_bucket"><code class="xref py py-func docutils literal notranslate"><span class="pre">read_tipping_bucket()</span></code></a>, which combines both) converts tip counters into
+tips, depths and rates on a regular grid, handling counter resets, duplicate
+records and reporting gaps. Nothing is written to disk.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.gauge.read_gauge">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.gauge.</span></span><span class="sig-name descname"><span class="pre">read_gauge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">gauge_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measurement</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/gauge.html#read_gauge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.gauge.read_gauge" title="Link to this definition">#</a></dt>
+<dd><p>Read gauge packets into a pandas DataFrame without resampling or writing.</p>
+<p><code class="docutils literal notranslate"><span class="pre">source</span></code> may be one full-path filename, a directory, or an explicit
+sequence of files/directories. Optional filters never aggregate the data.
+Set <code class="docutils literal notranslate"><span class="pre">return_metadata=True</span></code> to return <code class="docutils literal notranslate"><span class="pre">(observations,</span> <span class="pre">packet_metadata)</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>Sequence</em><em>[</em><em>str</em><em> | </em><em>Path</em><em>]</em>)</p></li>
+<li><p><strong>gauge_id</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>measurement</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>return_metadata</strong> (<em>bool</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.gauge.tipping_bucket_rain">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.gauge.</span></span><span class="sig-name descname"><span class="pre">tipping_bucket_rain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_depth_mm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measurements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cumulative'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1min'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_gap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counter_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_rate_mm_h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">glitch_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/gauge.html#tipping_bucket_rain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.gauge.tipping_bucket_rain" title="Link to this definition">#</a></dt>
+<dd><p>Convert tipping-bucket tip records into tips, depth and rate per <code class="docutils literal notranslate"><span class="pre">freq</span></code> interval.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>observations</strong> (<em>DataFrame</em>) – The DataFrame returned by <a class="reference internal" href="#gv_tools.io.gauge.read_gauge" title="gv_tools.io.gauge.read_gauge"><code class="xref py py-func docutils literal notranslate"><span class="pre">read_gauge()</span></code></a> (index <code class="docutils literal notranslate"><span class="pre">timestamp</span></code>,
+columns <code class="docutils literal notranslate"><span class="pre">measurement</span></code> and <code class="docutils literal notranslate"><span class="pre">value</span></code>).</p></li>
+<li><p><strong>tip_depth_mm</strong> (<em>float</em>) – Rain depth of one tip in mm (the gauge’s calibration, e.g. 0.254 for
+a 0.01 in bucket). Required: GV Tools never assumes a bucket size.</p></li>
+<li><p><strong>measurements</strong> (<em>str</em><em> | </em><em>Sequence</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – Tip-counter measurement names; default: every measurement whose name
+contains <code class="docutils literal notranslate"><span class="pre">&quot;tip&quot;</span></code> (<code class="docutils literal notranslate"><span class="pre">TB_A_tips</span></code>, <code class="docutils literal notranslate"><span class="pre">TB_B_tips</span></code>).</p></li>
+<li><p><strong>counter</strong> (<em>str</em>) – <code class="docutils literal notranslate"><span class="pre">&quot;cumulative&quot;</span></code> (default): <code class="docutils literal notranslate"><span class="pre">value</span></code> is a running tip counter and a
+record’s tips are its increase since the previous record. A decrease
+is read as a counter reset (the new value counts the tips since it;
+with <code class="docutils literal notranslate"><span class="pre">counter_max</span></code>, a wrap-around when that increase is plausible),
+as a dip (bad records until the counter is back at its old level –
+a dropout to 0, a stale value) or as a spike (the record before was
+bad), whichever implies the calmest rain, a reset when they are close
+(flag 16 for removed records). A dropout longer than
+<code class="docutils literal notranslate"><span class="pre">glitch_window</span></code> records is recognised when the counter jumps back
+to its old level. A reset on the last record cannot be confirmed by a
+later one, and a jump no rain can make is a re-based counter: their
+tips are NaN (flag 1). <code class="docutils literal notranslate"><span class="pre">glitch_window=0</span></code> turns the bad-value
+rules off, so every drop is a reset – use it for a logger that clears
+its counter on a schedule (every packet, say), whose small counts make
+resets and dropouts hard to tell apart.
+<code class="docutils literal notranslate"><span class="pre">&quot;incremental&quot;</span></code>: <code class="docutils literal notranslate"><span class="pre">value</span></code> already holds the tips since the previous
+record.</p></li>
+<li><p><strong>freq</strong> (<em>str</em>) – Output interval (pandas frequency, default one minute); intervals are
+labelled by their start. A report covers the time since the previous
+report and is put in the interval whose centre it covers.</p></li>
+<li><p><strong>max_gap</strong> – Longest spacing between reports still treated as continuous; default
+2.5 x the median spacing (at least 1.5 x <code class="docutils literal notranslate"><span class="pre">freq</span></code>).</p></li>
+<li><p><strong>max_rate_mm_h</strong> (<em>float</em><em> | </em><em>None</em>) – Intervals above this rate are flagged suspect and their depth and rate
+set to NaN (the tips are kept). The same rate (300 mm/h when None),
+with a Poisson allowance for bursts, decides whether a counter change
+is possible at all.</p></li>
+<li><p><strong>counter_max</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>glitch_window</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One row per interval from the first to the last report. For each
+measurement <code class="docutils literal notranslate"><span class="pre">m</span></code>: <code class="docutils literal notranslate"><span class="pre">m_tips</span></code>, <code class="docutils literal notranslate"><span class="pre">m_depth_mm</span></code>, <code class="docutils literal notranslate"><span class="pre">m_rate_mm_h</span></code> and
+<code class="docutils literal notranslate"><span class="pre">m_flag</span></code> (see <code class="docutils literal notranslate"><span class="pre">attrs[&quot;flag_meanings&quot;]</span></code>). Intervals no report
+covers – before the first report, inside reporting gaps, and inside
+a report spanning several intervals in which tips fell – are NaN, not
+dry. A report spanning several intervals puts its tips in the last of
+them (flag 8, rate NaN), together with any tips already counted in the
+intervals it makes unknown, so no tip is lost; one that saw no tips
+makes all of them 0. Accounting is in <code class="docutils literal notranslate"><span class="pre">attrs</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools.io.gauge.read_tipping_bucket">
+<span class="sig-prename descclassname"><span class="pre">gv_tools.io.gauge.</span></span><span class="sig-name descname"><span class="pre">read_tipping_bucket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_depth_mm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gauge_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measurements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/io/gauge.html#read_tipping_bucket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.io.gauge.read_tipping_bucket" title="Link to this definition">#</a></dt>
+<dd><p>Read PIERS gauge packets and return tips, depth and rate per interval.</p>
+<p>Combines <a class="reference internal" href="#gv_tools.io.gauge.read_gauge" title="gv_tools.io.gauge.read_gauge"><code class="xref py py-func docutils literal notranslate"><span class="pre">read_gauge()</span></code></a> and <a class="reference internal" href="#gv_tools.io.gauge.tipping_bucket_rain" title="gv_tools.io.gauge.tipping_bucket_rain"><code class="xref py py-func docutils literal notranslate"><span class="pre">tipping_bucket_rain()</span></code></a>; <code class="docutils literal notranslate"><span class="pre">options</span></code>
+(<code class="docutils literal notranslate"><span class="pre">counter</span></code>, <code class="docutils literal notranslate"><span class="pre">freq</span></code>, <code class="docutils literal notranslate"><span class="pre">max_gap</span></code>, <code class="docutils literal notranslate"><span class="pre">counter_max</span></code>, <code class="docutils literal notranslate"><span class="pre">max_rate_mm_h</span></code>)
+go to <a class="reference internal" href="#gv_tools.io.gauge.tipping_bucket_rain" title="gv_tools.io.gauge.tipping_bucket_rain"><code class="xref py py-func docutils literal notranslate"><span class="pre">tipping_bucket_rain()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>Sequence</em><em>[</em><em>str</em><em> | </em><em>Path</em><em>]</em>)</p></li>
+<li><p><strong>tip_depth_mm</strong> (<em>float</em>)</p></li>
+<li><p><strong>gauge_id</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>measurements</strong> (<em>str</em><em> | </em><em>Sequence</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>DataFrame</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-gv_tools._parsivel">
+<span id="parsivel-decoder"></span><h2>Parsivel decoder<a class="headerlink" href="#module-gv_tools._parsivel" title="Link to this heading">#</a></h2>
+<p>OTT Parsivel / Parsivel2 telegram decoding and drop-size-distribution parameters.</p>
+<section id="how-a-day-is-built-changed-in-0-65-0">
+<h3>How a day is built (changed in 0.65.0)<a class="headerlink" href="#how-a-day-is-built-changed-in-0-65-0" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Every input – a plain <code class="docutils literal notranslate"><span class="pre">.csv</span></code>/<code class="docutils literal notranslate"><span class="pre">.dat</span></code> file or the <code class="docutils literal notranslate"><span class="pre">.csv</span></code>/<code class="docutils literal notranslate"><span class="pre">.dat</span></code>/<code class="docutils literal notranslate"><span class="pre">.txt</span></code>
+members of a <code class="docutils literal notranslate"><span class="pre">.zip</span></code> archive – is read in memory. Nothing is extracted to
+disk and nothing is written to the working directory.</p></li>
+<li><p>Each source is first scanned for its earliest and latest telegram stamp (a
+byte-level look at the 14 characters before every <code class="docutils literal notranslate"><span class="pre">;</span></code>). Sources are then
+decoded in that order and a UTC day is produced once no unread source can
+hold a telegram for it. File names are never trusted for dates, so any name
+works and a file holding parts of several days is handled correctly. Only
+the days spanned by the files being read are held in memory, and inside a
+file whose stamps never go backwards a day is produced as soon as the file
+is 30 minutes past its end, so a long time-ordered file costs about one day
+of memory.</p></li>
+<li><p>A telegram is accepted only when it is whole: a valid 14-digit
+<code class="docutils literal notranslate"><span class="pre">YYYYMMDDhhmmss</span></code> stamp, <code class="docutils literal notranslate"><span class="pre">;</span></code>, exactly <code class="docutils literal notranslate"><span class="pre">spectrum_offset</span></code> header fields
+plus 1024 non-negative integer counts (a trailing comma is allowed). A line
+with one header field more or less is rejected instead of being read with
+every count shifted into the neighbouring class. A missing final newline,
+a stray quote or a non-UTF-8 byte can only cost the telegram it touches.</p></li>
+<li><p>Telegrams are keyed by their own time stamp, so a telegram that appears in
+more than one file (a <code class="docutils literal notranslate"><span class="pre">*_daily</span></code> file and its packets, overlapping
+archives) is counted once.</p></li>
+<li><p>Each telegram holds the drops of the measuring interval that ends at its
+stamp. The interval is inferred per telegram from the spacing of its
+neighbours (largest spacing that most neighbouring spacings are whole
+multiples of; robust to any loss rate and to a change of interval) and the
+telegram is counted in the minute that holds the centre of its interval
+(<code class="docutils literal notranslate"><span class="pre">time_binning=&quot;stamp&quot;</span></code> restores 0.50.0’s stamp binning).</p></li>
+<li><p>One-minute sums are reported on a complete minute grid. Minutes without a
+telegram are missing (NaN), not dry. <code class="docutils literal notranslate"><span class="pre">telegram_count</span></code> and
+<code class="docutils literal notranslate"><span class="pre">sample_duration</span></code> (sum of the telegrams’ intervals) are reported for every
+minute and every rate uses <code class="docutils literal notranslate"><span class="pre">sample_duration</span></code>, not a fixed 60 s.</p></li>
+</ul>
+</section>
+<section id="science-changed-in-0-65-0">
+<h3>Science (changed in 0.65.0)<a class="headerlink" href="#science-changed-in-0-65-0" title="Link to this heading">#</a></h3>
+<p>The number concentration in diameter class <em>i</em> is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span><span class="p">(</span><span class="n">D_i</span><span class="p">)</span> <span class="n">dD_i</span> <span class="o">=</span> <span class="n">sum_j</span> <span class="n">n_ij</span> <span class="o">/</span> <span class="p">(</span><span class="n">A_i</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">V_ij</span><span class="p">)</span>            <span class="p">[</span><span class="n">m</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">A_i</span>         <span class="o">=</span> <span class="mi">180</span> <span class="n">mm</span> <span class="o">*</span> <span class="p">(</span><span class="mi">30</span> <span class="n">mm</span> <span class="o">-</span> <span class="n">D_i</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>                <span class="p">(</span><span class="n">effective</span> <span class="n">beam</span> <span class="n">area</span><span class="p">)</span>
+<span class="n">V_ij</span>        <span class="o">=</span> <span class="n">V_j</span>      <span class="p">(</span><span class="n">measured</span> <span class="n">velocity</span> <span class="k">class</span><span class="w"> </span><span class="nc">centre</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span> <span class="ow">or</span>
+              <span class="n">Vt</span><span class="p">(</span><span class="n">D_i</span><span class="p">)</span>  <span class="p">(</span><span class="n">Gunn</span><span class="o">-</span><span class="n">Kinzer</span> <span class="n">terminal</span> <span class="n">velocity</span><span class="p">,</span> <span class="n">fall_speed</span><span class="o">=</span><span class="s2">"theoretical"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>0.50.0 divided every count by the terminal velocity of <em>diameter class j</em>
+broadcast along the <em>velocity</em> axis, which mixed the two axes. Moments,
+liquid water content, reflectivity, Dm, sigma_m and Nw all follow from
+<code class="docutils literal notranslate"><span class="pre">N(D)</span></code> and the flux-based rain rate uses the counted drop volume over the
+effective area and the sampled time.</p>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="gv_tools._parsivel.ParsivelClasses">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gv_tools._parsivel.</span></span><span class="sig-name descname"><span class="pre">ParsivelClasses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terminal_velocity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/_parsivel.html#ParsivelClasses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools._parsivel.ParsivelClasses" title="Link to this definition">#</a></dt>
+<dd><p>Diameter/velocity class definitions and the velocity-diameter filter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>)</p></li>
+<li><p><strong>diameter</strong> (<em>ndarray</em>)</p></li>
+<li><p><strong>diameter_width</strong> (<em>ndarray</em>)</p></li>
+<li><p><strong>velocity</strong> (<em>ndarray</em>)</p></li>
+<li><p><strong>velocity_width</strong> (<em>ndarray</em>)</p></li>
+<li><p><strong>terminal_velocity</strong> (<em>ndarray</em>)</p></li>
+<li><p><strong>mask</strong> (<em>ndarray</em>)</p></li>
+<li><p><strong>description</strong> (<em>str</em>)</p></li>
+<li><p><strong>settings</strong> (<em>dict</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="gv_tools._parsivel.ParsivelClasses.sampling_area_mm2">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">sampling_area_mm2</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></span><a class="headerlink" href="#gv_tools._parsivel.ParsivelClasses.sampling_area_mm2" title="Link to this definition">#</a></dt>
+<dd><p>Effective Parsivel sampling area for each diameter class (mm2).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools._parsivel.discover_input_dates">
+<span class="sig-prename descclassname"><span class="pre">gv_tools._parsivel.</span></span><span class="sig-name descname"><span class="pre">discover_input_dates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/_parsivel.html#discover_input_dates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools._parsivel.discover_input_dates" title="Link to this definition">#</a></dt>
+<dd><p>Return the UTC dates that hold telegram stamps in Parsivel inputs.</p>
+<p>Every file is scanned (a fast byte-level look at the stamps, no decoding)
+and the distinct UTC days of its usable stamps are listed; a gap between
+two days in one file adds no dates. Products are built by the centre of
+each telegram’s interval, so a telegram stamped just after midnight can
+also put a minute into the day before, and a listed day whose telegrams
+are all rejected yields no product.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools._parsivel.filename_stamp">
+<span class="sig-prename descclassname"><span class="pre">gv_tools._parsivel.</span></span><span class="sig-name descname"><span class="pre">filename_stamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/_parsivel.html#filename_stamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools._parsivel.filename_stamp" title="Link to this definition">#</a></dt>
+<dd><p>Return the date/time stamp encoded in a Parsivel file name, if any.</p>
+<p>Accepts stand-alone 8-, 10-, 12- or 14-digit stamps: <code class="docutils literal notranslate"><span class="pre">*_20260810_daily</span></code>,
+<code class="docutils literal notranslate"><span class="pre">apu04_2026081000.zip</span></code> and <code class="docutils literal notranslate"><span class="pre">PIERS0042_Parsivel_20260810001005.zip</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Timestamp</em> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools._parsivel.get_integral_parameters">
+<span class="sig-prename descclassname"><span class="pre">gv_tools._parsivel.</span></span><span class="sig-name descname"><span class="pre">get_integral_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instrument</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds_1min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dv_parms</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">fall_speed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'measured'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_seconds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/_parsivel.html#get_integral_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools._parsivel.get_integral_parameters" title="Link to this definition">#</a></dt>
+<dd><p>0.50.0-compatible wrapper: parameters, PSD and moments from a 1-min Dataset.</p>
+<p><code class="docutils literal notranslate"><span class="pre">ds_1min[&quot;drops&quot;]</span></code> holds (time, Diam, Vel) counts. NaN rows are treated
+as missing. <code class="docutils literal notranslate"><span class="pre">sample_seconds</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">ds_1min[&quot;sample_duration&quot;]</span></code>
+when present, otherwise 60 s per row.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools._parsivel.get_parsivel_classes">
+<span class="sig-prename descclassname"><span class="pre">gv_tools._parsivel.</span></span><span class="sig-name descname"><span class="pre">get_parsivel_classes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ott'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_diameter_mm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/_parsivel.html#get_parsivel_classes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools._parsivel.get_parsivel_classes" title="Link to this definition">#</a></dt>
+<dd><p>Return the class definitions used to integrate Parsivel spectra.</p>
+<p><code class="docutils literal notranslate"><span class="pre">classes=&quot;ott&quot;</span></code> (default) uses the OTT Parsivel2 class centres/widths and
+rebuilds the velocity filter from <code class="docutils literal notranslate"><span class="pre">velocity_filter</span></code> and
+<code class="docutils literal notranslate"><span class="pre">max_diameter_mm</span></code>. <code class="docutils literal notranslate"><span class="pre">classes=&quot;legacy&quot;</span></code> reproduces the 0.50.0 tables. A
+<code class="docutils literal notranslate"><span class="pre">table_dir</span></code> holding 0.50.0-format tables overrides both.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>classes</strong> (<em>str</em>)</p></li>
+<li><p><strong>velocity_filter</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>max_diameter_mm</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>table_dir</strong> (<em>str</em><em> | </em><em>PathLike</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#gv_tools._parsivel.ParsivelClasses" title="gv_tools._parsivel.ParsivelClasses"><em>ParsivelClasses</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools._parsivel.integral_parameters">
+<span class="sig-prename descclassname"><span class="pre">gv_tools._parsivel.</span></span><span class="sig-name descname"><span class="pre">integral_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">counts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_seconds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">fall_speed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'measured'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/_parsivel.html#integral_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools._parsivel.integral_parameters" title="Link to this definition">#</a></dt>
+<dd><p>Compute DSD parameters from summed (time, diameter, velocity) counts.</p>
+<p><code class="docutils literal notranslate"><span class="pre">sample_seconds</span></code> is the sampled duration of every row. Rows whose
+duration is missing/zero or whose counts are not finite are returned as
+NaN. Returns <code class="docutils literal notranslate"><span class="pre">(parameters,</span> <span class="pre">nd,</span> <span class="pre">moments)</span></code> as NumPy arrays: <code class="docutils literal notranslate"><span class="pre">parameters</span></code>
+is a dict keyed by the <code class="xref py py-data docutils literal notranslate"><span class="pre">PARAMETER_COLUMNS</span></code> names, <code class="docutils literal notranslate"><span class="pre">nd</span></code> is N(D)
+(time, diameter) in m-3 mm-1 and <code class="docutils literal notranslate"><span class="pre">moments</span></code> holds M0..M7 in m-3 mm^n.
+Only rows that contain drops are integrated; observed rows without drops
+get zeros for the extensive quantities and NaN for Dm, sigma_m, Nw, dBZ,
+Dmax and the mean fall speed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>classes</strong> (<a class="reference internal" href="#gv_tools._parsivel.ParsivelClasses" title="gv_tools._parsivel.ParsivelClasses"><em>ParsivelClasses</em></a>)</p></li>
+<li><p><strong>fall_speed</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools._parsivel.iter_days">
+<span class="sig-prename descclassname"><span class="pre">gv_tools._parsivel.</span></span><span class="sig-name descname"><span class="pre">iter_days</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ott'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fall_speed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'measured'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_diameter_mm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">telegram_interval_s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_day</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_spectrum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spectrum_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict_fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_binning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'centre'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temp_root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/_parsivel.html#iter_days"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools._parsivel.iter_days" title="Link to this definition">#</a></dt>
+<dd><p>Yield <code class="docutils literal notranslate"><span class="pre">(YYYY-MM-DD,</span> <span class="pre">frames)</span></code> in date order.</p>
+<p><code class="docutils literal notranslate"><span class="pre">frames</span></code> is <code class="docutils literal notranslate"><span class="pre">(parameters,</span> <span class="pre">psd,</span> <span class="pre">moments)</span></code> – plus a raw-count
+<code class="docutils literal notranslate"><span class="pre">xarray.DataArray</span></code> when <code class="docutils literal notranslate"><span class="pre">include_spectrum=True</span></code>. Every source is
+first scanned for its earliest and latest telegram stamp; sources are
+then decoded in that order and a day is produced once no unread source
+can hold a telegram for it, so files may be named anything and only the
+days spanned by the files being read are held in memory (about one day
+for a long file whose stamps never go backwards). With <code class="docutils literal notranslate"><span class="pre">start_date</span></code> or
+<code class="docutils literal notranslate"><span class="pre">end_date</span></code>, lines stamped outside the window are skipped before their
+spectrum is decoded.</p>
+<p><code class="docutils literal notranslate"><span class="pre">time_binning=&quot;centre&quot;</span></code> (default) puts each telegram in the minute that
+holds the centre of its measuring interval (stamp - interval / 2);
+<code class="docutils literal notranslate"><span class="pre">&quot;stamp&quot;</span></code> uses the stamp itself, as 0.50.0 did. <code class="docutils literal notranslate"><span class="pre">strict_fields</span></code>
+rejects telegrams whose field count is not <code class="docutils literal notranslate"><span class="pre">spectrum_offset</span> <span class="pre">+</span> <span class="pre">1024</span></code>
+(plus an optional trailing comma).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instrument</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>classes</strong> (<em>str</em>)</p></li>
+<li><p><strong>fall_speed</strong> (<em>str</em>)</p></li>
+<li><p><strong>velocity_filter</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>max_diameter_mm</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>telegram_interval_s</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>full_day</strong> (<em>bool</em>)</p></li>
+<li><p><strong>include_spectrum</strong> (<em>bool</em>)</p></li>
+<li><p><strong>spectrum_offset</strong> (<em>int</em>)</p></li>
+<li><p><strong>strict_fields</strong> (<em>bool</em>)</p></li>
+<li><p><strong>time_binning</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools._parsivel.load_tables">
+<span class="sig-prename descclassname"><span class="pre">gv_tools._parsivel.</span></span><span class="sig-name descname"><span class="pre">load_tables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ott'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/_parsivel.html#load_tables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools._parsivel.load_tables" title="Link to this definition">#</a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">(dv_parms,</span> <span class="pre">mask)</span></code> in the 0.50.0 table layout.</p>
+<p><code class="docutils literal notranslate"><span class="pre">dv_parms</span></code> has the columns <code class="docutils literal notranslate"><span class="pre">Drop_bin</span></code>, <code class="docutils literal notranslate"><span class="pre">Delta-D</span></code>, <code class="docutils literal notranslate"><span class="pre">Theoretical_Vt</span></code>,
+<code class="docutils literal notranslate"><span class="pre">Measured_Vt</span></code> (velocity class centre), <code class="docutils literal notranslate"><span class="pre">50%&gt;Velt</span></code> and <code class="docutils literal notranslate"><span class="pre">50%&lt;Velt</span></code>.
+<code class="docutils literal notranslate"><span class="pre">mask</span></code> is 32 x 33 with velocity classes in rows, diameter classes in
+columns and an empty last column, exactly like the bundled file. With
+<code class="docutils literal notranslate"><span class="pre">table_dir</span></code> the files there are read unchanged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table_dir</strong> (<em>str</em><em> | </em><em>PathLike</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>classes</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools._parsivel.parse_telegram_line">
+<span class="sig-prename descclassname"><span class="pre">gv_tools._parsivel.</span></span><span class="sig-name descname"><span class="pre">parse_telegram_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">spectrum_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict_fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/_parsivel.html#parse_telegram_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools._parsivel.parse_telegram_line" title="Link to this definition">#</a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">(telegrams,</span> <span class="pre">rejected)</span></code> for one text line.</p>
+<p><code class="docutils literal notranslate"><span class="pre">telegrams</span></code> is a list of <code class="docutils literal notranslate"><span class="pre">(epoch_seconds,</span> <span class="pre">counts)</span></code> with <code class="docutils literal notranslate"><span class="pre">counts</span></code> a
+<code class="docutils literal notranslate"><span class="pre">uint16</span></code> array of the 1024 raw spectrum values in instrument order.
+Two telegrams run together on one line are split at their time stamps
+and text before a time stamp is ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>line</strong> (<em>str</em>)</p></li>
+<li><p><strong>spectrum_offset</strong> (<em>int</em>)</p></li>
+<li><p><strong>strict_fields</strong> (<em>bool</em>)</p></li>
+<li><p><strong>_layout</strong> (<em>list</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools._parsivel.run">
+<span class="sig-prename descclassname"><span class="pre">gv_tools._parsivel.</span></span><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temp_root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/_parsivel.html#run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools._parsivel.run" title="Link to this definition">#</a></dt>
+<dd><p>Decode Parsivel inputs and return <code class="docutils literal notranslate"><span class="pre">{YYYY-MM-DD:</span> <span class="pre">(parameters,</span> <span class="pre">psd,</span> <span class="pre">moments)}</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">input_path</span></code> may be a file, a directory searched recursively or a
+sequence of files/directories. Keyword options are those of
+<a class="reference internal" href="#gv_tools._parsivel.iter_days" title="gv_tools._parsivel.iter_days"><code class="xref py py-func docutils literal notranslate"><span class="pre">iter_days()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools._parsivel.terminal_velocity">
+<span class="sig-prename descclassname"><span class="pre">gv_tools._parsivel.</span></span><span class="sig-name descname"><span class="pre">terminal_velocity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diameter_mm</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/_parsivel.html#terminal_velocity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools._parsivel.terminal_velocity" title="Link to this definition">#</a></dt>
+<dd><p>Raindrop terminal fall speed (m s-1) near sea level after Gunn &amp; Kinzer (1949).</p>
+<p>Values are linearly interpolated from the bundled 0.2 mm table. Below
+0.1 mm the Stokes-regime scaling <code class="docutils literal notranslate"><span class="pre">V</span> <span class="pre">~</span> <span class="pre">D**2</span></code> is used and above the table
+(11.9 mm) the speed stays at its 9.175 m s-1 plateau.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gv_tools._parsivel.velocity_filter_mask">
+<span class="sig-prename descclassname"><span class="pre">gv_tools._parsivel.</span></span><span class="sig-name descname"><span class="pre">velocity_filter_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terminal</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_diameter_mm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/_parsivel.html#velocity_filter_mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools._parsivel.velocity_filter_mask" title="Link to this definition">#</a></dt>
+<dd><p>Return the boolean (diameter, velocity) mask of plausible raindrop cells.</p>
+<p>A cell is kept when its velocity class centre lies within
+<code class="docutils literal notranslate"><span class="pre">(1</span> <span class="pre">-</span> <span class="pre">tolerance)</span> <span class="pre">*</span> <span class="pre">Vt(D)</span> <span class="pre">..</span> <span class="pre">(1</span> <span class="pre">+</span> <span class="pre">tolerance)</span> <span class="pre">*</span> <span class="pre">Vt(D)</span></code> and the diameter class
+centre is below <code class="docutils literal notranslate"><span class="pre">max_diameter_mm</span></code>. <code class="docutils literal notranslate"><span class="pre">tolerance=None</span></code> keeps every
+velocity; <code class="docutils literal notranslate"><span class="pre">max_diameter_mm=None</span></code> keeps every diameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tolerance</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>max_diameter_mm</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>ndarray</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -1285,6 +1822,7 @@ lines and is computed on uncompressed bytes during the same read pass.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawParsivelProduct.parameters"><code class="docutils literal notranslate"><span class="pre">RawParsivelProduct.parameters</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawParsivelProduct.psd"><code class="docutils literal notranslate"><span class="pre">RawParsivelProduct.psd</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawParsivelProduct.moments"><code class="docutils literal notranslate"><span class="pre">RawParsivelProduct.moments</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawParsivelProduct.spectrum"><code class="docutils literal notranslate"><span class="pre">RawParsivelProduct.spectrum</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.RawRMYoungAIOProduct"><code class="docutils literal notranslate"><span class="pre">RawRMYoungAIOProduct</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
@@ -1312,12 +1850,40 @@ lines and is computed on uncompressed bytes during the same read pass.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_parsivel_raw"><code class="docutils literal notranslate"><span class="pre">read_parsivel_raw()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_radar"><code class="docutils literal notranslate"><span class="pre">read_radar()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_gauge"><code class="docutils literal notranslate"><span class="pre">read_gauge()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_tipping_bucket"><code class="docutils literal notranslate"><span class="pre">read_tipping_bucket()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.tipping_bucket_rain"><code class="docutils literal notranslate"><span class="pre">tipping_bucket_rain()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_ws800_full"><code class="docutils literal notranslate"><span class="pre">read_ws800_full()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.read_2dvd"><code class="docutils literal notranslate"><span class="pre">read_2dvd()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.ingest_raw"><code class="docutils literal notranslate"><span class="pre">ingest_raw()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dvd">2DVD</a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.py_2dvd.date_from_filename"><code class="docutils literal notranslate"><span class="pre">date_from_filename()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.py_2dvd.ingest_raw"><code class="docutils literal notranslate"><span class="pre">ingest_raw()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-gv_tools.io.gauge">Tipping-bucket gauges</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.gauge.read_gauge"><code class="docutils literal notranslate"><span class="pre">read_gauge()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.gauge.tipping_bucket_rain"><code class="docutils literal notranslate"><span class="pre">tipping_bucket_rain()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools.io.gauge.read_tipping_bucket"><code class="docutils literal notranslate"><span class="pre">read_tipping_bucket()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-gv_tools._parsivel">Parsivel decoder</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-a-day-is-built-changed-in-0-65-0">How a day is built (changed in 0.65.0)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#science-changed-in-0-65-0">Science (changed in 0.65.0)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools._parsivel.ParsivelClasses"><code class="docutils literal notranslate"><span class="pre">ParsivelClasses</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools._parsivel.ParsivelClasses.sampling_area_mm2"><code class="docutils literal notranslate"><span class="pre">ParsivelClasses.sampling_area_mm2</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools._parsivel.discover_input_dates"><code class="docutils literal notranslate"><span class="pre">discover_input_dates()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools._parsivel.filename_stamp"><code class="docutils literal notranslate"><span class="pre">filename_stamp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools._parsivel.get_integral_parameters"><code class="docutils literal notranslate"><span class="pre">get_integral_parameters()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools._parsivel.get_parsivel_classes"><code class="docutils literal notranslate"><span class="pre">get_parsivel_classes()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools._parsivel.integral_parameters"><code class="docutils literal notranslate"><span class="pre">integral_parameters()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools._parsivel.iter_days"><code class="docutils literal notranslate"><span class="pre">iter_days()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools._parsivel.load_tables"><code class="docutils literal notranslate"><span class="pre">load_tables()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools._parsivel.parse_telegram_line"><code class="docutils literal notranslate"><span class="pre">parse_telegram_line()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools._parsivel.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools._parsivel.terminal_velocity"><code class="docutils literal notranslate"><span class="pre">terminal_velocity()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gv_tools._parsivel.velocity_filter_mask"><code class="docutils literal notranslate"><span class="pre">velocity_filter_mask()</span></code></a></li>
 </ul>
 </li>
 </ul>

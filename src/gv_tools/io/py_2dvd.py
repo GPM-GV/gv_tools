@@ -174,6 +174,39 @@ def _file_hash(path):
     return digest.hexdigest()
 
 
+_CHUNK_LINES = 20_000
+
+
+def _parse_chunk(chunk):
+    """Parse ``[(line_number, tokens), ...]``; vectorized for split-time records.
+
+    Any irregular line sends the whole chunk through :func:`_parse_record`, so
+    errors keep their exact line numbers and messages.
+    """
+    if all(len(tokens) == 16 and ":" not in tokens[0] for _, tokens in chunk):
+        try:
+            values = np.array([tokens for _, tokens in chunk], dtype=np.float64)
+        except ValueError:
+            values = None
+        if values is not None and np.isfinite(values).all():
+            hour, minute, second = values[:, 0], values[:, 1], values[:, 2]
+            valid = (
+                (hour >= 0) & (hour < 24) & (hour == np.floor(hour))
+                & (minute >= 0) & (minute < 60) & (minute == np.floor(minute))
+                & (second >= 0) & (second < 60) & (values[:, 4] >= 0)
+            )
+            if valid.all():
+                return values, {}, {"split_time"}
+    rows, metadata, layouts = [], {}, set()
+    for index, (line_number, tokens) in enumerate(chunk):
+        values, extra, layout = _parse_record(tokens, line_number)
+        rows.append(values)
+        if extra:
+            metadata[index] = extra
+        layouts.add(layout)
+    return np.asarray(rows, dtype=np.float64).reshape(-1, len(DROP_COLUMNS)), metadata, layouts
+
+
 def ingest_raw(datafile, *, site="WFF", instrument="sn37", date=None):
     """Read one plain/ZIP/TGZ day into a DataFrame without scientific filtering.
 
@@ -184,16 +217,29 @@ def ingest_raw(datafile, *, site="WFF", instrument="sn37", date=None):
     retained. The source contains no timezone, so timestamps remain naive.
 
     Each returned row is one detected object, not a concentration or a spectrum.
-    Source filenames, the date/site/instrument, layouts, row count, and hashes
-    are stored in DataFrame.attrs. The content hash includes headers and blank
-    lines and is computed on uncompressed bytes during the same read pass.
+    Source file names (no directories), the date/site/instrument, layouts, row
+    count, and hashes are stored in DataFrame.attrs. The content hash includes
+    headers and blank lines and is computed on uncompressed bytes during the
+    same read pass. Split-time records are parsed in vectorized chunks.
     """
     if not re.fullmatch(r"[A-Za-z0-9_-]+", site):
         raise ValueError("site must contain only letters, digits, underscore or hyphen")
     input_path = Path(datafile).expanduser().resolve()
-    records, metadata_records, layouts = [], [], set()
+    blocks, metadata_records, layouts = [], {}, set()
     content_digest = sha256()
     header_count = 0
+    offset = 0
+    chunk: list = []
+
+    def flush():
+        nonlocal offset
+        values, extra, kinds = _parse_chunk(chunk)
+        blocks.append(values)
+        metadata_records.update({offset + index: fields for index, fields in extra.items()})
+        layouts.update(kinds)
+        offset += len(chunk)
+        chunk.clear()
+
     with _open_input(input_path) as (stream, logical_filename):
         observation_date = date_from_filename(logical_filename, date=date)
         for line_number, binary_line in enumerate(stream, start=1):
@@ -201,21 +247,25 @@ def ingest_raw(datafile, *, site="WFF", instrument="sn37", date=None):
             if line_number <= 2:
                 header_count += 1
                 continue
-            tokens = binary_line.decode("utf-8-sig").split()
+            tokens = binary_line.decode("utf-8-sig", errors="replace").split()
             if not tokens:
                 continue
-            values, metadata, layout = _parse_record(tokens, line_number)
-            records.append(values)
-            metadata_records.append(metadata)
-            layouts.add(layout)
+            chunk.append((line_number, tokens))
+            if len(chunk) >= _CHUNK_LINES:
+                flush()
+        if chunk:
+            flush()
     if header_count != 2:
         raise ValueError("Input must contain the two required header lines")
-    raw_drops = pd.DataFrame(records, columns=DROP_COLUMNS, dtype=float)
-    for index in range(max(map(len, metadata_records), default=0)):
-        raw_drops[f"source_extra_{index + 1}"] = [
-            fields[index] if index < len(fields) else None
-            for fields in metadata_records
-        ]
+    values = np.concatenate(blocks) if blocks else np.empty((0, len(DROP_COLUMNS)))
+    raw_drops = pd.DataFrame(values, columns=DROP_COLUMNS, dtype=float)
+    extra_width = max(map(len, metadata_records.values()), default=0)
+    for index in range(extra_width):
+        column = [None] * len(raw_drops)
+        for row, fields in metadata_records.items():
+            if index < len(fields):
+                column[row] = fields[index]
+        raw_drops[f"source_extra_{index + 1}"] = column
     seconds_since_midnight = (
         raw_drops.hour * 3600 + raw_drops.minute * 60 + raw_drops.second
     )
@@ -226,8 +276,8 @@ def ingest_raw(datafile, *, site="WFF", instrument="sn37", date=None):
         "site": site,
         "instrument_id": instrument,
         "date": str(observation_date.date()),
-        "source_file": str(input_path),
-        "source_member": logical_filename,
+        "source_file": input_path.name,
+        "source_member": Path(logical_filename).name,
         "source_sha256": _file_hash(input_path),
         "source_data_sha256": content_digest.hexdigest(),
         "source_layouts": ",".join(sorted(layouts)) or "empty",
@@ -235,5 +285,3 @@ def ingest_raw(datafile, *, site="WFF", instrument="sn37", date=None):
         "timezone": "Unspecified in source; timestamps are naive",
     }
     return raw_drops
-
-

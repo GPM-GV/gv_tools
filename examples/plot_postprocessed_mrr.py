@@ -1,4 +1,4 @@
-"""Read and display C. Williams post-processed MRRPro hourly files."""
+"""Read and display post-processed MRRPro files with GV Tools 0.65.0."""
 
 from __future__ import annotations
 
@@ -25,6 +25,7 @@ def main() -> None:
             f"{requested_output.stem}_{product_code}{requested_output.suffix}"
         )
     )
+    output.parent.mkdir(parents=True, exist_ok=True)
     print(dataset)
     gv_tools.graph.plot_mrr_time_height_quicklook(
         dataset,

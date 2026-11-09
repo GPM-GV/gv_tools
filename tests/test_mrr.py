@@ -288,3 +288,25 @@ def test_reads_real_spectral_mrrpro_file_when_available():
     assert result.longitude.item() == pytest.approx(-97.318275)
     assert result.sizes["spectral_bins"] == 96
     assert "reflectivity_spectral_density" in result
+
+
+def test_old_h5netcdf_gets_an_actionable_error(tmp_path, monkeypatch):
+    import gv_tools.mrr as mrr_module
+
+    source = tmp_path / "mrrpro.nc"
+    source.write_bytes(b"\x89HDF\r\n\x1a\n")
+
+    def fail(*args, **kwargs):
+        raise AttributeError("'Variable' object has no attribute 'filters'")
+
+    monkeypatch.setattr(mrr_module.xr, "open_dataset", fail)
+    with pytest.raises(ImportError, match="h5netcdf>=1.8"):
+        read_mrr(source)
+
+
+def test_multi_file_provenance_has_no_directories(tmp_path):
+    first, second = tmp_path / "a.nc", tmp_path / "b.nc"
+    _write_mrr2(first)
+    _write_mrr2(second)
+    result = read_mrr([first, second])
+    assert result.attrs["mrr_source_files"] == "a.nc,b.nc"

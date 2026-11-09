@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Architecture &#8212; GV Tools 0.50.1 documentation</title>
+    <title>Architecture &#8212; GV Tools 0.65.0 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="_static/documentation_options.js?v=cb30952c"></script>
+    <script src="_static/documentation_options.js?v=dc8ea8b4"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'architecture';</script>
@@ -118,7 +118,7 @@
   
   
   
-    <p class="title logo__title">GV Tools 0.50.1 documentation</p>
+    <p class="title logo__title">GV Tools 0.65.0 documentation</p>
   
 </a></div>
     
@@ -135,6 +135,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -159,13 +166,6 @@
   </a>
 </li>
 
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="notebooks.html">
-    Notebooks
-  </a>
-</li>
-
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -174,6 +174,13 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="examples.html">
     Examples
@@ -287,6 +294,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -464,18 +478,24 @@ their results by ISO date internally. The public <code class="docutils literal n
 instrument the same interface: an explicit file-path list, optional date bounds,
 and a single merged return product. All downstream code consumes that normalized
 product and must not rely on manufacturer field names or raw file layouts.</p>
-<p>The Parsivel adapter calls the private decoder bundled with GV Tools.
-<code class="docutils literal notranslate"><span class="pre">read_raw()</span></code> returns a typed
-<code class="docutils literal notranslate"><span class="pre">RawParsivelProduct</span></code>; <code class="docutils literal notranslate"><span class="pre">read()</span></code> normalizes its parameter, DSD, and moment tables
-into one dataset. Instrument-aware discovery prevents files for another APU or
-PIERS platform from contributing dates.</p>
+<p>The Parsivel adapter calls the decoder bundled with GV Tools
+(<code class="docutils literal notranslate"><span class="pre">gv_tools._parsivel</span></code>). The decoder streams every file and archive member in
+memory, keys telegrams by their own time stamps (so a telegram is counted once
+and lands in its own UTC day whatever file it is in), and holds only about two
+days of telegrams at a time. <code class="docutils literal notranslate"><span class="pre">read_raw()</span></code> returns a typed <code class="docutils literal notranslate"><span class="pre">RawParsivelProduct</span></code>;
+<code class="docutils literal notranslate"><span class="pre">read()</span></code> normalizes its parameter, DSD, and moment tables (and, on request,
+the raw per-minute spectrum) into one dataset. Instrument-aware discovery
+prevents files for another APU or PIERS platform from contributing dates.</p>
 <p>The RM Young AIO adapter natively decodes PIERS <code class="docutils literal notranslate"><span class="pre">WX</span></code> packet files. Its
 <code class="docutils literal notranslate"><span class="pre">read_raw()</span></code> method exposes a typed pandas product and source accounting, while
 <code class="docutils literal notranslate"><span class="pre">read()</span></code> produces normalized daily partitions that <code class="docutils literal notranslate"><span class="pre">gv_tools.io.read_aio()</span></code>
 merges chronologically for the user.</p>
 <p>The Met One AIO adapter independently decodes monthly <code class="docutils literal notranslate"><span class="pre">AIO_SITE_YYYYMM.dat</span></code>
 files. It validates the filename month against each year/Julian-day/HHMM row
-and exposes the same raw-versus-normalized workflow and ingest accounting.</p>
+(an <code class="docutils literal notranslate"><span class="pre">HHMM</span></code> of 2400 is 00:00 of the next day) and exposes the same
+raw-versus-normalized workflow and ingest accounting.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">source</span></code> attribute of every product describes the kind of input; the
+<code class="docutils literal notranslate"><span class="pre">source_files</span></code> attribute lists file names only, never directories.</p>
 <p>MRR2 and MRRPro use a separate <code class="docutils literal notranslate"><span class="pre">gv_tools.io.read_mrr()</span></code> regime. MRR files
 are already scientific NetCDF products, so they do not pass through a surface
 instrument adapter or the scanning-radar Py-ART route. The reader identifies

@@ -15,7 +15,7 @@ from ..adapters import (
 from ..ingest_radar import RadarIngestRoute, ingest_radar, inspect_radar_file
 from ..mrr import read_mrr
 from ..registry import available_adapters, create_adapter, register_adapter
-from .gauge import read_gauge
+from .gauge import read_gauge, read_tipping_bucket, tipping_bucket_rain
 from .readers import (
     discover_aio,
     discover_metone,
@@ -61,6 +61,8 @@ __all__ = [
     "read_parsivel_raw",
     "read_radar",
     "read_gauge",
+    "read_tipping_bucket",
+    "tipping_bucket_rain",
     "read_ws800_full",
 ]
 

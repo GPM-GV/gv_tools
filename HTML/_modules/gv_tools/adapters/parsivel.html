@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>gv_tools.adapters.parsivel &#8212; GV Tools 0.50.1 documentation</title>
+    <title>gv_tools.adapters.parsivel &#8212; GV Tools 0.65.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="../../../_static/documentation_options.js?v=cb30952c"></script>
+    <script src="../../../_static/documentation_options.js?v=dc8ea8b4"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/gv_tools/adapters/parsivel';</script>
@@ -115,7 +115,7 @@
   
   
   
-    <p class="title logo__title">GV Tools 0.50.1 documentation</p>
+    <p class="title logo__title">GV Tools 0.65.0 documentation</p>
   
 </a></div>
     
@@ -132,6 +132,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../../userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -156,13 +163,6 @@
   </a>
 </li>
 
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../../notebooks.html">
-    Notebooks
-  </a>
-</li>
-
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -171,6 +171,13 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="../../../examples.html">
     Examples
@@ -282,6 +289,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../../userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -445,7 +459,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for gv_tools.adapters.parsivel</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Adapter for the private bundled Parsivel decoder."""</span>
+<span></span><span class="sd">"""Adapter for the bundled Parsivel decoder (:mod:`gv_tools._parsivel`)."""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -453,9 +467,12 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">importlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">import_module</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
 
@@ -465,16 +482,27 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">__version__</span>
 
 <span class="n">PARAMETER_NAMES</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">"Total Drops"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"drop_count"</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">,</span> <span class="s2">"Number of drops in the sampling interval"</span><span class="p">),</span>
+    <span class="s2">"Total Drops"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"drop_count"</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">,</span> <span class="s2">"Number of drops kept by the velocity-diameter filter"</span><span class="p">),</span>
     <span class="s2">"Concentration"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"number_concentration"</span><span class="p">,</span> <span class="s2">"m-3"</span><span class="p">,</span> <span class="s2">"Total drop number concentration"</span><span class="p">),</span>
     <span class="s2">"LWC"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"liquid_water_content"</span><span class="p">,</span> <span class="s2">"g m-3"</span><span class="p">,</span> <span class="s2">"Liquid water content"</span><span class="p">),</span>
-    <span class="s2">"Z"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"reflectivity_factor"</span><span class="p">,</span> <span class="s2">"mm6 m-3"</span><span class="p">,</span> <span class="s2">"Equivalent radar reflectivity factor"</span><span class="p">),</span>
-    <span class="s2">"dBZ"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"radar_reflectivity"</span><span class="p">,</span> <span class="s2">"dBZ"</span><span class="p">,</span> <span class="s2">"Radar reflectivity"</span><span class="p">),</span>
-    <span class="s2">"Rain"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"precipitation_rate"</span><span class="p">,</span> <span class="s2">"mm h-1"</span><span class="p">,</span> <span class="s2">"Liquid precipitation rate"</span><span class="p">),</span>
-    <span class="s2">"Dm"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"mass_weighted_mean_diameter"</span><span class="p">,</span> <span class="s2">"mm"</span><span class="p">,</span> <span class="s2">"Mass-weighted mean drop diameter"</span><span class="p">),</span>
-    <span class="s2">"Dmax"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"maximum_drop_diameter"</span><span class="p">,</span> <span class="s2">"mm"</span><span class="p">,</span> <span class="s2">"Maximum observed drop diameter"</span><span class="p">),</span>
-    <span class="s2">"Sigma_M"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"mass_spectrum_width"</span><span class="p">,</span> <span class="s2">"mm2"</span><span class="p">,</span> <span class="s2">"Mass spectrum variance"</span><span class="p">),</span>
+    <span class="s2">"Z"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"reflectivity_factor"</span><span class="p">,</span> <span class="s2">"mm6 m-3"</span><span class="p">,</span> <span class="s2">"Rayleigh radar reflectivity factor (sixth DSD moment)"</span><span class="p">),</span>
+    <span class="s2">"dBZ"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"radar_reflectivity"</span><span class="p">,</span> <span class="s2">"dBZ"</span><span class="p">,</span> <span class="s2">"10 log10 of the Rayleigh reflectivity factor"</span><span class="p">),</span>
+    <span class="s2">"Rain"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"precipitation_rate"</span><span class="p">,</span> <span class="s2">"mm h-1"</span><span class="p">,</span> <span class="s2">"Rain rate from the filtered drop volume flux"</span><span class="p">),</span>
+    <span class="s2">"Dm"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"mass_weighted_mean_diameter"</span><span class="p">,</span> <span class="s2">"mm"</span><span class="p">,</span> <span class="s2">"Mass-weighted mean drop diameter (M4/M3)"</span><span class="p">),</span>
+    <span class="s2">"Dmax"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"maximum_drop_diameter"</span><span class="p">,</span> <span class="s2">"mm"</span><span class="p">,</span> <span class="s2">"Centre of the largest diameter class with drops"</span><span class="p">),</span>
+    <span class="s2">"Sigma_M"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"mass_spectrum_width"</span><span class="p">,</span> <span class="s2">"mm"</span><span class="p">,</span> <span class="s2">"Mass spectrum standard deviation (sigma_m)"</span><span class="p">),</span>
+    <span class="s2">"Nw"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"normalized_intercept_parameter"</span><span class="p">,</span> <span class="s2">"m-3 mm-1"</span><span class="p">,</span> <span class="s2">"Normalized intercept parameter Nw = (4**4/6) M3**5/M4**4"</span><span class="p">),</span>
+    <span class="s2">"V"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"mean_fall_speed"</span><span class="p">,</span> <span class="s2">"m s-1"</span><span class="p">,</span> <span class="s2">"Drop-count-weighted mean measured fall speed of the filtered drops"</span><span class="p">),</span>
+    <span class="s2">"Raw Drops"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"raw_drop_count"</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">,</span> <span class="s2">"Number of particles before the velocity-diameter filter"</span><span class="p">),</span>
+    <span class="s2">"Telegrams"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"telegram_count"</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">,</span> <span class="s2">"Number of telegrams received in the minute"</span><span class="p">),</span>
+    <span class="s2">"Sample_Seconds"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"sample_duration"</span><span class="p">,</span> <span class="s2">"s"</span><span class="p">,</span> <span class="s2">"Sampled duration: telegram count x telegram interval"</span><span class="p">),</span>
 <span class="p">}</span>
+<span class="n">_PROVENANCE_ATTRS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">"telegrams"</span><span class="p">,</span> <span class="s2">"duplicate_telegrams"</span><span class="p">,</span> <span class="s2">"conflicting_telegrams"</span><span class="p">,</span> <span class="s2">"rejected_lines"</span><span class="p">,</span>
+    <span class="s2">"rejected_lines_by_file"</span><span class="p">,</span> <span class="s2">"telegram_interval_s"</span><span class="p">,</span> <span class="s2">"telegram_interval_source"</span><span class="p">,</span> <span class="s2">"time_binning"</span><span class="p">,</span>
+    <span class="s2">"source_files"</span><span class="p">,</span> <span class="s2">"parsivel_classes"</span><span class="p">,</span> <span class="s2">"fall_speed_method"</span><span class="p">,</span> <span class="s2">"class_description"</span><span class="p">,</span>
+    <span class="s2">"velocity_filter"</span><span class="p">,</span> <span class="s2">"max_diameter_mm"</span><span class="p">,</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="ParsivelSourcePlatform">
@@ -492,11 +520,16 @@
 <a class="viewcode-back" href="../../../api/io.html#gv_tools.io.RawParsivelProduct">[docs]</a>
 <span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">RawParsivelProduct</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""The three tables returned by process-parsivel for one day."""</span>
+<span class="w">    </span><span class="sd">"""The tables returned by the decoder for one day.</span>
+
+<span class="sd">    ``spectrum`` is the per-minute raw count array (time, drop_diameter,</span>
+<span class="sd">    fall_velocity) when it was requested with ``include_spectrum=True``.</span>
+<span class="sd">    """</span>
 
     <span class="n">parameters</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
     <span class="n">psd</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
-    <span class="n">moments</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span></div>
+    <span class="n">moments</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
+    <span class="n">spectrum</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
 
@@ -551,40 +584,57 @@
             <span class="s2">"metadata using one of those platform identifiers"</span>
         <span class="p">)</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_file_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">Pattern</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">identifier</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_platform</span> <span class="o">==</span> <span class="s2">"piers"</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">rf</span><span class="s2">"^</span><span class="si">{</span><span class="n">identifier</span><span class="si">}</span><span class="s2">_Parsivel_.*\.(?:zip|csv|dat)$"</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">rf</span><span class="s2">"^(?:APU_)?</span><span class="si">{</span><span class="n">identifier</span><span class="si">}</span><span class="s2">_.*\.(?:zip|csv|dat)$"</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return explicit files unchanged; select this instrument's files in directories."""</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_path</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_path</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">))</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="n">input_path</span><span class="p">)</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_pattern</span><span class="p">()</span>
+        <span class="n">selected</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                <span class="n">selected</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                    <span class="n">candidate</span> <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">"*"</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">candidate</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">and</span> <span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">candidate</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">selected</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">selected</span>
+
 <div class="viewcode-block" id="ParsivelAdapter.discover">
 <a class="viewcode-back" href="../../../api/io.html#gv_tools.io.ParsivelAdapter.discover">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">discover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">"""Return ISO dates represented by compatible source files."""</span>
-        <span class="n">source</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">input_path</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
-            <span class="n">identifier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">instrument_id</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-            <span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">path</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">source</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">"*"</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span>
-                <span class="ow">and</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">".zip"</span><span class="p">,</span> <span class="s2">".csv"</span><span class="p">,</span> <span class="s2">".dat"</span><span class="p">}</span>
-                <span class="ow">and</span> <span class="n">identifier</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-            <span class="p">]</span>
-            <span class="n">dates</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">({</span>
-                <span class="n">date</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">candidates</span>
-                <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">_backend</span><span class="p">()</span><span class="o">.</span><span class="n">discover_input_dates</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-            <span class="p">})</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">dates</span> <span class="o">=</span> <span class="n">_backend</span><span class="p">()</span><span class="o">.</span><span class="n">discover_input_dates</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">]</span></div>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputs</span><span class="p">(</span><span class="n">input_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inputs</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">dates</span> <span class="o">=</span> <span class="n">_backend</span><span class="p">()</span><span class="o">.</span><span class="n">discover_input_dates</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">})</span></div>
 
 
 <div class="viewcode-block" id="ParsivelAdapter.read_raw">
 <a class="viewcode-back" href="../../../api/io.html#gv_tools.io.ParsivelAdapter.read_raw">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">read_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_path</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Decode source files without applying the GV normalized schema."""</span>
+<span class="w">        </span><span class="sd">"""Decode source files without applying the GV normalized schema.</span>
+
+<span class="sd">        Options are those of :func:`gv_tools._parsivel.iter_days`:</span>
+<span class="sd">        ``start_date``, ``end_date``, ``classes``, ``fall_speed``,</span>
+<span class="sd">        ``velocity_filter``, ``max_diameter_mm``, ``telegram_interval_s``,</span>
+<span class="sd">        ``time_binning``, ``strict_fields``, ``spectrum_offset``,</span>
+<span class="sd">        ``full_day`` and ``include_spectrum``.</span>
+<span class="sd">        """</span>
         <span class="n">date_interval</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">"_date_interval"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">date_interval</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">options</span><span class="p">[</span><span class="s2">"start_date"</span><span class="p">],</span> <span class="n">options</span><span class="p">[</span><span class="s2">"end_date"</span><span class="p">]</span> <span class="o">=</span> <span class="n">date_interval</span>
-        <span class="n">results</span> <span class="o">=</span> <span class="n">_backend</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-            <span class="n">input_path</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">,</span>
-            <span class="o">**</span><span class="n">options</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputs</span><span class="p">(</span><span class="n">input_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inputs</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{}</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">_backend</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">{</span><span class="n">day</span><span class="p">:</span> <span class="n">RawParsivelProduct</span><span class="p">(</span><span class="o">*</span><span class="n">frames</span><span class="p">)</span> <span class="k">for</span> <span class="n">day</span><span class="p">,</span> <span class="n">frames</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></div>
 
 
@@ -594,14 +644,18 @@
 <span class="w">        </span><span class="sd">"""Decode and normalize source data into day-keyed xarray datasets."""</span>
         <span class="n">raw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_raw</span><span class="p">(</span><span class="n">input_path</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">{</span><span class="n">day</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span>
-            <span class="n">product</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">product</span><span class="o">.</span><span class="n">psd</span><span class="p">,</span> <span class="n">product</span><span class="o">.</span><span class="n">moments</span><span class="p">,</span> <span class="n">source_path</span><span class="o">=</span><span class="n">input_path</span>
+            <span class="n">product</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">product</span><span class="o">.</span><span class="n">psd</span><span class="p">,</span> <span class="n">product</span><span class="o">.</span><span class="n">moments</span><span class="p">,</span> <span class="n">spectrum</span><span class="o">=</span><span class="n">product</span><span class="o">.</span><span class="n">spectrum</span><span class="p">,</span>
         <span class="p">)</span> <span class="k">for</span> <span class="n">day</span><span class="p">,</span> <span class="n">product</span> <span class="ow">in</span> <span class="n">raw</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></div>
 
 
 <div class="viewcode-block" id="ParsivelAdapter.normalize">
 <a class="viewcode-back" href="../../../api/io.html#gv_tools.io.ParsivelAdapter.normalize">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">psd</span><span class="p">,</span> <span class="n">moments</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_path</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Combine the processor's three DataFrames into one GV Dataset."""</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">psd</span><span class="p">,</span> <span class="n">moments</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">spectrum</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Combine the processor's DataFrames into one GV Dataset.</span>
+
+<span class="sd">        ``source_path`` is accepted for compatibility; only its base name is</span>
+<span class="sd">        recorded (in ``source_files``) when the frames carry no provenance.</span>
+<span class="sd">        """</span>
         <span class="n">frames</span> <span class="o">=</span> <span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">psd</span><span class="p">,</span> <span class="n">moments</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">frames</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Parsivel results must be three pandas DataFrames"</span><span class="p">)</span>
@@ -619,28 +673,44 @@
                 <span class="nb">str</span><span class="p">(</span><span class="n">original_name</span><span class="p">),</span>
                 <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">original_name</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">"_"</span><span class="p">),</span> <span class="s2">"1"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">original_name</span><span class="p">)),</span>
             <span class="p">)</span>
-            <span class="n">dataset</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"time"</span><span class="p">,</span> <span class="n">parameters</span><span class="p">[</span><span class="n">original_name</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="n">original_name</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">"telegram_count"</span><span class="p">:</span>
+                <span class="n">values</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">"int32"</span><span class="p">)</span>
+            <span class="n">dataset</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"time"</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
             <span class="n">dataset</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
                 <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="n">long_name</span><span class="p">,</span> <span class="n">source_field</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">original_name</span><span class="p">)</span>
             <span class="p">)</span>
 
         <span class="n">diameters</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">psd</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
         <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">drop_diameter</span><span class="o">=</span><span class="p">(</span><span class="s2">"drop_diameter"</span><span class="p">,</span> <span class="n">diameters</span><span class="p">))</span>
-        <span class="n">dataset</span><span class="o">.</span><span class="n">drop_diameter</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="s2">"mm"</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="s2">"Drop diameter bin center"</span><span class="p">)</span>
+        <span class="n">dataset</span><span class="o">.</span><span class="n">drop_diameter</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="s2">"mm"</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="s2">"Drop diameter class centre"</span><span class="p">)</span>
+        <span class="n">widths</span> <span class="o">=</span> <span class="n">psd</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"diameter_width"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">widths</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">widths</span><span class="p">)</span> <span class="o">==</span> <span class="n">diameters</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span>
+                <span class="n">drop_diameter_width</span><span class="o">=</span><span class="p">(</span><span class="s2">"drop_diameter"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">widths</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))</span>
+            <span class="p">)</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">drop_diameter_width</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="s2">"mm"</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="s2">"Drop diameter class width"</span><span class="p">)</span>
         <span class="n">dataset</span><span class="p">[</span><span class="s2">"drop_size_distribution"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
             <span class="p">(</span><span class="s2">"time"</span><span class="p">,</span> <span class="s2">"drop_diameter"</span><span class="p">),</span> <span class="n">psd</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
         <span class="p">)</span>
         <span class="n">dataset</span><span class="o">.</span><span class="n">drop_size_distribution</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-            <span class="n">units</span><span class="o">=</span><span class="s2">"m-3 mm-1"</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="s2">"Drop size distribution"</span>
+            <span class="n">units</span><span class="o">=</span><span class="s2">"m-3 mm-1"</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="s2">"Drop size distribution N(D)"</span>
         <span class="p">)</span>
 
         <span class="n">orders</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">column</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">"Mm"</span><span class="p">))</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">moments</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
         <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">moment_order</span><span class="o">=</span><span class="p">(</span><span class="s2">"moment_order"</span><span class="p">,</span> <span class="n">orders</span><span class="p">))</span>
         <span class="n">dataset</span><span class="p">[</span><span class="s2">"drop_size_moment"</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="s2">"time"</span><span class="p">,</span> <span class="s2">"moment_order"</span><span class="p">),</span> <span class="n">moments</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
         <span class="n">dataset</span><span class="o">.</span><span class="n">drop_size_moment</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-            <span class="n">units</span><span class="o">=</span><span class="s2">"varies_with_order"</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="s2">"Raw moment of the drop size distribution"</span>
+            <span class="n">units</span><span class="o">=</span><span class="s2">"m-3 mm^n"</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="s2">"Moment n of the drop size distribution, sum N(D) D^n dD"</span>
         <span class="p">)</span>
+        <span class="k">if</span> <span class="n">spectrum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dataset</span><span class="p">[</span><span class="s2">"raw_spectrum"</span><span class="p">]</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">times</span><span class="p">)</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">fall_velocity</span><span class="o">=</span><span class="n">spectrum</span><span class="o">.</span><span class="n">fall_velocity</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">fall_velocity</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="s2">"m s-1"</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="s2">"Fall velocity class centre"</span><span class="p">)</span>
 
+        <span class="n">provenance</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">parameters</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">_PROVENANCE_ATTRS</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">attrs</span><span class="p">}</span>
+        <span class="k">if</span> <span class="s2">"source_files"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">provenance</span> <span class="ow">and</span> <span class="n">source_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">provenance</span><span class="p">[</span><span class="s2">"source_files"</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">source_path</span><span class="p">))</span><span class="o">.</span><span class="n">name</span>
         <span class="n">dataset</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">to_attrs</span><span class="p">())</span>
         <span class="n">dataset</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
             <span class="n">Conventions</span><span class="o">=</span><span class="s2">"CF-1.10, NASA-GPM-GV-TOOLS-0.2"</span><span class="p">,</span>
@@ -649,14 +719,72 @@
             <span class="n">processing_software_version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
             <span class="n">processing_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
             <span class="n">time_reference</span><span class="o">=</span><span class="s2">"UTC"</span><span class="p">,</span>
-            <span class="n">source</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">source_path</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">())</span> <span class="k">if</span> <span class="n">source_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">"in_memory"</span><span class="p">,</span>
+            <span class="n">time_coordinate</span><span class="o">=</span><span class="p">(</span>
+                <span class="s2">"start of each one-minute interval; each telegram is counted in the minute holding "</span>
+                <span class="s2">"the centre of its measuring interval (stamp - interval / 2)"</span>
+                <span class="k">if</span> <span class="n">parameters</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"time_binning"</span><span class="p">,</span> <span class="s2">"centre"</span><span class="p">)</span> <span class="o">==</span> <span class="s2">"centre"</span>
+                <span class="k">else</span> <span class="s2">"start of each one-minute interval; telegrams binned by their logger time stamp"</span>
+            <span class="p">),</span>
+            <span class="n">source</span><span class="o">=</span><span class="sa">f</span><span class="s2">"OTT </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">model</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">'Parsivel'</span><span class="si">}</span><span class="s2"> raw telegrams (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">source_platform</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2"> logger)"</span><span class="p">,</span>
             <span class="n">product_type</span><span class="o">=</span><span class="s2">"parsivel_disdrometer"</span><span class="p">,</span>
             <span class="n">source_platform</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_platform</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">provenance</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">sortby</span><span class="p">(</span><span class="s2">"time"</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">validate_product</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span></div>
 </div>
 
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_parse_by_file</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="n">counts</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">";"</span><span class="p">):</span>
+        <span class="n">name</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="s2">"="</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">separator</span> <span class="ow">and</span> <span class="n">name</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">counts</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">continue</span>
+    <span class="k">return</span> <span class="n">counts</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">merge_provenance</span><span class="p">(</span><span class="n">items</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Combine the per-day provenance attributes of several products.</span>
+
+<span class="sd">    ``items`` are Datasets or DataFrames carrying the attributes written by</span>
+<span class="sd">    the decoder. Telegram counts are summed; rejected lines are counted once</span>
+<span class="sd">    per file however many days the file spans; source files are joined; the</span>
+<span class="sd">    telegram interval is reported once when every day agrees. Files are</span>
+<span class="sd">    known by name only (directories are never stored), so two different</span>
+<span class="sd">    files with the same name count as one.</span>
+<span class="sd">    """</span>
+    <span class="n">attrs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">"attrs"</span><span class="p">,</span> <span class="p">{})</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
+    <span class="n">merged</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"telegrams"</span><span class="p">,</span> <span class="s2">"duplicate_telegrams"</span><span class="p">,</span> <span class="s2">"conflicting_telegrams"</span><span class="p">):</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">attrs</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">item</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">values</span><span class="p">:</span>
+            <span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">))</span>
+    <span class="n">by_file</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">_parse_by_file</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"rejected_lines_by_file"</span><span class="p">))</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># a day produced while its file was still being read saw part of the count</span>
+            <span class="n">by_file</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">by_file</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">count</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="s2">"rejected_lines"</span> <span class="ow">in</span> <span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">):</span>
+        <span class="n">merged</span><span class="p">[</span><span class="s2">"rejected_lines"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">by_file</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="n">merged</span><span class="p">[</span><span class="s2">"rejected_lines_by_file"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"; "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">by_file</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">attrs</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"source_files"</span><span class="p">,</span> <span class="s2">""</span><span class="p">))</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">","</span><span class="p">)</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="p">))</span>
+    <span class="k">if</span> <span class="n">names</span><span class="p">:</span>
+        <span class="n">merged</span><span class="p">[</span><span class="s2">"source_files"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+        <span class="n">merged</span><span class="p">[</span><span class="s2">"source_file_count"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"telegram_interval_s"</span><span class="p">,</span> <span class="s2">"telegram_interval_source"</span><span class="p">):</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">attrs</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">item</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">attrs</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">item</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">values</span><span class="p">:</span>
+            <span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"varies by day: "</span> <span class="o">+</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">merged</span>
 </pre></div>
 
                 </article>

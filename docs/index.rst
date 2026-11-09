@@ -16,6 +16,7 @@ paths or perform downstream scientific analyses.
    :maxdepth: 2
 
    userguide
+   parsivel
    dependencies
    mrr
    api/index

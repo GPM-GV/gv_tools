@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Examples &#8212; GV Tools 0.50.1 documentation</title>
+    <title>Examples &#8212; GV Tools 0.65.0 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="_static/documentation_options.js?v=cb30952c"></script>
+    <script src="_static/documentation_options.js?v=dc8ea8b4"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples';</script>
@@ -118,7 +118,7 @@
   
   
   
-    <p class="title logo__title">GV Tools 0.50.1 documentation</p>
+    <p class="title logo__title">GV Tools 0.65.0 documentation</p>
   
 </a></div>
     
@@ -135,6 +135,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -159,13 +166,6 @@
   </a>
 </li>
 
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="notebooks.html">
-    Notebooks
-  </a>
-</li>
-
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -174,6 +174,13 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
 <li class=" current active">
   <a class="nav-link dropdown-item nav-internal" href="#">
     Examples
@@ -287,6 +294,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -461,16 +475,17 @@
 time-height display from <code class="docutils literal notranslate"><span class="pre">tcsh</span></code>:</p>
 <div class="highlight-tcsh notranslate"><div class="highlight"><pre><span></span><span class="nb">set </span><span class="nv">WORKSPACE</span> <span class="o">=</span> <span class="s2">"$HOME/Desktop/Work/GV_Tools"</span>
 <span class="nb">set </span><span class="nv">PYTHON</span> <span class="o">=</span> <span class="s2">"$HOME/anaconda3/bin/python"</span>
+mkdir -p <span class="s2">"$WORKSPACE/Output"</span>
 <span class="nv">$PYTHON</span> <span class="s2">"$WORKSPACE/gv_tools/examples/plot_postprocessed_mrr.py"</span> <span class="se">\</span>
   /Volumes/36TB/MRR/TAMU-CC/reprocessed/nc_files/nc_files_c01_mom/2023/08/22 <span class="se">\</span>
-  <span class="s2">"$WORKSPACE/MRRPro_TAMUCC_20230822.png"</span>
+  <span class="s2">"$WORKSPACE/Output/MRRPro_TAMUCC_20230822.png"</span>
 </pre></div>
 </div>
 <p>The example appends the detected product code, producing
-<code class="docutils literal notranslate"><span class="pre">MRRPro_TAMUCC_20230822_mom.png</span></code>. Spectral and original products use
+<code class="docutils literal notranslate"><span class="pre">Output/MRRPro_TAMUCC_20230822_mom.png</span></code>. Spectral and original products use
 <code class="docutils literal notranslate"><span class="pre">_spc</span></code> and <code class="docutils literal notranslate"><span class="pre">_org</span></code> respectively.</p>
 <p>Runnable Python examples are kept in the project-level <code class="docutils literal notranslate"><span class="pre">examples</span></code> folder.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">"""Minimal reader and user-directed plotting example."""</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">"""Minimal GV Tools 0.65.0 reader and user-directed plotting example."""</span>
 <span class="linenos"> 2</span>
 <span class="linenos"> 3</span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="linenos"> 4</span>
@@ -481,10 +496,11 @@ time-height display from <code class="docutils literal notranslate"><span class=
 <span class="linenos"> 9</span><span class="n">FIGURE</span> <span class="o">=</span> <span class="n">WORKSPACE</span> <span class="o">/</span> <span class="s2">"Output"</span> <span class="o">/</span> <span class="s2">"PIERS0045-RMYoung_2026-10-11_temperature.png"</span>
 <span class="linenos">10</span>
 <span class="linenos">11</span><span class="n">data</span> <span class="o">=</span> <span class="n">gv_tools</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_aio</span><span class="p">(</span><span class="n">INPUT</span><span class="p">)</span>
-<span class="linenos">12</span><span class="n">gv_tools</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">plot_instrument_timeseries</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">"air_temperature"</span><span class="p">,</span> <span class="n">FIGURE</span><span class="p">)</span>
-<span class="linenos">13</span>
-<span class="linenos">14</span><span class="c1"># Users select their own data format and destination when desired:</span>
-<span class="linenos">15</span><span class="c1"># data.to_csv(WORKSPACE / "Output" / "PIERS0045-RMYoung_2026-10-11.csv", index=False)</span>
+<span class="linenos">12</span><span class="n">FIGURE</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos">13</span><span class="n">gv_tools</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">plot_instrument_timeseries</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">"air_temperature"</span><span class="p">,</span> <span class="n">FIGURE</span><span class="p">)</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="c1"># Users select their own data format and destination when desired:</span>
+<span class="linenos">16</span><span class="c1"># data.to_csv(WORKSPACE / "Output" / "PIERS0045-RMYoung_2026-10-11.csv", index=False)</span>
 </pre></div>
 </div>
 </section>

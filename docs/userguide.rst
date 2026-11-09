@@ -14,8 +14,16 @@ Input selection
 Public readers accept an absolute filename, an absolute directory, or an
 explicit sequence of absolute files/directories. Directories are searched
 recursively. A single call must contain files compatible with its reader.
-PIERS readers prefer consolidated ``*_daily`` products when daily and packet
-files are both present.
+PIERS readers read consolidated ``*_daily`` products and packets together and
+keep each observation once (the daily value wins a tie).
+
+Missing versus dry
+------------------
+
+Parsivel minutes without telegrams and tipping-bucket intervals inside a
+reporting gap are NaN. A zero always means the instrument was reporting and
+saw nothing. Use ``telegram_count`` (Parsivel) or the ``*_flag`` columns
+(tipping buckets) to select complete intervals.
 
 .. code-block:: python
 
@@ -34,6 +42,7 @@ One PIERS day directory can be supplied separately to each instrument reader:
    day = "/Volumes/TBW/distro/PIERS_Gauges_Daily/PIERS0045/2026/10/11"
    weather = gv_tools.io.read_aio(day)
    gauge = gv_tools.io.read_gauge(day)
+   rain = gv_tools.io.read_tipping_bucket(day, tip_depth_mm=0.254)  # the gauge's gauge_tip
    parsivel = gv_tools.io.read_parsivel(day)
 
 User-controlled data output

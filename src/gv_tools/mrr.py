@@ -69,6 +69,26 @@ _PIERS0030_LATITUDE = 27.713017
 _PIERS0030_LONGITUDE = -97.318275
 
 
+_H5NETCDF_MESSAGE = (
+    "reading NetCDF-4/HDF5 MRR files with this xarray needs h5netcdf>=1.8 "
+    "(xarray 2026.9 calls Variable.filters(), added in h5netcdf 1.8); upgrade with "
+    "python -m pip install --upgrade 'h5netcdf>=1.8'"
+)
+
+
+def _is_h5netcdf_too_old(exc: BaseException) -> bool:
+    return isinstance(exc, AttributeError) and "filters" in str(exc)
+
+
+def _open_dataset(source, **options: Any) -> xr.Dataset:
+    try:
+        return xr.open_dataset(source, **options)
+    except AttributeError as exc:
+        if _is_h5netcdf_too_old(exc):
+            raise ImportError(_H5NETCDF_MESSAGE) from exc
+        raise
+
+
 def _open_zipped_netcdf(source: Path, **options: Any) -> xr.Dataset:
     """Open and eagerly load the single NetCDF payload in *source*."""
     try:
@@ -92,9 +112,15 @@ def _open_zipped_netcdf(source: Path, **options: Any) -> xr.Dataset:
     default_engine = "h5netcdf" if payload.startswith(_HDF5_SIGNATURE) else "scipy"
     engine = options.pop("engine", default_engine)
     try:
-        with xr.open_dataset(BytesIO(payload), engine=engine, **options) as opened:
+        with _open_dataset(BytesIO(payload), engine=engine, **options) as opened:
             return opened.load()
+    except AttributeError as exc:
+        if _is_h5netcdf_too_old(exc):
+            raise ImportError(_H5NETCDF_MESSAGE) from exc
+        raise
     except (ImportError, ModuleNotFoundError) as exc:
+        if str(exc) == _H5NETCDF_MESSAGE:
+            raise
         if default_engine == "h5netcdf":
             raise ImportError(
                 "zipped MRRPro ingest requires h5netcdf and h5py; install "
@@ -156,7 +182,7 @@ def _read_mrr_file(source: Path, **open_dataset_options: Any) -> xr.Dataset:
     if source.suffix.casefold() == ".zip":
         dataset = _open_zipped_netcdf(source, **open_dataset_options)
     else:
-        dataset = xr.open_dataset(source, **open_dataset_options)
+        dataset = _open_dataset(source, **open_dataset_options)
 
     try:
         model = _identify_model(dataset)
@@ -272,11 +298,12 @@ def _decode_unix_time(dataset: xr.Dataset) -> xr.Dataset:
     if str(time.attrs.get("units", "")).casefold() != "unix time stamp":
         return dataset
 
-    values = np.asarray(time.values)
+    values = np.asarray(time.values, dtype=np.float64)
     fill_value = time.encoding.get("_FillValue", time.attrs.get("_FillValue", -9999))
-    valid = values != fill_value
-    decoded = np.full(values.shape, np.datetime64("NaT"), dtype="datetime64[s]")
-    decoded[valid] = values[valid].astype("datetime64[s]")
+    valid = np.isfinite(values) & (values != fill_value)
+    decoded = np.full(values.shape, np.datetime64("NaT"), dtype="datetime64[ms]")
+    # Round to milliseconds instead of truncating fractional seconds.
+    decoded[valid] = np.round(values[valid] * 1000.0).astype(np.int64).astype("datetime64[ms]")
     dataset = dataset.assign_coords(time=(time.dims, decoded.astype("datetime64[ns]")))
     dataset.coords["time"].attrs.update(
         standard_name="time", long_name="Time (UTC)", timezone="UTC"
@@ -336,7 +363,7 @@ def read_mrr(
         if time_index.has_duplicates:
             combined = combined.isel(time=~time_index.duplicated(keep="first"))
         combined.attrs["mrr_source_file_count"] = len(sources)
-        combined.attrs["mrr_source_files"] = ",".join(str(source) for source in sources)
+        combined.attrs["mrr_source_files"] = ",".join(source.name for source in sources)
         _warn_missing_geolocation(combined)
         return combined
     except Exception:

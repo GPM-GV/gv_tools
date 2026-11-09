@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>gv_tools.mrr &#8212; GV Tools 0.50.1 documentation</title>
+    <title>gv_tools.mrr &#8212; GV Tools 0.65.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="../../_static/documentation_options.js?v=cb30952c"></script>
+    <script src="../../_static/documentation_options.js?v=dc8ea8b4"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/gv_tools/mrr';</script>
@@ -115,7 +115,7 @@
   
   
   
-    <p class="title logo__title">GV Tools 0.50.1 documentation</p>
+    <p class="title logo__title">GV Tools 0.65.0 documentation</p>
   
 </a></div>
     
@@ -132,6 +132,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -156,13 +163,6 @@
   </a>
 </li>
 
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../notebooks.html">
-    Notebooks
-  </a>
-</li>
-
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -171,6 +171,13 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="../../examples.html">
     Examples
@@ -282,6 +289,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -516,6 +530,26 @@
 <span class="n">_PIERS0030_LONGITUDE</span> <span class="o">=</span> <span class="o">-</span><span class="mf">97.318275</span>
 
 
+<span class="n">_H5NETCDF_MESSAGE</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">"reading NetCDF-4/HDF5 MRR files with this xarray needs h5netcdf&gt;=1.8 "</span>
+    <span class="s2">"(xarray 2026.9 calls Variable.filters(), added in h5netcdf 1.8); upgrade with "</span>
+    <span class="s2">"python -m pip install --upgrade 'h5netcdf&gt;=1.8'"</span>
+<span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_h5netcdf_too_old</span><span class="p">(</span><span class="n">exc</span><span class="p">:</span> <span class="ne">BaseException</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">"filters"</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_open_dataset</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">_is_h5netcdf_too_old</span><span class="p">(</span><span class="n">exc</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">_H5NETCDF_MESSAGE</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+        <span class="k">raise</span>
+
+
 <span class="k">def</span><span class="w"> </span><span class="nf">_open_zipped_netcdf</span><span class="p">(</span><span class="n">source</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""Open and eagerly load the single NetCDF payload in *source*."""</span>
     <span class="k">try</span><span class="p">:</span>
@@ -539,9 +573,15 @@
     <span class="n">default_engine</span> <span class="o">=</span> <span class="s2">"h5netcdf"</span> <span class="k">if</span> <span class="n">payload</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">_HDF5_SIGNATURE</span><span class="p">)</span> <span class="k">else</span> <span class="s2">"scipy"</span>
     <span class="n">engine</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">"engine"</span><span class="p">,</span> <span class="n">default_engine</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span> <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span> <span class="k">as</span> <span class="n">opened</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">_open_dataset</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span> <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span> <span class="k">as</span> <span class="n">opened</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">opened</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">_is_h5netcdf_too_old</span><span class="p">(</span><span class="n">exc</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">_H5NETCDF_MESSAGE</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+        <span class="k">raise</span>
     <span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span> <span class="o">==</span> <span class="n">_H5NETCDF_MESSAGE</span><span class="p">:</span>
+            <span class="k">raise</span>
         <span class="k">if</span> <span class="n">default_engine</span> <span class="o">==</span> <span class="s2">"h5netcdf"</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
                 <span class="s2">"zipped MRRPro ingest requires h5netcdf and h5py; install "</span>
@@ -603,7 +643,7 @@
     <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">casefold</span><span class="p">()</span> <span class="o">==</span> <span class="s2">".zip"</span><span class="p">:</span>
         <span class="n">dataset</span> <span class="o">=</span> <span class="n">_open_zipped_netcdf</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">open_dataset_options</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">dataset</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">open_dataset_options</span><span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">_open_dataset</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">open_dataset_options</span><span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">_identify_model</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
@@ -719,11 +759,12 @@
     <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"units"</span><span class="p">,</span> <span class="s2">""</span><span class="p">))</span><span class="o">.</span><span class="n">casefold</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">"unix time stamp"</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">dataset</span>
 
-    <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="n">fill_value</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">encoding</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"_FillValue"</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"_FillValue"</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">))</span>
-    <span class="n">valid</span> <span class="o">=</span> <span class="n">values</span> <span class="o">!=</span> <span class="n">fill_value</span>
-    <span class="n">decoded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">(</span><span class="s2">"NaT"</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"datetime64[s]"</span><span class="p">)</span>
-    <span class="n">decoded</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">"datetime64[s]"</span><span class="p">)</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">values</span> <span class="o">!=</span> <span class="n">fill_value</span><span class="p">)</span>
+    <span class="n">decoded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">(</span><span class="s2">"NaT"</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"datetime64[ms]"</span><span class="p">)</span>
+    <span class="c1"># Round to milliseconds instead of truncating fractional seconds.</span>
+    <span class="n">decoded</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1000.0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">"datetime64[ms]"</span><span class="p">)</span>
     <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">dims</span><span class="p">,</span> <span class="n">decoded</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">"datetime64[ns]"</span><span class="p">)))</span>
     <span class="n">dataset</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">"time"</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
         <span class="n">standard_name</span><span class="o">=</span><span class="s2">"time"</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="s2">"Time (UTC)"</span><span class="p">,</span> <span class="n">timezone</span><span class="o">=</span><span class="s2">"UTC"</span>
@@ -785,7 +826,7 @@
         <span class="k">if</span> <span class="n">time_index</span><span class="o">.</span><span class="n">has_duplicates</span><span class="p">:</span>
             <span class="n">combined</span> <span class="o">=</span> <span class="n">combined</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=~</span><span class="n">time_index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s2">"first"</span><span class="p">))</span>
         <span class="n">combined</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"mrr_source_file_count"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sources</span><span class="p">)</span>
-        <span class="n">combined</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"mrr_source_files"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">","</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="k">for</span> <span class="n">source</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">)</span>
+        <span class="n">combined</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"mrr_source_files"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">","</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">source</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">)</span>
         <span class="n">_warn_missing_geolocation</span><span class="p">(</span><span class="n">combined</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">combined</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>

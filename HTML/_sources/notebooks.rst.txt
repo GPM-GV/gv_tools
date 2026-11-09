@@ -11,7 +11,8 @@ set to ``WORKSPACE / "Output"`` so figures are never written inside the package
 directory or one of its subdirectories.
 
 * ``check_gv_tools.ipynb`` (complete instrument ingest and plotting check)
-* ``Ingest_WSR88D.ipynb``
+* ``Ingest_WSR88D.ipynb`` (configurable Level-II discovery and ingest; no
+  generated output is written inside the package tree)
 * ``MRRPro_Postprocessed_Ingest_and_Display.ipynb`` (hourly collection ingest
   and extensively configurable time-height displays)
 * ``Upper_Air_Sounding_Downloads.ipynb`` (download, decode, and Skew-T test)

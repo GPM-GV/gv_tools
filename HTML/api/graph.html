@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>gv_tools.graph &#8212; GV Tools 0.50.1 documentation</title>
+    <title>gv_tools.graph &#8212; GV Tools 0.65.0 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="../_static/documentation_options.js?v=cb30952c"></script>
+    <script src="../_static/documentation_options.js?v=dc8ea8b4"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/graph';</script>
@@ -118,7 +118,7 @@
   
   
   
-    <p class="title logo__title">GV Tools 0.50.1 documentation</p>
+    <p class="title logo__title">GV Tools 0.65.0 documentation</p>
   
 </a></div>
     
@@ -135,6 +135,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -159,13 +166,6 @@
   </a>
 </li>
 
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../notebooks.html">
-    Notebooks
-  </a>
-</li>
-
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -174,6 +174,13 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="../examples.html">
     Examples
@@ -287,6 +294,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../userguide.html">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -500,8 +514,12 @@ analysis. It returns the editable <code class="docutils literal notranslate"><sp
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gv_tools.graph.plot_aio_quicklook">
-<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.</span></span><span class="sig-name descname"><span class="pre">plot_aio_quicklook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">4,</span> <span class="pre">6,</span> <span class="pre">8,</span> <span class="pre">inf)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/quicklooks.html#plot_aio_quicklook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.plot_aio_quicklook" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.</span></span><span class="sig-name descname"><span class="pre">plot_aio_quicklook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">4,</span> <span class="pre">6,</span> <span class="pre">8,</span> <span class="pre">inf)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calm_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/quicklooks.html#plot_aio_quicklook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.plot_aio_quicklook" title="Link to this definition">#</a></dt>
 <dd><p>Plot a three-row, two-column AIO dashboard and return the Figure.</p>
+<p>Wind direction is drawn as points (a line would draw false vertical
+strokes at every 0/360 deg wrap). In the wind rose, speeds below
+<code class="docutils literal notranslate"><span class="pre">calm_threshold</span></code> (m s-1; 0.5 by default) are reported as calm instead
+of being assigned the sensor’s arbitrary calm direction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -510,6 +528,7 @@ analysis. It returns the editable <code class="docutils literal notranslate"><sp
 <li><p><strong>savefig</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
 <li><p><strong>title</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
 <li><p><strong>direction_bins</strong> (<em>int</em>)</p></li>
+<li><p><strong>calm_threshold</strong> (<em>float</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -517,8 +536,11 @@ analysis. It returns the editable <code class="docutils literal notranslate"><sp
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gv_tools.graph.plot_aio_wind_rose">
-<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.</span></span><span class="sig-name descname"><span class="pre">plot_aio_wind_rose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">4,</span> <span class="pre">6,</span> <span class="pre">8,</span> <span class="pre">inf)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/quicklooks.html#plot_aio_wind_rose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.plot_aio_wind_rose" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.</span></span><span class="sig-name descname"><span class="pre">plot_aio_wind_rose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">4,</span> <span class="pre">6,</span> <span class="pre">8,</span> <span class="pre">inf)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calm_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/quicklooks.html#plot_aio_wind_rose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.plot_aio_wind_rose" title="Link to this definition">#</a></dt>
 <dd><p>Plot direction/speed occurrence percentages and return Figure, Axes, and frequencies.</p>
+<p>Percentages are of all valid observations; speeds below
+<code class="docutils literal notranslate"><span class="pre">calm_threshold</span></code> (m s-1) are counted as calm, not given a direction,
+and the calm percentage is stored as <code class="docutils literal notranslate"><span class="pre">axis.gv_tools_calm_percent</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -526,6 +548,7 @@ analysis. It returns the editable <code class="docutils literal notranslate"><sp
 <li><p><strong>output</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>)</p></li>
 <li><p><strong>direction_bins</strong> (<em>int</em>)</p></li>
 <li><p><strong>title</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>calm_threshold</strong> (<em>float</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -559,10 +582,15 @@ analysis. It returns the editable <code class="docutils literal notranslate"><sp
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gv_tools.graph.plot_parsivel_quicklook">
-<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.</span></span><span class="sig-name descname"><span class="pre">plot_parsivel_quicklook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'viridis'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar_bounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'top'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dsd_yrange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/quicklooks.html#plot_parsivel_quicklook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.plot_parsivel_quicklook" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gv_tools.graph.</span></span><span class="sig-name descname"><span class="pre">plot_parsivel_quicklook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'viridis'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar_bounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'top'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dsd_yrange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shade_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gv_tools/quicklooks.html#plot_parsivel_quicklook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gv_tools.graph.plot_parsivel_quicklook" title="Link to this definition">#</a></dt>
 <dd><p>Plot one UTC day of Parsivel DSD and precipitation parameters.</p>
 <p>The six rows contain DSD, dBZ, rain rate, liquid-water content,
-concentration, and number of drops.</p>
+concentration, and number of drops. N(D) spans several orders of
+magnitude, so it is coloured on a logarithmic scale by default
+(<code class="docutils literal notranslate"><span class="pre">log_scale=False</span></code> restores a linear scale) and drawn on the true
+class edges when <code class="docutils literal notranslate"><span class="pre">drop_diameter_width</span></code> is available. Minutes without
+telegrams (<code class="docutils literal notranslate"><span class="pre">telegram_count</span> <span class="pre">==</span> <span class="pre">0</span></code>) are shaded grey when
+<code class="docutils literal notranslate"><span class="pre">shade_missing</span></code> is true, so outages are not mistaken for dry weather.</p>
 <p><code class="docutils literal notranslate"><span class="pre">savefig</span></code> must include an image filename and may be relative. The legacy
 positional <code class="docutils literal notranslate"><span class="pre">output</span></code> argument remains supported, but cannot be combined
 with <code class="docutils literal notranslate"><span class="pre">savefig</span></code>. <code class="docutils literal notranslate"><span class="pre">colorbar_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">dsd_yrange</span></code> are two-item <code class="docutils literal notranslate"><span class="pre">(minimum,</span> <span class="pre">maximum)</span></code>
@@ -578,6 +606,8 @@ or <code class="docutils literal notranslate"><span class="pre">&quot;bottom&quo
 <li><p><strong>colorbar_bounds</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>] </em><em>| </em><em>None</em>)</p></li>
 <li><p><strong>colorbar_location</strong> (<em>str</em>)</p></li>
 <li><p><strong>dsd_yrange</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>log_scale</strong> (<em>bool</em>)</p></li>
+<li><p><strong>shade_missing</strong> (<em>bool</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -659,8 +689,8 @@ a sequence of dictionaries is accepted.</p>
 <p><code class="docutils literal notranslate"><span class="pre">data</span></code> may be the pandas DataFrame or xarray Dataset returned by
 <code class="docutils literal notranslate"><span class="pre">read_ws800_full</span></code>. Each panel contains every available field in its
 family: air temperature, dew point, relative humidity, absolute humidity,
-mixing ratio, and lightning. <code class="docutils literal notranslate"><span class="pre">colors</span></code> optionally maps field names to
-Matplotlib colors.</p>
+specific enthalpy (or a true mixing ratio when the file has one), and
+lightning. <code class="docutils literal notranslate"><span class="pre">colors</span></code> optionally maps field names to Matplotlib colors.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

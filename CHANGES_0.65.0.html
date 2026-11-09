@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GV Tools 0.65.0 changes</title>
+<style>
+:root {
+  --bg: #ffffff; --fg: #1d2330; --muted: #5b6475; --rule: #d9dee7; --panel: #f4f6fa;
+  --accent: #1f5fae; --sci: #9a3412; --sci-bg: #fff4ec; --fix-bg: #eef6ff; --ok: #166534; --ok-bg: #ecfdf3;
+  --code-bg: #eef1f6;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12151b; --fg: #e3e7ee; --muted: #9aa3b2; --rule: #2b313c; --panel: #1a1f27;
+    --accent: #7fb0ff; --sci: #ffb488; --sci-bg: #2a1d15; --fix-bg: #16212f; --ok: #86efac; --ok-bg: #12251a;
+    --code-bg: #222833;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12151b; --fg: #e3e7ee; --muted: #9aa3b2; --rule: #2b313c; --panel: #1a1f27;
+  --accent: #7fb0ff; --sci: #ffb488; --sci-bg: #2a1d15; --fix-bg: #16212f; --ok: #86efac; --ok-bg: #12251a;
+  --code-bg: #222833;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+a, a:visited { color: var(--accent); }
+main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 64px; }
+h1 { font-size: 1.9rem; margin: 0 0 4px; }
+h2 { font-size: 1.35rem; margin: 40px 0 10px; padding-top: 10px; border-top: 1px solid var(--rule); }
+h3 { font-size: 1.05rem; margin: 22px 0 6px; }
+p, li { max-width: 78ch; overflow-wrap: anywhere; }
+.sub { color: var(--muted); margin: 0 0 18px; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.88em; background: var(--code-bg); padding: 1px 4px; border-radius: 4px; overflow-wrap: anywhere; }
+pre { background: var(--code-bg); padding: 10px 12px; border-radius: 6px; overflow-x: auto; font-size: 0.86em; }
+nav.toc { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 16px; }
+nav.toc ol { margin: 6px 0; padding-left: 20px; }
+.table-wrap { overflow-x: auto; margin: 10px 0 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 0.92em; }
+th, td { border-bottom: 1px solid var(--rule); padding: 7px 8px; text-align: left; vertical-align: top; }
+th { background: var(--panel); font-weight: 600; }
+td.num, th.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tag { display: inline-block; font-size: 0.74em; font-weight: 600; padding: 1px 7px; border-radius: 999px; margin-right: 6px; vertical-align: 1px; }
+.tag.sci { color: var(--sci); background: var(--sci-bg); }
+.tag.fix { color: var(--accent); background: var(--fix-bg); }
+.tag.new { color: var(--ok); background: var(--ok-bg); }
+.card { border: 1px solid var(--rule); border-radius: 8px; padding: 4px 16px 10px; margin: 12px 0; }
+.card h3 { margin-top: 12px; }
+.card dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 14px; margin: 6px 0 4px; }
+.card dt { color: var(--muted); font-weight: 600; }
+.card dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 640px) { .card dl { grid-template-columns: minmax(0, 1fr); } .card dt { margin-top: 6px; } }
+.note { background: var(--panel); border-left: 3px solid var(--accent); padding: 8px 12px; border-radius: 4px; }
+.warn { background: var(--sci-bg); border-left: 3px solid var(--sci); padding: 8px 12px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<main>
+<h1>GV Tools 0.65.0 — what changed from 0.50.0</h1>
+<p class="sub">Adapted 9 November 2026 from the reviewed 0.60.0 candidate. Every change, why it was made, and how the 0.65.0 results differ from 0.50.0.</p>
+
+<div class="warn"><strong>Products change value.</strong> Parsivel concentrations, N(D), LWC, Dm, σ<sub>m</sub>, Nw and moments change because 0.50.0 divided the counts by the wrong fall speed. Rain rate and Z change by about 9 % and 0.8 dB because 0.65.0 uses the OTT size classes (<a href="#s-classes">§2.2</a>). Don't mix 0.50.0 and 0.65.0 Parsivel products in one analysis.</div>
+
+<nav class="toc"><strong>Contents</strong>
+<ol>
+<li><a href="#s-glance">At a glance</a></li>
+<li><a href="#s-science">Scientific corrections</a></li>
+<li><a href="#s-issues">The nine 0.50.0 issues from the gv_process README</a></li>
+<li><a href="#s-other">Other fixes</a></li>
+<li><a href="#s-new">Additions</a></li>
+<li><a href="#s-perf">Performance and memory</a></li>
+<li><a href="#s-compare">How much the numbers move (test day)</a></li>
+<li><a href="#s-review">Independent reviews</a></li>
+<li><a href="#s-api">Compatibility and API changes</a></li>
+<li><a href="#s-limits">Assumptions and limits to know about</a></li>
+<li><a href="#s-files">Files changed</a></li>
+<li><a href="#s-validation">Validation</a></li>
+</ol></nav>
+
+<h2 id="s-glance">1. At a glance</h2>
+<div class="table-wrap"><table>
+<tr><th>Area</th><th>0.50.0</th><th>0.65.0</th></tr>
+<tr><td>Parsivel N(D) fall speed</td><td>Count in cell (D<sub>i</sub>, V<sub>j</sub>) divided by the terminal speed of <em>diameter class j</em> (wrong axis)</td><td>Divided by V<sub>j</sub> (measured, default) or by Vt(D<sub>i</sub>) (<code>fall_speed="theoretical"</code>)</td></tr>
+<tr><td><code>mass_spectrum_width</code></td><td>Variance of the mass spectrum (mm²)</td><td>σ<sub>m</sub>, the standard deviation (mm)</td></tr>
+<tr><td>dBZ when Z = 0, and anything below 0 dBZ</td><td>Clamped to 0</td><td>NaN for Z = 0; negative values kept</td></tr>
+<tr><td>Dm, σ<sub>m</sub>, Dmax with no drops</td><td>0</td><td>NaN</td></tr>
+<tr><td>Minutes with no telegram</td><td>0 drops, 0 mm/h (looked dry)</td><td>NaN, with <code>telegram_count = 0</code></td></tr>
+<tr><td>Partly sampled minutes</td><td>Divided by a fixed 60 s</td><td>Divided by the sampled time: the sum of each telegram's own measuring interval, inferred from its neighbours</td></tr>
+<tr><td>Minute a telegram is counted in</td><td>Minute of its stamp, which is the end of its interval</td><td>Minute holding the centre of its interval; <code>time_binning="stamp"</code> keeps the old way</td></tr>
+<tr><td>Dates and processing order</td><td>Taken from file names</td><td>Taken from the telegram stamps inside the files; any file name works</td></tr>
+<tr><td>Telegram with one header field too many or too few</td><td>Read with every count shifted one diameter class (10 fields), or rejected (8)</td><td>Rejected, with a warning naming the field counts seen</td></tr>
+<tr><td>Size classes</td><td>OTT classes × 1.03 (undocumented)</td><td>OTT manual classes; old tables are <code>classes="legacy"</code></td></tr>
+<tr><td>Raw PIERS / APU file names</td><td>Unreadable (needed a stand-alone 8-digit date)</td><td>Readable: any name works, dates come from the telegrams</td></tr>
+<tr><td>Last minutes of a day</td><td>Lost (in the next morning's packet)</td><td>Kept: days come from telegram time stamps</td></tr>
+<tr><td>Duplicate telegrams, daily + packets</td><td>Counted twice</td><td>Counted once</td></tr>
+<tr><td>Scratch files</td><td><code>./tmp/&lt;instrument&gt;/&lt;date&gt;</code> in the working directory</td><td>None; everything is read in memory</td></tr>
+<tr><td>Tipping buckets</td><td>Packets decoded only</td><td>Tips, depth, rate, resets and gaps (<code>read_tipping_bucket</code>)</td></tr>
+<tr><td>WS800 enthalpy/density</td><td>Labelled mixing ratio (g/kg) and relative pressure (hPa)</td><td><code>specific_enthalpy</code> (kJ/kg) and <code>air_density</code> (kg/m³)</td></tr>
+<tr><td>Parsivel speed / memory (one PIERS day)</td><td>3.7–4.6 s, 223 MB peak</td><td>0.37–0.41 s, 57 MB peak</td></tr>
+</table></div>
+
+<h2 id="s-science">2. Scientific corrections</h2>
+
+<div class="card"><h3><span class="tag sci">science</span>2.1 Parsivel number concentration used the wrong fall speed</h3>
+<dl>
+<dt>Where</dt><dd><code>src/gv_tools/_parsivel.py</code> — <code>get_integral_parameters</code> (0.50.0) → <code>integral_parameters</code> (0.65.0)</dd>
+<dt>0.50.0</dt><dd><code>denominator = 60 * A[:, None] * Theoretical_Vt[None, :]</code>. <code>Theoretical_Vt</code> is the terminal speed at each <em>diameter</em> class, but it was broadcast along the <em>velocity</em> axis. A drop in cell (D<sub>i</sub>, V<sub>j</sub>) was divided by Vt(D<sub>j</sub>), the terminal speed of the diameter class that shares the velocity index. A 1 mm drop counted in the 3.0 m/s class was divided by 8.8 m/s, the speed of a 3.9 mm drop, so small drops were undercounted roughly threefold.</dd>
+<dt>0.65.0</dt><dd>N(D<sub>i</sub>) = (1/ΔD<sub>i</sub>) Σ<sub>j</sub> n<sub>ij</sub> / (A<sub>i</sub> Δt V<sub>ij</sub>). V<sub>ij</sub> is the measured class centre V<sub>j</sub> by default (Tokay et al. 2014; Jaffrain &amp; Berne 2011), or Vt(D<sub>i</sub>) with <code>fall_speed="theoretical"</code>. Concentration, LWC, Z, moments, Dm, σ<sub>m</sub> and Nw all follow from N(D). Rain rate is the volume flux through the beam, so it is unaffected (it was already correct).</dd>
+<dt>Effect</dt><dd>Concentration and LWC rise, Dm and σ<sub>m</sub> fall (<a href="#s-compare">§7</a>). Each formula is checked against an independent loop implementation in <code>tests/test_parsivel_decoder.py</code>.</dd>
+</dl></div>
+
+<div class="card" id="s-classes"><h3><span class="tag sci">science</span>2.2 Size classes: OTT manual values by default</h3>
+<dl>
+<dt>0.50.0</dt><dd><code>parsivel_diameter_py.txt</code> lists every diameter class centre and width multiplied by exactly 1.03 (0.064 instead of 0.062 mm … 25.235 instead of 24.5 mm). Between 0.85 and 3.8 m/s its <code>Measured_Vt</code> column also differs from the OTT velocity classes, by up to 9 %. Neither change is documented.</dd>
+<dt>0.65.0</dt><dd><code>classes="ott"</code> (default) uses the OTT Parsivel² class centres and widths bundled in <code>diameter.dat</code>/<code>velocity.dat</code>. <code>classes="legacy"</code> reproduces the 0.50.0 tables.</dd>
+<dt>Effect</dt><dd>A 3 % size scaling raises R by 1.03³ ≈ 9.3 % and Z by 1.03⁶ ≈ 19 % (0.8 dB). If the 1.03 is a deliberate GV calibration, pass <code>classes="legacy"</code> or ask for it to become the default.</dd>
+</dl></div>
+
+<div class="card"><h3><span class="tag sci">science</span>2.3 Velocity–diameter filter rebuilt from its rule</h3>
+<dl>
+<dt>0.50.0</dt><dd>A hand-entered 32 × 32 matrix. It follows "velocity centre within ±50 % of Vt(D)" except for one isolated accepted cell (9.5 mm drops at 4.4 m/s) and two cells at 13.6 m/s. Its Vt was linearly extrapolated above 5.8 mm, reaching 10.6 m/s at 25 mm.</dd>
+<dt>0.65.0</dt><dd>The mask is computed: keep a cell when the velocity class centre lies within (1 ± <code>velocity_filter</code>) × Vt(D) (default ±50 %) and the diameter class centre is below <code>max_diameter_mm</code> (default 10 mm, as before). Vt is Gunn &amp; Kinzer (1949), interpolated from a bundled 0.2 mm table, with a Stokes D² tail below 0.1 mm and the 9.175 m/s plateau above 5.9 mm. <code>classes="legacy"</code> keeps the old matrix, minus the isolated cell. <code>velocity_filter=None</code> disables the filter.</dd>
+</dl></div>
+
+<div class="card"><h3><span class="tag sci">science</span>2.4 σ<sub>m</sub> was a variance</h3>
+<dl>
+<dt>0.50.0</dt><dd><code>Sigma_M = Σ(D−Dm)² D³ N / Σ D³ N</code>, without the square root, stored in mm² as <code>mass_spectrum_width</code>. Values above 20 were set to 0.</dd>
+<dt>0.65.0</dt><dd>σ<sub>m</sub> = √(…) in mm, the standard deviation of the mass spectrum (Ulbrich &amp; Atlas 1998; Williams et al. 2014), NaN when there are no drops. The 0-substitution clip is gone, as is the same clip on Dm.</dd>
+</dl></div>
+
+<div class="card"><h3><span class="tag sci">science</span>2.5 dBZ, Dm, Dmax for dry and weak minutes</h3>
+<dl>
+<dt>0.50.0</dt><dd>dBZ = max(10 log₁₀ Z, 0): Z = 0 gave 0 dBZ, and every real value below 0 dBZ (drizzle) was clamped to 0. Dm, Dmax and σ<sub>m</sub> were 0 with no drops.</dd>
+<dt>0.65.0</dt><dd>dBZ is NaN for Z = 0 and negative values are kept. Shape parameters are NaN when undefined. Extensive quantities (counts, concentration, LWC, Z, R) are 0 for an observed dry minute and NaN for an unobserved one.</dd>
+</dl></div>
+
+<div class="card"><h3><span class="tag sci">science</span>2.6 Rates use the sampled time</h3>
+<dl>
+<dt>0.50.0</dt><dd>One-minute sums were divided by 60 s even when the minute held only part of its telegrams, for example at the edges of an outage. A minute with 3 of its 6 telegrams reported half its rain rate and concentration.</dd>
+<dt>0.65.0</dt><dd>Each telegram gets its own measuring interval, and <code>sample_duration</code> (the sum over the minute's telegrams) is the Δt in N(D) and R. A lost telegram only lengthens the spacing between neighbours, always by a whole multiple of the interval. So the interval is the largest spacing that at least 80 % of the nearby spacings are whole multiples of, and that itself occurs at least three times. The 15 spacings before, after and around each telegram are tried; the answer explaining the most spacings wins and may not exceed the telegram's own spacing. Only intervals of 10 s or more are considered, the shortest the Parsivel offers. A telegram whose own neighbourhood is inconclusive (a stamp a few seconds late, a short irregular burst) takes the interval of the nearest telegram, within 30, that has one. A day-level median, used in the first draft, doubles once half the telegrams are lost; this rule gives the right answer at 60 % random loss, follows a 60 s → 10 s change of logger interval, and stays exact at 10, 30 and 60 s intervals when stamps are up to 5 s late and 30 % of the telegrams are lost. With nothing nearby to go on, the most common interval of the surrounding telegrams is used, then the previous day's, then that of later telegrams, then 60 s with a warning. <code>telegram_interval_s</code> overrides the inference.</dd>
+</dl></div>
+
+<div class="card"><h3><span class="tag sci">science</span>2.7 Model soundings (Skew-T)</h3>
+<dl>
+<dt>Where</dt><dd><code>src/gv_tools/util/skewt.py</code>, <code>src/gv_tools/util/upper_air.py</code></dd>
+<dt>Grid-relative winds</dt><dd>RAP, HRRR and NAM store u/v relative to their Lambert-conformal grid, and 0.50.0 plotted them as if they were east/north. At Wallops the HRRR grid is turned about 14° from true north. 0.65.0 reads <code>uvRelativeToGrid</code>, <code>LoV</code> and <code>Latin1/2</code> from the GRIB and rotates the winds (NCEP convention: u<sub>e</sub> = cos α u + sin α v, v<sub>e</sub> = −sin α u + cos α v, α = n(λ − LoV)).</dd>
+<dt>Below-ground levels</dt><dd>Model isobaric levels below the ground (p ≥ p<sub>sfc</sub>) are extrapolated values, yet 0.50.0 started the "surface" parcel from the highest-pressure level. The downloader now also requests <code>PRES</code> (surface pressure) and <code>SPFH</code>. Underground levels are dropped (<code>below_ground="drop"</code>), and the surface (2 m T/RH, 10 m wind) becomes the first level when present, so the parcel starts at the ground. The parcel label says where it starts.</dd>
+<dt>Humidity</dt><dd>Dew point comes from specific humidity when the file has it. That avoids the ambiguity of GFS relative humidity, which is reported over ice below −20 °C.</dd>
+<dt>CAPE/CIN</dt><dd>Unchanged on purpose. MetPy ≥ 1.6 (the package minimum) already applies the virtual-temperature correction inside <code>cape_cin</code>; the plot label now says so.</dd>
+</dl></div>
+
+<div class="card"><h3><span class="tag sci">science</span>2.8 Wind roses: calms</h3>
+<dl>
+<dt>0.50.0</dt><dd>Speed-0 observations were binned by their reported direction, usually 0° (north), which inflated the northerly sector.</dd>
+<dt>0.65.0</dt><dd>Speeds below <code>calm_threshold</code> (0.5 m/s, the usual calm limit) count toward the total but are reported as "Calm x %" rather than placed in a sector, so sectors plus calm add up to 100 %. The AIO quicklook also draws wind direction as points, which removes the false vertical strokes at every 0°/360° wrap.</dd>
+</dl></div>
+
+<div class="card"><h3><span class="tag sci">science</span>2.9 Parsivel quicklook</h3>
+<dl>
+<dt>0.65.0</dt><dd>N(D) spans several decades, so it is now coloured on a log scale (<code>log_scale=False</code> restores linear). It is drawn on the true class edges, and minutes without telegrams are shaded grey so outages aren't read as dry weather.</dd>
+</dl></div>
+
+<div class="card"><h3><span class="tag sci">science</span>2.10 Telegrams and gauge reports go in the minute they describe</h3>
+<dl>
+<dt>0.50.0</dt><dd>Telegrams were binned by their logger stamp. A Parsivel telegram holds the drops of the interval that <em>ends</em> at its stamp, so a 60 s telegram stamped 12:01:00 (covering 12:00–12:01) was labelled 12:01, one minute late. The first draft of 0.65.0 did the same for tipping-bucket reports.</dd>
+<dt>0.65.0</dt><dd>A Parsivel telegram is counted in the minute holding the centre of its interval (stamp − interval/2). A gauge report covers the time since the previous report and goes in the minute whose centre it covers. Minutes are labelled by their start, so the 12:01:00 telegram now fills 12:00. For 10 s telegrams stamped at :05, :15 … nothing moves. <code>time_binning="stamp"</code> restores stamp binning for Parsivel.</dd>
+</dl></div>
+
+<h2 id="s-issues">3. The nine 0.50.0 issues from the gv_process README</h2>
+
+<div class="card"><h3><span class="tag fix">fix</span>1. Raw PIERS and APU Parsivel files could not be read on their own</h3>
+<dl>
+<dt>Was</dt><dd><code>PIERS0042_Parsivel_20260810001005.zip</code> raised "could not infer a date". <code>apu04_2026081000.zip</code> raised "contain no valid observations". A folder of them silently returned nothing.</dd>
+<dt>Now</dt><dd>File names are no longer needed. Each source (a file or archive member) is scanned for its earliest and latest telegram stamp; this only looks at the 14 bytes before each <code>;</code> and costs about 0.05 s for a day of packets. Sources are then decoded in that order. Raw PIERS and APU names, undated names and multi-day files all work, and <code>discover_parsivel</code> reports the dates actually present. <code>filename_stamp()</code> still recognises 8-, 10-, 12- and 14-digit stamps; it is used only to skip packet and daily files more than a day outside a <code>start_date</code>/<code>end_date</code> window when a directory is scanned. Files you name explicitly are never skipped by name.</dd>
+<dt>Files</dt><dd><code>_parsivel.py</code>, <code>io/readers.py</code>, <code>adapters/parsivel.py</code></dd>
+</dl></div>
+
+<div class="card"><h3><span class="tag fix">fix</span>2. A day lost its last minutes</h3>
+<dl>
+<dt>Was</dt><dd>Only files named for a date were read, and only telegrams stamped with that date were kept. The PIERS packet stamped 00:00:05 the next morning holds 23:50–23:59, so neither day kept those minutes.</dd>
+<dt>Now</dt><dd>Every telegram goes to the UTC day (and minute) of the centre of its measuring interval. A day is produced only once no unread source can hold a telegram for it: the earliest stamp of every remaining source must lie at least 30 minutes after the end of the day. A file named for one day that also holds part of an earlier day can therefore no longer produce that earlier day a second time and replace it with a partial copy. That was a defect in the first draft, found in review. To get one complete day from <code>read_parsivel</code>, pass that day's folder and the next day's (its first packet holds 23:50–23:59) with <code>start_date</code>/<code>end_date</code>.</dd>
+</dl></div>
+
+<div class="card"><h3><span class="tag fix">fix</span>3. Minutes with no telegram read as dry</h3>
+<dl>
+<dt>Was</dt><dd><code>resample("1min").sum().fillna(0)</code> turned outages into 0 drops and 0 mm/h.</dd>
+<dt>Now</dt><dd>Minutes with no telegram are NaN, with <code>telegram_count = 0</code> and <code>sample_duration = 0</code>. Day products cover all 1440 minutes. <code>read_parsivel</code> spans the first to last minute with a telegram and fills skipped days as missing.</dd>
+</dl></div>
+
+<div class="card"><h3><span class="tag fix">fix</span>4. Telegrams counted twice or lost</h3>
+<dl>
+<dt>Repeats across files</dt><dd>Telegrams are keyed by time stamp and counted once. Exact repeats show in <code>duplicate_telegrams</code>. Equal stamps with different spectra show in <code>conflicting_telegrams</code>; the first is kept, and daily files are read first.</dd>
+<dt>Daily file + packets</dt><dd>Reading both is now safe (same result as either alone, see test).</dd>
+<dt>Logged twice</dt><dd>The Parsivel can't send telegrams less than 10 s apart, so an equal spectrum stamped within 2 s of another is the same telegram logged twice. It is counted once and shows in <code>duplicate_telegrams</code>. Before, every repeat added its drops and its sampling time. A pair that fills a gap of about two intervals is kept: that is a telegram stamped late, landing just before the next one.</dd>
+<dt>Clock not set</dt><dd>A telegram stamped before 2005 or more than 30 days ahead of the computer's clock comes from a logger whose clock wasn't set (2000-01-01 is typical). It is rejected and counted in <code>rejected_lines</code>, so it can't become a day of its own or stretch <code>read_parsivel</code>'s time axis back 26 years.</dd>
+<dt>Equal member names</dt><dd>Archives are read in memory, member by member, so equal names in two archives no longer overwrite each other.</dd>
+<dt>No final newline</dt><dd>Each file is read separately; nothing is concatenated. Two telegrams that are already run together on one line are split at their <code>YYYYMMDDhhmmss;</code> stamps.</dd>
+<dt>Stray <code>"</code></dt><dd>Lines are split by hand, with no CSV quoting. A quote can only break the telegram it sits in, and only if it falls in the spectrum.</dd>
+<dt>Non-UTF-8 byte</dt><dd>Decoded with replacement, so a bad byte invalidates at most its own telegram (<code>rejected_lines</code>). Rejected lines are reported for every day a file's stamps cover, even when none of its telegrams could be used.</dd>
+<dt>Validation</dt><dd>A telegram must have a valid 14-digit stamp and <em>exactly</em> 9 header fields plus 1024 non-negative integer counts, with an optional trailing comma. 0.50.0 accepted any line with at least 1034 fields, so a telegram with 10 header fields was read with every count one diameter class off. 0.50.0 also turned any unparsable count into 0. Rejected layouts produce one warning listing the field counts seen. For a differently configured logger, set <code>spectrum_offset</code> (header fields) or <code>strict_fields=False</code>.</dd>
+</dl></div>
+
+<div class="card"><h3><span class="tag fix">fix</span>5. Scratch files in the working directory</h3>
+<dl>
+<dt>Was</dt><dd><code>./tmp/&lt;instrument&gt;/&lt;date&gt;</code> under the current directory; two processes on the same instrument and date deleted each other's files.</dd>
+<dt>Now</dt><dd>No files are written. <code>temp_root</code> is accepted but ignored, with a <code>DeprecationWarning</code>. The deprecated helpers <code>unzip_files_parallel</code>/<code>concatenate_files</code> use a private <code>tempfile.mkdtemp</code> directory when no <code>temp_root</code> is given, prefix member names with their archive name, and add missing newlines.</dd>
+</dl></div>
+
+<div class="card"><h3><span class="tag fix">fix</span>6. <code>source</code> carried absolute server paths</h3>
+<dl>
+<dt>Now</dt><dd><code>source</code> describes the input (for example "OTT Parsivel2 raw telegrams (PIERS logger)"), and <code>source_files</code> lists file names only. This applies to Parsivel, R.M. Young, Met One, WS800, gauge attrs, MRR (<code>mrr_source_files</code>) and 2DVD (<code>source_file</code>). Gauge rows keep their <code>source_path</code> column, which you can drop.</dd>
+</dl></div>
+
+<div class="card"><h3><span class="tag fix">fix</span>7. WS800 enthalpy and density carried mixing-ratio and pressure labels</h3>
+<dl>
+<dt>Now</dt><dd>Each file is checked against the thermodynamics. Mixing ratio (g/kg) and moist enthalpy, h = 1.006 T + w(2501 + 1.86 T) kJ/kg, are computed from T, RH and p, and the <code>MixingRatio_*</code> values are matched to the closer one. A <code>RelPress_*</code> median of 0.5–2 is air density; 300–1200 is pressure. Columns holding enthalpy or density become <code>specific_enthalpy[_min|_max…]</code> (kJ kg⁻¹) and <code>air_density[…]</code> (kg m⁻³). The decision is recorded in <code>ws800_mixing_ratio_columns</code>/<code>ws800_rel_press_columns</code>. When T/RH/p are missing, the PIERS logger's known layout (enthalpy, density) is assumed. The WS800 quicklook's "Mixing ratio" panel becomes "Specific enthalpy". Units are also added for wind chill, compass and other fields that were unitless before.</dd>
+</dl></div>
+
+<div class="card"><h3><span class="tag fix">fix</span>8. <code>read_gauge</code> stopped at decoded packets</h3>
+<dl>
+<dt>Now</dt><dd><span class="tag new">new</span><code>read_tipping_bucket(source, tip_depth_mm=…)</code> and <code>tipping_bucket_rain(frame, tip_depth_mm=…)</code> return, per minute and per bucket, <code>*_tips</code>, <code>*_depth_mm</code>, <code>*_rate_mm_h</code> and <code>*_flag</code>. <code>tip_depth_mm</code> is required, so a bucket size is never assumed.
+<ul>
+<li>A decrease can mean three things: a counter reset (the new value counts the tips since, flag 1); a dip, where the records until the counter is back at its old level are bad (a dropout to 0, a stale value); or a spike, where the record before was bad. Each reading implies a rain rate, and a reading that needs more than <code>max_rate_mm_h</code> (with a Poisson allowance for bursts) is impossible. A small drop, to more than half the old level, takes the calmest reading. A drop to less than half the old level looks like a cleared counter, so it stays a reset unless the reset would need a rate more than three times the dip's plus two tips per report. Removed records get flag 16.</li>
+<li>Examples. Plain differencing turned 100, 101, 102, 3, 103 into 106 tips and a single 9999 into 2 541 mm; now the first gives 3 tips and the 9999 is removed. Light rain across a reset (1, 2, 0, 1, 2, 3) and a reboot in heavy rain (500, 515, 0, 15, 30) count every tip. A dry evening with a two-record dropout (15, 15, 0, 0, 15) gives 0 tips, and a stale value after a reset (0, 3, 5, 4, 7, 8) gives 8.</li>
+<li>A dropout longer than three records is recognised when the counter jumps back to its old level. The records since the drop are removed and the tips count from the old level (1013, 1013, 0, 0, 0, 0, 1016, 1018 gives 5 tips).</li>
+<li>A drop on the last record can't be confirmed by a later one, and a jump no rain can make is a re-based counter. Their tips are NaN (flag 1) rather than the raw counter value. With <code>counter_max</code>, a decrease counts as a wrap-around only if the implied tips are plausible at <code>max_rate_mm_h</code>, so a logger restart from 40 002 to 0 is not 25 534 tips.</li>
+<li>A logger that clears its counter on a schedule should use <code>glitch_window=0</code>, which reads every drop as a reset (see §10).</li>
+<li>A report covers the time since the previous one and goes in the minute whose centre it covers (§2.10). Minutes no report covers are NaN: before the first report (or before a <code>start</code> filter), inside gaps longer than 2.5× the usual spacing (flag 2: tips to the gap's last minute, rate NaN), and inside a report spanning several minutes in which tips fell (flag 8). Tips already counted in a minute that such a report makes unknown move with its tips, so none are lost. A multi-minute report with no tips makes all its minutes 0, because nothing fell.</li>
+<li>Rates above <code>max_rate_mm_h</code> (300) are flagged (4) and their depth and rate set to NaN, so sums can't include them by accident. The tips are kept.</li>
+</ul>
+<code>counter="incremental"</code> handles loggers that report tips per record. <code>read_gauge</code> also reads daily files and packets together now, dropping exact repeats (<code>duplicate_records</code>).</dd>
+<dt>Note</dt><dd><code>gvp_tipping_bucket.py</code> was not in the zip, so this is a new implementation rather than a move. It treats <code>TB_*_tips</code> as a cumulative counter, which matches the README's mention of counter resets.</dd>
+</dl></div>
+
+<div class="card"><h3><span class="tag fix">fix</span>9. h5netcdf range too old for xarray 2026.9</h3>
+<dl>
+<dt>Now</dt><dd>The <code>netcdf</code> and <code>all</code> extras require <code>h5netcdf&gt;=1.8</code>, and <code>gv-tools check</code> reports 1.8 as the minimum. If an older h5netcdf is installed anyway, <code>read_mrr</code> raises an <code>ImportError</code> that names the fix instead of "'Variable' object has no attribute 'filters'".</dd>
+</dl></div>
+
+<h2 id="s-other">4. Other fixes</h2>
+<div class="table-wrap"><table>
+<tr><th>Area</th><th>0.50.0</th><th>0.65.0</th></tr>
+<tr><td>AIO daily files + packets (R.M. Young, WS800)</td><td>When any <code>*_daily</code> file was present, every packet was dropped, including packets for days without a daily file</td><td>All files are read; observations are de-duplicated by time and the daily value wins a tie</td></tr>
+<tr><td>Ingest accounting</td><td>Files were decoded one at a time, so duplicates across files went uncounted, and per-call totals were summed once per day (a monthly Met One file counted its rejects about 31 times)</td><td>One decode call per read; totals reported once</td></tr>
+<tr><td>Met One <code>HHMM = 2400</code></td><td>Rejected, losing the last record of every day</td><td>Kept as 00:00 of the next day; the month check accepts the closing midnight record</td></tr>
+<tr><td>Met One extra fields (11–14)</td><td><code>KeyError</code> crash</td><td>Unknown field numbers are ignored</td></tr>
+<tr><td>Met One negative values</td><td>The field pattern required a literal <code>+</code>, so every row with a negative value (for example <code>08-005.6</code>, a sub-freezing temperature) was rejected</td><td>Signed fields are read (Campbell printable ASCII puts the sign in place of the <code>+</code>)</td></tr>
+<tr><td>AIO local time zones with daylight saving</td><td>One ambiguous or non-existent local time (the repeated or skipped hour) raised and aborted the whole read</td><td>The repeated hour is resolved from the record order. Anything still unresolvable becomes a counted reject. Applies to Met One, R.M. Young and WS800.</td></tr>
+<tr><td>Polar-stereographic model grids</td><td>—</td><td>Grid-relative winds are rotated (for example HRRR-Alaska). Other grids give a warning instead of silently claiming earth-relative winds.</td></tr>
+<tr><td>Merged Parsivel provenance</td><td>—</td><td><code>read_parsivel</code>/<code>read_parsivel_raw</code> sum the telegram counts over days and count rejected lines once per file. They report one telegram interval, or "varies by day". <code>read_parsivel_raw(include_spectrum=True)</code> keeps the spectrum.</td></tr>
+<tr><td>Conflicting telegrams</td><td>—</td><td>Two different spectra with the same time stamp (for example two instruments mixed together) now log a warning, not just a counter.</td></tr>
+<tr><td>R.M. Young <code>discover</code></td><td>Dates from file names</td><td>Dates from the observations (matches what <code>read</code> returns)</td></tr>
+<tr><td>MRR2 Unix time</td><td>Fractional seconds truncated; NaN not handled</td><td>Rounded to milliseconds; NaN and fill values give NaT</td></tr>
+<tr><td>Parsivel reader file order</td><td>Files had to be in chronological order (first/last names set the date range)</td><td>Any order</td></tr>
+<tr><td>2DVD non-UTF-8 byte</td><td><code>UnicodeDecodeError</code> with no line number</td><td>Replaced, then reported as a numeric error with its line number</td></tr>
+<tr><td>Gauge spacing under pandas 3</td><td>—</td><td>Record spacing computed independently of index resolution (pandas 3 parses to µs)</td></tr>
+<tr><td>Matplotlib 3.11</td><td><code>set_bad</code> PendingDeprecationWarning</td><td><code>with_extremes(bad=…)</code></td></tr>
+</table></div>
+
+<h2 id="s-new">5. Additions</h2>
+<ul>
+<li><span class="tag new">new</span>Parsivel variables: <code>normalized_intercept_parameter</code> (Nw = 4⁴/6 · M₃⁵/M₄⁴, m⁻³ mm⁻¹), <code>mean_fall_speed</code> (count-weighted, m/s), <code>raw_drop_count</code> (before the filter), <code>telegram_count</code>, <code>sample_duration</code>, coordinate <code>drop_diameter_width</code>, and an optional per-minute <code>raw_spectrum</code> (time × diameter × velocity, NaN for missing minutes) with <code>include_spectrum=True</code>.</li>
+<li><span class="tag new">new</span>Parsivel options: <code>start_date</code>/<code>end_date</code>, <code>classes</code>, <code>fall_speed</code>, <code>velocity_filter</code>, <code>max_diameter_mm</code>, <code>telegram_interval_s</code>, <code>time_binning</code>, <code>strict_fields</code>, <code>spectrum_offset</code>, <code>full_day</code>, <code>include_spectrum</code>.</li>
+<li><span class="tag new">new</span>Provenance attributes: <code>telegrams</code>, <code>duplicate_telegrams</code>, <code>conflicting_telegrams</code>, <code>rejected_lines</code>, <code>rejected_lines_by_file</code>, <code>telegram_interval_s</code>/<code>_source</code>, <code>time_binning</code>, <code>time_coordinate</code>, <code>parsivel_classes</code>, <code>fall_speed_method</code>, <code>class_description</code>, <code>source_file_count</code>.</li>
+<li><span class="tag new">new</span>Decoder functions: <code>iter_days</code> (streaming), <code>integral_parameters</code>, <code>telegram_intervals</code>, <code>get_parsivel_classes</code>, <code>terminal_velocity</code>, <code>velocity_filter_mask</code>, <code>parse_telegram_line</code>, <code>filename_stamp</code>; <code>gv_tools.adapters.base.localize_to_utc</code>.</li>
+<li><span class="tag new">new</span><code>gv_tools.io.read_tipping_bucket</code>, <code>gv_tools.io.tipping_bucket_rain</code> (also <code>gv_tools.read_tipping_bucket</code>).</li>
+<li><span class="tag new">new</span><code>gv_tools.util.skewt.lambert_rotation_angle</code>, <code>grid_to_earth_winds</code>; <code>SoundingProfile.metadata</code>.</li>
+<li><span class="tag new">new</span>Manual page <code>docs/parsivel.rst</code> with every formula, plus a tipping-bucket cell in <code>notebooks/check_gv_tools.ipynb</code>.</li>
+</ul>
+
+<h2 id="s-perf">6. Performance and memory</h2>
+<p>Measured for the reviewed 0.60.0 candidate whose implementation is released here as 0.65.0, using the same synthetic PIERS day: 145 ten-minute zip packets, 10 s telegrams, 8 640 telegrams. 0.50.0 could only read it after the files were renamed to 8-digit dates. Best of 3 runs, repeated on different runs of a shared machine (hence the ranges); peak from <code>tracemalloc</code>. These supplied benchmarks were reviewed but not rerun during the 0.65.0 integration.</p>
+<div class="table-wrap"><table>
+<tr><th>Task</th><th class="num">0.50.0</th><th class="num">0.65.0</th><th>Why</th></tr>
+<tr><td>Parsivel day, time</td><td class="num">3.7–4.6 s</td><td class="num">0.37–0.41 s (≈10×)</td><td>Spectra parsed with <code>np.fromstring</code> (slow path only for odd lines); no extraction, concatenation or pandas python-engine parse; minute sums by slice (reduceat along axis 0 was ~15× slower); only minutes with drops are integrated. With a date window, lines stamped outside it are skipped before their spectrum is decoded and a time-ordered file is closed after the window: one day out of a 110 MB six-day file takes 0.46 s instead of 1.7 s</td></tr>
+<tr><td>Parsivel day, peak memory</td><td class="num">223 MB</td><td class="num">57 MB</td><td>Counts stored as uint16; a day is released as soon as no unread source can add to it, so reading 10 days of daily or undated files never holds more than 2 days of telegrams at once. Inside a time-ordered file a day is released 30 minutes after its end while the file is still being read: one 110 MB file holding six days of 10 s telegrams peaks at 55 MB, instead of 149 MB when the whole file was held, and memory no longer grows with the length of a file. A 1.1 GB file holding 30 days now takes 11 s and 139 MB of resident memory, where the second draft took 16 s and 692 MB</td></tr>
+<tr><td>2DVD day, 300 000 drops</td><td class="num">3.7–4.3 s</td><td class="num">1.6–1.8 s (≈2.4×)</td><td>Split-time records parsed in vectorized 20 000-line chunks; any irregular chunk falls back to the line parser, so errors and output are identical</td></tr>
+</table></div>
+<p>Everything stays single-process. Nothing new spawns threads or processes, so CPU use on shared servers is unchanged.</p>
+
+<h2 id="s-compare">7. How much the numbers move (synthetic test day)</h2>
+<p>Same synthetic day as §6 (drops placed near the terminal-velocity curve). Means are over minutes with rain. These numbers illustrate the size of each change; they are not a measurement. Expect changes of a similar sign on real data, with magnitudes that depend on the DSD.</p>
+<div class="table-wrap"><table>
+<tr><th>Run</th><th class="num">Day rain (mm)</th><th class="num">Mean dBZ</th><th class="num">Mean Dm (mm)</th><th class="num">Mean σ<sub>m</sub></th><th class="num">Mean Nt (m⁻³)</th><th class="num">Mean LWC (g m⁻³)</th><th class="num">dBZ when dry</th></tr>
+<tr><td>0.50.0</td><td class="num">29.13</td><td class="num">40.79</td><td class="num">2.389</td><td class="num">1.303 (mm², variance)</td><td class="num">302.6</td><td class="num">0.274</td><td class="num">0</td></tr>
+<tr><td>0.65.0 default (OTT, measured)</td><td class="num">26.63</td><td class="num">40.81</td><td class="num">2.004</td><td class="num">1.096 mm</td><td class="num">996.1</td><td class="num">0.399</td><td class="num">NaN</td></tr>
+<tr><td>0.65.0 OTT, theoretical</td><td class="num">26.63</td><td class="num">40.69</td><td class="num">1.986</td><td class="num">1.094 mm</td><td class="num">967.2</td><td class="num">0.394</td><td class="num">NaN</td></tr>
+<tr><td>0.65.0 legacy classes, measured</td><td class="num">29.13</td><td class="num">41.59</td><td class="num">2.075</td><td class="num">1.127 mm</td><td class="num">957.1</td><td class="num">0.433</td><td class="num">NaN</td></tr>
+</table></div>
+<p>Rain totals of 0.50.0 and legacy agree exactly, because the flux rain rate was always correct and differs only by the 1.03³ size scaling. Concentration rises about 3× and Dm drops about 0.4 mm once each count is divided by its own velocity class.</p>
+
+<h2 id="s-review">8. Independent reviews</h2>
+<p>A separate reviewer checked three drafts of the proposed 0.60.0 change set against the physics, with reproduction scripts and truth-based checks. Every confirmed defect from all three rounds is included in the implementation released as 0.65.0, and each has a regression test that fails on the draft where it was found.</p>
+<h3>First review: 11 defects in the first draft</h3>
+<div class="table-wrap"><table>
+<tr><th>Finding in the draft</th><th>Fix</th></tr>
+<tr><td>One median telegram interval per day: 60 % loss doubled it (rates halved), and a 60 s → 10 s change made the morning 6× too high</td><td>Per-telegram interval from consistent spacings (§2.6)</td></tr>
+<tr><td>A partial copy of a day could replace the complete one (release ordered by file name)</td><td>Release ordered by scanned telegram stamps (issue 2)</td></tr>
+<tr><td>Date filters skipped explicitly named multi-day files by their name</td><td>Content-based filtering; explicit files are never skipped by name</td></tr>
+<tr><td>8 header fields + trailing comma accepted with counts shifted one class</td><td>Exact field count (issue 4)</td></tr>
+<tr><td>Met One rows with negative values dropped (pre-existing)</td><td>Signed fields (§4)</td></tr>
+<tr><td>One bad counter value could add thousands of mm</td><td>Glitch removal, plausible wraps, suspect rates blanked (issue 8)</td></tr>
+<tr><td>Undated file names were all held in memory</td><td>Stamp scan orders every source</td></tr>
+<tr><td>Gauge minutes with no covering report shown as dry</td><td>Interval-centre binning and NaN for uncovered minutes</td></tr>
+<tr><td>A local zone with daylight saving aborted Met One reads (pre-existing)</td><td>DST-safe localisation (§4)</td></tr>
+<tr><td>Merged bookkeeping: spectrum dropped, day-1 counts, rejects counted per day</td><td>Merged provenance (§4)</td></tr>
+<tr><td>Quicklook painted outages white in the N(D) panel</td><td>Missing cells transparent so the grey outage shading shows</td></tr>
+</table></div>
+<h3>Second review: 8 defects and 2 memory problems in the second draft</h3>
+<p>The second round confirmed the 11 fixes above, then placed 25 920 telegrams from overlapping, unsorted and multi-day files against truth with no error.</p>
+<div class="table-wrap"><table>
+<tr><th>Finding in the second draft</th><th>Fix</th></tr>
+<tr><td>Decoding could loop forever when a later file held a day before one already attempted: a telegram stamped 2000-01-01 by a logger whose clock wasn't set, a monthly archive with an outage plus files recovered for the outage, or one mis-stamped telegram plus a missing day</td><td>The next day is worked out afresh on every pass and remembered only once it has been produced. Each pass consumes the earliest pooled telegram, so the loop always ends. Stamps before 2005 or more than 30 days ahead of the clock are rejected (issue 4)</td></tr>
+<tr><td>Telegrams logged twice 1 s apart were counted twice, and the interval could come out as 1 s (rain 10× too high)</td><td>An equal spectrum within 2 s is one telegram; intervals under 10 s, the Parsivel minimum, are never inferred</td></tr>
+<tr><td>Logger stamps 0–3 s late sent 28 % of the telegrams to the 60 s fallback (a 10 s day's rain 40 % low)</td><td>A telegram whose own neighbourhood is inconclusive takes the interval of its nearest neighbour that has one (§2.6). Exact with stamps up to 5 s late</td></tr>
+<tr><td>Gauge: resets at small counts were taken for bad values (light rain across a reset: 3 of 5 tips; a counter cleared every 10 min: 300 of 316), and a bad last value became 7 tips</td><td>A drop is a reset unless a reset is impossible at <code>max_rate_mm_h</code>; a drop on the last record has unknown tips (issue 8). The reviewer's cases now count 5 of 5, 17 of 17 and 316 of 316</td></tr>
+<tr><td>Gauge: tips already counted in minutes that a later gap report made unknown were thrown away (10 of 12)</td><td>They move into the gap report's minute (12 of 12)</td></tr>
+<tr><td><code>discover_input_dates</code> listed every date between a file's first and last stamp (9 719 dates for one clock-reset telegram)</td><td>Lists the days that hold stamps</td></tr>
+<tr><td>A telegram just after midnight could be lost when its interval was worked out again for the next day</td><td>A telegram left for the next day keeps the interval that put it there (9 661 of 9 661 counted)</td></tr>
+<tr><td>A file whose telegrams were all rejected was missing from the provenance</td><td>Its rejected lines are reported for every day its stamps cover</td></tr>
+<tr><td>Memory: one time-ordered file was held whole (30 days in 1.1 GB peaked at 692 MB)</td><td>Days are released while the file is read: 139 MB (§6)</td></tr>
+<tr><td>Memory: one impossible stamp made the scan read the whole file at once</td><td>Stamps are checked per 8 MB chunk, and the order of a file is judged on the stamps that will be used</td></tr>
+</table></div>
+<h3>Third review: 3 defects in the third draft</h3>
+<p>The third round confirmed every round-two fix. It placed 43 200 telegrams from an ordered archive, daily files, packets and shuffled files against truth with no error, including with impossible stamps mid-file, damaged archives and 24 random mixes. It also checked 300 fuzzed files: the stamp scan never disagreed with the decoder. Two of its findings were about how a gauge counter drop is read, and one about repeated Parsivel telegrams:</p>
+<div class="table-wrap"><table>
+<tr><th>Finding in the third draft</th><th>Fix</th></tr>
+<tr><td>Gauge: any possible reset was preferred, so with a small counter a dropout or stale value became rain (15, 15, 0, 0, 15, 15 gave 15 tips; 0, 3, 5, 4, 7, 8 gave 13; daily resets with 0.5 % dropouts read 1.3 % high)</td><td>The reset, dip and spike readings are weighed by the rain rate each implies (issue 8). These give 0 and 8 tips; with dropouts, stale values and spikes together the totals are within 0.4 %</td></tr>
+<tr><td>Gauge: a dropout to 0 longer than three records made a 1 016-tip jump and lost the tips that fell meanwhile</td><td>A jump back to the level before a flat run after a drop is recognised as the end of a dropout (5 of 5 tips). Jumps nothing explains are NaN, not tips</td></tr>
+<tr><td>Decoder (low impact): a telegram stamped late, landing 1 s before the next one, was taken for a repeat when both were dry</td><td>A close pair that fills a gap of about two intervals is kept (8 640 of 8 640)</td></tr>
+</table></div>
+
+<h2 id="s-api">9. Compatibility and API changes</h2>
+<ul>
+<li><strong>Kept signatures:</strong> <code>_parsivel.run</code>, <code>process_input</code>, <code>load_tables</code>, <code>get_integral_parameters</code>, <code>get_dataset_from_parsivel</code> and <code>discover_input_dates</code> still accept their 0.50.0 arguments. <code>run</code> now also accepts a list of files. <code>load_tables()</code> returns the 0.50.0 layout (32 × 33 mask) built from the OTT classes; pass <code>classes="legacy"</code> or <code>table_dir</code> to get the old tables. If gv_process calls <code>load_tables()</code> + <code>get_integral_parameters()</code>, it picks up the corrections automatically.</li>
+<li><strong>Changed meaning:</strong> <code>mass_spectrum_width</code> is now in mm (σ<sub>m</sub>), not mm². <code>radar_reflectivity</code> can be NaN or negative.</li>
+<li><strong>Changed shape:</strong> Parsivel day products cover 1440 minutes; <code>read_parsivel</code> covers the observed span, with missing minutes inside it.</li>
+<li><strong>New columns</strong> in the Parsivel parameter frame: <code>Nw</code>, <code>V</code>, <code>Raw Drops</code>, <code>Telegrams</code>, <code>Sample_Seconds</code>.</li>
+<li><strong>Changed minute labels:</strong> with <code>time_binning="centre"</code> (default), telegrams whose stamps fall on or just after the minute (for example 60 s telegrams at :00 or :13) are labelled one minute earlier than in 0.50.0. Gauge reports are likewise labelled by the minute they cover.</li>
+<li><strong>Deprecated:</strong> <code>temp_root</code> (ignored), <code>unzip_files_parallel</code>, <code>concatenate_files</code>.</li>
+<li><strong>Removed:</strong> the "order files from earliest to latest" error and the symlink staging directory in <code>read_parsivel</code>.</li>
+<li><strong>Dependencies:</strong> <code>h5netcdf&gt;=1.8</code> in the <code>netcdf</code>/<code>all</code> extras. No new required packages.</li>
+</ul>
+
+<h2 id="s-limits">10. Assumptions and limits to know about</h2>
+<ul>
+<li><strong>Telegram layout — please check one real PIERS file and one real APU file.</strong> 9 header fields precede the 1024 spectrum values, as in 0.50.0, and only a trailing comma may follow the spectrum. If the loggers write a field after the spectrum, every telegram is rejected and the warning names the field count it saw. Then pass <code>strict_fields=False</code>, which ignores fields after the spectrum, or <code>spectrum_offset</code> if the header has a different number of fields.</li>
+<li><strong>Day edges.</strong> A day file's first telegram can belong to the previous day: a 60 s telegram stamped 00:00:13 covers 23:59:13–00:00:13 and is counted at 23:59. The day's own last minutes are in the next day's first file. Pass the next day's folder as well to get a complete day.</li>
+<li><strong>Time convention.</strong> 0.65.0 assumes the logger stamps a telegram (or gauge report) at the <em>end</em> of the interval it describes, which is how Parsivel telegrams and PIERS packets work. If a logger stamps the start instead, use <code>time_binning="stamp"</code> for Parsivel.</li>
+<li><strong>Interval inference.</strong> Right after a change of logger interval, one telegram can get the old interval, because measuring windows that would overlap are ambiguous. A run of fewer than about 20 telegrams at a longer interval inside a stream at a shorter one (ten 60 s telegrams in a 10 s day, say) looks exactly like lost telegrams and gets the shorter interval. A day with only two or three widely spaced telegrams can't show its interval, so the neighbouring days' interval is used, then 60 s with a warning. Pass <code>telegram_interval_s</code> when you know the interval.</li>
+<li><strong>Date windows and file names.</strong> With <code>start_date</code>/<code>end_date</code>, packet files and <code>*_daily</code> files named more than a day outside the window are skipped without being opened. Files named with a plain 8-digit date are always scanned, because such a file can hold several days; scanning costs about 0.1 s per 100 MB. A logger whose clock jumps to a wrong but possible date (a single telegram stamped on the wrong day, say) still produces that day.</li>
+<li><strong>Terminal speed.</strong> Gunn &amp; Kinzer values are for still air near sea level. They are right for Wallops; a high-altitude site would need an air-density correction.</li>
+<li><strong>Tipping buckets — please check how the PIERS logger handles <code>TB_*_tips</code>.</strong> The processor assumes a cumulative counter. Confirm this against <code>gvp_tipping_bucket.py</code>, or send it and it can replace this implementation.
+<ul>
+<li><strong>Counter never cleared, or cleared daily or on a reboot.</strong> The defaults suit this case. In tests with 1 % stale values, 1 % spikes and 0.5 % dropouts, totals were within 0.4 %.</li>
+<li><strong>Counter cleared on a schedule (every packet, every hour).</strong> Pass <code>glitch_window=0</code>. With small counts a reset and a dropout look alike. With the counter cleared every 10 minutes in showery rain, the default rules counted 6 % fewer tips and <code>glitch_window=0</code> 2 % fewer. That 2 % is the tips hidden by resets that show no drop (the first count after the reset at or above the old level), which no reading of the counter can recover.</li>
+</ul>
+A wrong but plausible first value can't be told from rain.</li>
+<li><strong>Size classes.</strong> The default (OTT) gives about 9 % less rain than 0.50.0. Choose <code>classes="legacy"</code> if the 1.03 factor is an intended calibration.</li>
+<li><strong>HRRR downloads.</strong> The NOMADS HRRR filter endpoint (<code>filter_hrrr_2d.pl</code> with <code>wrfprs</code> files) is unchanged and couldn't be tested from here.</li>
+<li><strong>User code.</strong> Your <code>parsivel_fx.py</code> uses the same tables and may contain the same velocity-axis pattern. Check it before comparing its output with gv_tools.</li>
+</ul>
+
+<h2 id="s-files">11. Files changed</h2>
+<div class="table-wrap"><table>
+<tr><th>File</th><th>Change</th></tr>
+<tr><td><code>src/gv_tools/_parsivel.py</code></td><td>Rewritten: decoder, class tables, DSD integrals, compatibility wrappers</td></tr>
+<tr><td><code>src/gv_tools/adapters/parsivel.py</code></td><td>New variables and units, provenance, directory selection, optional spectrum</td></tr>
+<tr><td><code>src/gv_tools/io/readers.py</code></td><td>Daily+packet union, one decode call per read, Parsivel span/gap handling, no directories in <code>source</code></td></tr>
+<tr><td><code>src/gv_tools/io/gauge.py</code></td><td>Tipping-bucket processing; daily+packet union with de-duplication</td></tr>
+<tr><td><code>src/gv_tools/io/py_2dvd.py</code></td><td>Vectorized parsing; file names only</td></tr>
+<tr><td><code>src/gv_tools/io/__init__.py</code>, <code>src/gv_tools/__init__.py</code></td><td>Export the new gauge functions; version 0.65.0</td></tr>
+<tr><td><code>src/gv_tools/adapters/lufft_ws800.py</code></td><td>Enthalpy/density relabelling, units, multi-file decode with daily priority</td></tr>
+<tr><td><code>src/gv_tools/adapters/rm_young_aio.py</code></td><td>File lists, daily priority, observation-based discover, DST-safe times, provenance</td></tr>
+<tr><td><code>src/gv_tools/adapters/metone_aio.py</code></td><td>2400 records, month edges, signed fields, unknown fields, DST-safe times, file lists, provenance</td></tr>
+<tr><td><code>src/gv_tools/adapters/base.py</code></td><td>New <code>localize_to_utc</code> helper (daylight-saving-safe local → UTC)</td></tr>
+<tr><td><code>src/gv_tools/mrr.py</code></td><td>h5netcdf message, ms time rounding, file names only</td></tr>
+<tr><td><code>src/gv_tools/quicklooks.py</code></td><td>Log N(D), class edges, outage shading, calm winds, direction as points, enthalpy panel</td></tr>
+<tr><td><code>src/gv_tools/util/skewt.py</code>, <code>upper_air.py</code></td><td>Wind rotation (Lambert, polar stereographic), below-ground levels, surface level, specific humidity, extra download fields</td></tr>
+<tr><td><code>src/gv_tools/environment.py</code>, <code>pyproject.toml</code></td><td>h5netcdf ≥ 1.8; version 0.65.0</td></tr>
+<tr><td><code>src/gv_tools/data/parsivel/terminal_velocity_gunn_kinzer.txt</code></td><td>New: Gunn–Kinzer table used for Vt(D)</td></tr>
+<tr><td><code>tests/test_parsivel_decoder.py</code>, <code>test_gauge.py</code>, <code>test_quicklooks.py</code></td><td>New tests (one or more per issue and formula)</td></tr>
+<tr><td><code>tests/test_io_readers.py</code>, <code>test_lufft_ws800_adapter.py</code>, <code>test_metone_aio_adapter.py</code>, <code>test_mrr.py</code>, <code>test_skewt.py</code></td><td>Updated for the new behaviour, plus new cases</td></tr>
+<tr><td><code>docs/*</code>, <code>HTML/</code></td><td>New Parsivel page; updated guide, instrument matrix, architecture, dependencies, API; rebuilt manual</td></tr>
+<tr><td><code>README.md</code>, <code>RELEASE_NOTES.md</code>, <code>RELEASE_VALIDATION_0.65.0.txt</code>, <code>INSTALL.tcsh</code>, <code>MANIFEST.in</code>, <code>notebooks/*.ipynb</code></td><td>Version 0.65.0 and release text; tipping-bucket notebook cell</td></tr>
+</table></div>
+
+<h2 id="s-validation">12. Validation</h2>
+<ul>
+<li>pytest: <span id="v-tests">176 passed, 2 skipped</span> (the 2 skips need C. Williams MRRPro sample data that isn't available here). Python 3.13, numpy 2.4, pandas 3.1, xarray 2026.9, h5netcdf 1.8.2, matplotlib 3.11, MetPy 1.7, Py-ART, xradar.</li>
+<li>Ruff (E4, E7, E9, F): all checks passed for <code>src</code>, <code>tests</code> and <code>examples</code>.</li>
+<li>Sphinx: built with warnings treated as errors; the title reads "GV Tools 0.65.0 documentation".</li>
+<li>The 2DVD vectorized reader gives a DataFrame identical to 0.50.0's on a 300 000-drop file.</li>
+<li>DSD formulas agree with an independent loop implementation to 1e-10, and the rain rate from N(D)·V equals the flux rain rate.</li>
+<li>Skew-T: a synthetic Lambert GRIB2 with grid-relative winds and two below-ground levels is read correctly. The reviewer checked the rotation against pyproj for tangent and secant cones.</li>
+<li>The reviewer's reproduction scripts from all three rounds were re-run after the fixes and all give the expected results. Examples: the interval at 60 % loss is 60 s with the true rain rate; a 60 → 10 s change is exact; Aug 9 keeps 1 440 telegrams; 10 days of undated files hold at most 2 days at once; the gauge glitch cases total 4 tips; the three looping cases finish with the right days; 1 s repeats and 3 s late stamps give the true rain rate; the gauge reset cases count every tip, and randomised gauge records with jitter and missing reports keep 100 % of the tips.</li>
+<li>A randomised check of the streaming release (40 cases: data split at random into ordered, shuffled, overlapping and zipped files, with interval changes, telegram loss and random date windows) gives products identical to reading every telegram at once, with no telegram arriving after its day.</li>
+<li>The third round's gauge cases (dropouts, stale values, spikes, reboots, small-count resets) all give the true totals. In 400 random records with two faults each, none is off by more than 2 tips; before the third-round fixes, one was off by more than 50.</li>
+<li>Interval inference was checked at 10, 30 and 60 s intervals with stamps up to 5 s late and up to 60 % loss. With up to 30 % loss every telegram gets the right interval; at 60 % loss up to about 1 telegram in 200 gets a multiple of it.</li>
+</ul>
+</main>
+</body>
+</html>

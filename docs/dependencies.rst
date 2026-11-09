@@ -13,7 +13,7 @@ formats and plotting features in use.
      - Packages
    * - ``netcdf``
      - NetCDF-backed MRR and xarray input
-     - h5netcdf, h5py, scipy
+     - h5netcdf (1.8 or newer; xarray 2026.9 needs ``Variable.filters()``), h5py, scipy
    * - ``plot``
      - All Matplotlib figures
      - matplotlib
@@ -42,7 +42,7 @@ Install and inspect dependencies with the required Anaconda Python using
    set PACKAGE_DIRECTORY = "$WORKSPACE/gv_tools"
    set PYTHON = "$HOME/anaconda3/bin/python"
 
-   $PYTHON -m pip install "$PACKAGE_DIRECTORY/dist/gv_tools-0.50.1-py3-none-any.whl[all]"
+   $PYTHON -m pip install "$PACKAGE_DIRECTORY/dist/gv_tools-0.65.0-py3-none-any.whl[all]"
    $PYTHON -m gv_tools.cli check --include radar --include plot --include notebook --include sounding
 
 The dependency checker reports unavailable or older packages but does not

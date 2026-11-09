@@ -1,9 +1,10 @@
 """Download point subsets of NOAA model pressure-level data.
 
 The downloaded GRIB2 files contain the fields normally needed to construct an
-upper-air sounding: height, temperature, relative humidity, and the horizontal
-wind components on all available pressure levels.  Downloads use NOAA NCEP's
-NOMADS grib-filter service and do not require an API key.
+upper-air sounding: height, temperature, relative and specific humidity, and the
+horizontal wind components on all available levels, plus pressure (for the
+surface pressure used to drop below-ground isobaric levels). Downloads use NOAA
+NCEP's NOMADS grib-filter service and do not require an API key.
 """
 
 from __future__ import annotations
@@ -84,7 +85,7 @@ _MODELS = {
     ),
 }
 
-_VARIABLES = ("HGT", "RH", "TMP", "UGRD", "VGRD")
+_VARIABLES = ("HGT", "PRES", "RH", "SPFH", "TMP", "UGRD", "VGRD")
 
 
 def available_models() -> tuple[str, ...]:
@@ -157,7 +158,9 @@ def _url(config: _Model, cycle: datetime, forecast_hour: int, latitude: float, l
 
 
 def _fetch(url: str, timeout: float) -> bytes:
-    request = Request(url, headers={"User-Agent": "gv-tools-upper-air/0.32"})
+    from .. import __version__
+
+    request = Request(url, headers={"User-Agent": f"gv-tools-upper-air/{__version__}"})
     try:
         with urlopen(request, timeout=timeout) as response:
             payload = response.read()

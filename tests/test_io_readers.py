@@ -1,11 +1,12 @@
+from datetime import datetime
 from pathlib import Path
-from types import SimpleNamespace
+from zipfile import ZipFile
 
+import numpy as np
 import pandas as pd
 import pytest
 
 import gv_tools
-from gv_tools.adapters import parsivel as parsivel_module
 
 
 PACKET_1 = "20260810060013 0 004.27 103.1 27.1 66.0 1013.7\n"
@@ -43,10 +44,15 @@ def test_reader_accepts_directory_and_rejects_empty_sources(tmp_path):
         gv_tools.io.read_aio([])
 
 
-def test_piers_day_directory_selects_daily_wx_and_ignores_other_instruments(tmp_path):
+def test_piers_day_directory_reads_daily_and_packets_once_and_ignores_other_instruments(tmp_path):
     daily = tmp_path / "PIERS0042_WX_20260810_daily.csv"
     daily.write_text(
         "20260810060013,0 004.27 103.1 27.1 66.0 1013.7\n", encoding="ascii"
+    )
+    # A packet that repeats the daily record (with a different value) and one
+    # the daily file lacks. 0.50.0 silently dropped every packet here.
+    (tmp_path / "PIERS0042_WX_20260810060005.csv").write_text(
+        "20260810060013 0 009.99 103.1 27.1 66.0 1013.7\n", encoding="ascii"
     )
     (tmp_path / "PIERS0042_WX_20260810060105.csv").write_text(PACKET_2, encoding="ascii")
     (tmp_path / "PIERS0042_TB_20260810_daily.csv").write_text("not WX", encoding="ascii")
@@ -54,8 +60,11 @@ def test_piers_day_directory_selects_daily_wx_and_ignores_other_instruments(tmp_
 
     dataset = gv_tools.io.read_aio(tmp_path, XARRAY=True)
 
-    assert dataset.sizes["time"] == 1
-    assert dataset.attrs["source_files"] == daily.name
+    assert dataset.sizes["time"] == 2
+    assert dataset.wind_speed.values.tolist() == [4.27, 5.27]  # the daily value wins
+    assert dataset.attrs["duplicate_rows"] == 1
+    assert daily.name in dataset.attrs["source_files"]
+    assert str(tmp_path) not in dataset.attrs["source"]
 
 
 def test_metone_merges_monthly_files(tmp_path):
@@ -95,143 +104,65 @@ def test_aio_uses_observation_times_not_filename_dates(tmp_path):
     assert str(dataset.time.dt.strftime("%Y-%m-%d").item()) == "2026-08-10"
 
 
-def test_parsivel_file_list_hides_adapter_and_merges(monkeypatch, tmp_path):
-    names = [
-        "PIERS0042_Parsivel_20260721_part1.zip",
-        "PIERS0042_Parsivel_20260721_part2.zip",
-    ]
-    for name in names:
-        (tmp_path / name).touch()
+def _telegram(moment):
+    values = [0] * 1024
+    values[20 * 32 + 10] = 3  # 1.375 mm at 4.4 m s-1
+    return f"{moment:%Y%m%d%H%M%S};0,0,0,0,0,0,0,0,0," + ",".join(f"{v:03d}" for v in values) + ","
 
-    calls = []
 
-    def run(path, *args, **kwargs):
-        calls.append(kwargs)
-        times = pd.date_range("2026-07-21", periods=2, freq="min")
-        return {"2026-07-21": (
-            pd.DataFrame({"Rain": [1.0, 2.0]}, index=times),
-            pd.DataFrame([[1.0], [1.0]], index=times, columns=[0.1]),
-            pd.DataFrame([[1.0], [1.0]], index=times, columns=["M0"]),
-        )}
+def _parsivel_zip(path, moments):
+    with ZipFile(path, "w") as archive:
+        archive.writestr(path.stem + ".csv", "\n".join(_telegram(m) for m in moments) + "\n")
+    return path
 
-    fake = SimpleNamespace(
-        __version__="1.0.0", run=run,
-        discover_input_dates=lambda path: [pd.Timestamp("2026-07-21")],
-    )
-    monkeypatch.setattr(parsivel_module, "_backend", lambda: fake)
 
-    files = [tmp_path / name for name in names]
-    dataset = gv_tools.io.read_parsivel(files)
+def test_parsivel_file_list_merges_files(tmp_path):
+    first = _parsivel_zip(tmp_path / "PIERS0042_Parsivel_20260721_part1.zip",
+                          [datetime(2026, 7, 21, 0, 0, 30)])
+    second = _parsivel_zip(tmp_path / "PIERS0042_Parsivel_20260721_part2.zip",
+                           [datetime(2026, 7, 21, 0, 1, 30)])
+    dataset = gv_tools.io.read_parsivel([first, second])
     assert dataset.sizes["time"] == 2
-    assert dataset.precipitation_rate.values.tolist() == [1.0, 2.0]
+    assert (dataset.precipitation_rate.values > 0).all()
     assert dataset.attrs["source_platform"] == "piers"
     assert dataset.attrs["instrument_id"] == "PIERS0042"
-    assert calls == [{"start_date": "2026-07-21", "end_date": "2026-07-21"}]
+    assert dataset.attrs["telegrams"] == 2
 
 
-def test_parsivel_decodes_every_supplied_file(monkeypatch, tmp_path):
+def test_parsivel_decodes_every_supplied_file_in_any_order(tmp_path):
     files = [
-        tmp_path / "apu04_2026072100.zip",
-        tmp_path / "apu04_2026072200.zip",
-        tmp_path / "apu04_2026072300.zip",
+        _parsivel_zip(tmp_path / f"apu04_20260{day}00.zip", [datetime(2026, 7, int(day[1:]), 12, 0, 30)])
+        for day in ("723", "721", "722")
     ]
-    for path in files:
-        path.touch()
-    calls = []
-
-    def run(path, instrument, **options):
-        calls.append((sorted(item.name for item in Path(path).iterdir()), options))
-        results = {}
-        for day in pd.date_range(options["start_date"], options["end_date"]):
-            stamp = day.strftime("%Y-%m-%d")
-            frames = (
-                pd.DataFrame({"Rain": [1.0]}, index=[day]),
-                pd.DataFrame([[1.0]], index=[day], columns=[0.1]),
-                pd.DataFrame([[1.0]], index=[day], columns=["M0"]),
-            )
-            results[stamp] = frames
-        return results
-
-    fake = SimpleNamespace(
-        __version__="1.0.0", run=run,
-        discover_input_dates=lambda path: [],
-    )
-    monkeypatch.setattr(parsivel_module, "_backend", lambda: fake)
-
     dataset = gv_tools.io.read_parsivel(files)
+    observed = dataset.time.values[dataset.telegram_count.values > 0]
+    assert [str(value)[:10] for value in observed] == ["2026-07-21", "2026-07-22", "2026-07-23"]
+    # minutes between the observations are missing, not dry
+    assert np.isnan(dataset.precipitation_rate.sel(time="2026-07-22T00:00").item())
+    assert all(path.name in dataset.attrs["source_files"] for path in files)
 
-    assert dataset.sizes["time"] == 3
-    assert len(calls) == 1
-    assert calls[0][0] == [f"{index:06d}_{path.name}" for index, path in enumerate(files)]
-    assert calls[0][1] == {"start_date": "2026-07-21", "end_date": "2026-07-23"}
-    assert dataset.attrs["source_files"] == ", ".join(path.name for path in files)
 
-
-def test_parsivel_infers_apu_from_archive_name(monkeypatch, tmp_path):
-    source = tmp_path / "apu09_2026010100.zip"
-    source.touch()
-    times = pd.date_range("2026-01-01", periods=1, freq="min")
-    frames = (
-        pd.DataFrame({"Rain": [1.0]}, index=times),
-        pd.DataFrame([[1.0]], index=times, columns=[0.1]),
-        pd.DataFrame([[1.0]], index=times, columns=["M0"]),
-    )
-    received = {}
-
-    def run(*args, **kwargs):
-        received.update(kwargs)
-        return {"2026-01-01": frames}
-
-    fake = SimpleNamespace(
-        __version__="1.0.0",
-        run=run,
-        discover_input_dates=lambda path: [],
-    )
-    monkeypatch.setattr(parsivel_module, "_backend", lambda: fake)
-
+def test_parsivel_infers_apu_from_archive_name(tmp_path):
+    source = _parsivel_zip(tmp_path / "apu09_2026010100.zip", [datetime(2026, 1, 1, 0, 0, 30)])
     assert gv_tools.io.discover_parsivel([source]) == ["2026-01-01"]
     dataset = gv_tools.io.read_parsivel([source])
     assert dataset.attrs["instrument_id"] == "apu09"
     assert dataset.attrs["source_platform"] == "apu"
-    assert received == {"start_date": "2026-01-01", "end_date": "2026-01-01"}
 
 
 @pytest.mark.parametrize(
     "name",
     ["apu09_20240306_15.zip", "apu09_2024030615.zip"],
 )
-def test_parsivel_accepts_hour_with_or_without_separator(monkeypatch, tmp_path, name):
-    source = tmp_path / name
-    source.touch()
-    times = pd.date_range("2024-03-06 15:00", periods=1, freq="min")
-    frames = (
-        pd.DataFrame({"Rain": [1.0]}, index=times),
-        pd.DataFrame([[1.0]], index=times, columns=[0.1]),
-        pd.DataFrame([[1.0]], index=times, columns=["M0"]),
+def test_parsivel_accepts_hour_with_or_without_separator(tmp_path, name):
+    source = _parsivel_zip(
+        tmp_path / name,
+        [datetime(2024, 3, 6, 15, 0, 30)],
     )
-    fake = SimpleNamespace(
-        __version__="1.0.0",
-        run=lambda *args, **kwargs: {"2024-03-06": frames},
-        discover_input_dates=lambda path: [pd.Timestamp("2024-03-06")],
-    )
-    monkeypatch.setattr(parsivel_module, "_backend", lambda: fake)
-
     dataset = gv_tools.io.read_parsivel([source])
 
-    assert dataset.sizes["time"] == 1
+    assert int(dataset.telegram_count.sum()) == 1
     assert dataset.attrs["instrument_id"] == "apu09"
-
-
-def test_parsivel_requires_chronological_file_endpoints(tmp_path):
-    files = [
-        tmp_path / "apu04_2026072300.zip",
-        tmp_path / "apu04_2026072100.zip",
-    ]
-    for path in files:
-        path.touch()
-
-    with pytest.raises(ValueError, match="order files from earliest to latest"):
-        gv_tools.io.read_parsivel(files)
 
 
 def test_parsivel_rejects_non_parsivel_piers_archive(tmp_path):
@@ -276,3 +207,25 @@ def test_read_radar_forwards_xradar_choice(monkeypatch, tmp_path):
 
     assert gv_tools.io.read_radar(volume, XRADAR=True) == "tree"
     assert calls == [(volume, {"XRADAR": True})]
+
+
+def test_2dvd_vectorized_reader_matches_line_parser(tmp_path):
+    from gv_tools.io import py_2dvd
+
+    rows = [
+        "1 2 3.500 1.2 0.9 4.5 0.98 9500 1 2 3 4 10 20 30 40",
+        "1 2 4.000 1.4 1.4 5.0 0.97 9400 1 2 3 4 10 20 30 40",
+        "01:02:05.250 1.6 2.1 5.5 0.96 9300 aa bb 1 2 3 4 10 20 30 40",
+    ]
+    source = tmp_path / "V23022.drops.txt"
+    source.write_text("h1\nh2\n" + "\n".join(rows) + "\n")
+    frame = py_2dvd.ingest_raw(source)
+    assert frame.shape[0] == 3
+    assert frame.second.tolist() == [3.5, 4.0, 5.25]
+    assert frame.source_extra_1.iloc[2] == "aa"
+    assert frame.source_extra_1.iloc[:2].isna().all()
+    assert frame.attrs["source_file"] == "V23022.drops.txt"
+    bad = tmp_path / "V23023.drops.txt"
+    bad.write_text("h1\nh2\n" + rows[0] + "\n1 2 3 x 0.9 4.5 0.98 9500 1 2 3 4 10 20 30 40\n")
+    with pytest.raises(ValueError, match="Line 4"):
+        py_2dvd.ingest_raw(bad)

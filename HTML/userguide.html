@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>User guide &#8212; GV Tools 0.50.1 documentation</title>
+    <title>User guide &#8212; GV Tools 0.65.0 documentation</title>
   
   
   
@@ -39,14 +39,14 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="_static/documentation_options.js?v=cb30952c"></script>
+    <script src="_static/documentation_options.js?v=dc8ea8b4"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'userguide';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Dependencies" href="dependencies.html" />
+    <link rel="next" title="Parsivel processing" href="parsivel.html" />
     <link rel="prev" title="GV Tools" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -118,7 +118,7 @@
   
   
   
-    <p class="title logo__title">GV Tools 0.50.1 documentation</p>
+    <p class="title logo__title">GV Tools 0.65.0 documentation</p>
   
 </a></div>
     
@@ -135,6 +135,13 @@
 <li class="nav-item current active">
   <a class="nav-link nav-internal" href="#">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -159,13 +166,6 @@
   </a>
 </li>
 
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="notebooks.html">
-    Notebooks
-  </a>
-</li>
-
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -174,6 +174,13 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="notebooks.html">
+    Notebooks
+  </a>
+</li>
+
+
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="examples.html">
     Examples
@@ -287,6 +294,13 @@
 <li class="nav-item current active">
   <a class="nav-link nav-internal" href="#">
     User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parsivel.html">
+    Parsivel processing
   </a>
 </li>
 
@@ -466,8 +480,15 @@ publish results. Use pandas and xarray methods for those tasks.</p>
 <p>Public readers accept an absolute filename, an absolute directory, or an
 explicit sequence of absolute files/directories. Directories are searched
 recursively. A single call must contain files compatible with its reader.
-PIERS readers prefer consolidated <code class="docutils literal notranslate"><span class="pre">*_daily</span></code> products when daily and packet
-files are both present.</p>
+PIERS readers read consolidated <code class="docutils literal notranslate"><span class="pre">*_daily</span></code> products and packets together and
+keep each observation once (the daily value wins a tie).</p>
+</section>
+<section id="missing-versus-dry">
+<h2>Missing versus dry<a class="headerlink" href="#missing-versus-dry" title="Link to this heading">#</a></h2>
+<p>Parsivel minutes without telegrams and tipping-bucket intervals inside a
+reporting gap are NaN. A zero always means the instrument was reporting and
+saw nothing. Use <code class="docutils literal notranslate"><span class="pre">telegram_count</span></code> (Parsivel) or the <code class="docutils literal notranslate"><span class="pre">*_flag</span></code> columns
+(tipping buckets) to select complete intervals.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">gv_tools</span>
 
 <span class="n">frame</span> <span class="o">=</span> <span class="n">gv_tools</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_aio</span><span class="p">(</span><span class="s2">"/data/piers/PIERS0042"</span><span class="p">)</span>
@@ -481,6 +502,7 @@ files are both present.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">day</span> <span class="o">=</span> <span class="s2">"/Volumes/TBW/distro/PIERS_Gauges_Daily/PIERS0045/2026/10/11"</span>
 <span class="n">weather</span> <span class="o">=</span> <span class="n">gv_tools</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_aio</span><span class="p">(</span><span class="n">day</span><span class="p">)</span>
 <span class="n">gauge</span> <span class="o">=</span> <span class="n">gv_tools</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_gauge</span><span class="p">(</span><span class="n">day</span><span class="p">)</span>
+<span class="n">rain</span> <span class="o">=</span> <span class="n">gv_tools</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_tipping_bucket</span><span class="p">(</span><span class="n">day</span><span class="p">,</span> <span class="n">tip_depth_mm</span><span class="o">=</span><span class="mf">0.254</span><span class="p">)</span>  <span class="c1"># the gauge's gauge_tip</span>
 <span class="n">parsivel</span> <span class="o">=</span> <span class="n">gv_tools</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_parsivel</span><span class="p">(</span><span class="n">day</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -532,11 +554,11 @@ Matplotlib objects for further user customization.</p>
       </div>
     </a>
     <a class="right-next"
-       href="dependencies.html"
+       href="parsivel.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Dependencies</p>
+        <p class="prev-next-title">Parsivel processing</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -561,6 +583,7 @@ Matplotlib objects for further user customization.</p>
     <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design-boundary">Design boundary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#input-selection">Input selection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-versus-dry">Missing versus dry</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-controlled-data-output">User-controlled data output</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-controlled-figures">User-controlled figures</a></li>
 </ul>

@@ -12,11 +12,14 @@ instrument the same interface: an explicit file-path list, optional date bounds,
 and a single merged return product. All downstream code consumes that normalized
 product and must not rely on manufacturer field names or raw file layouts.
 
-The Parsivel adapter calls the private decoder bundled with GV Tools.
-`read_raw()` returns a typed
-`RawParsivelProduct`; `read()` normalizes its parameter, DSD, and moment tables
-into one dataset. Instrument-aware discovery prevents files for another APU or
-PIERS platform from contributing dates.
+The Parsivel adapter calls the decoder bundled with GV Tools
+(`gv_tools._parsivel`). The decoder streams every file and archive member in
+memory, keys telegrams by their own time stamps (so a telegram is counted once
+and lands in its own UTC day whatever file it is in), and holds only about two
+days of telegrams at a time. `read_raw()` returns a typed `RawParsivelProduct`;
+`read()` normalizes its parameter, DSD, and moment tables (and, on request,
+the raw per-minute spectrum) into one dataset. Instrument-aware discovery
+prevents files for another APU or PIERS platform from contributing dates.
 
 The RM Young AIO adapter natively decodes PIERS `WX` packet files. Its
 `read_raw()` method exposes a typed pandas product and source accounting, while
@@ -25,7 +28,11 @@ merges chronologically for the user.
 
 The Met One AIO adapter independently decodes monthly `AIO_SITE_YYYYMM.dat`
 files. It validates the filename month against each year/Julian-day/HHMM row
-and exposes the same raw-versus-normalized workflow and ingest accounting.
+(an `HHMM` of 2400 is 00:00 of the next day) and exposes the same
+raw-versus-normalized workflow and ingest accounting.
+
+The `source` attribute of every product describes the kind of input; the
+`source_files` attribute lists file names only, never directories.
 
 MRR2 and MRRPro use a separate `gv_tools.io.read_mrr()` regime. MRR files
 are already scientific NetCDF products, so they do not pass through a surface
